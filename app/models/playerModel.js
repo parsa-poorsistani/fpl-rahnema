@@ -33,3 +33,5 @@ const playerSchema = new Schema({
   threat: { type: Number, trim: true, default: null }, //threat
   in_dreamteam: { type: Boolean, trim: true, default: False }, //in_dreamteam
 });
+
+module.exports = mongoose.model("player", playerSchema);
