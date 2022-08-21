@@ -11,4 +11,4 @@ function setRoutes() {
     for (const route in routes) {
         app.use("/api/v1", routes[route]);
     }
-}
+};
