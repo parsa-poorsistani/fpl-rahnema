@@ -1,8 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const mint = require("./service/mint");
 const { routes } = require("./routes/path");
-require("dotenv").config();
 
 function setupServer() {
   app.listen(process.env.APPLICATION_PORT, () => {

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 connectDb = async () => {
-  await mongoose.connect(process.env.MONGODB_URI);
+  await mongoose.connect(process.env.MONGO_URI);
 };
 
 create = async (model, args) => {
