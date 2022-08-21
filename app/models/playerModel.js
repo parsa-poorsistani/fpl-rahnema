@@ -31,7 +31,7 @@ const playerSchema = new Schema({
   influence: { type: Number, trim: true, default: null }, //influence
   creativity: { type: Number, trim: true, default: null }, //creativity
   threat: { type: Number, trim: true, default: null }, //threat
-  in_dreamteam: { type: Boolean, trim: true, default: False }, //in_dreamteam
+  in_dreamteam: { type: Boolean, trim: true, default: false }, //in_dreamteam
 });
 
 module.exports = mongoose.model("player", playerSchema);
