@@ -1,4 +1,4 @@
-import models = require("../../app/models/path");
+import models = require("../models/path");
 
 const createManager = async (req: any, res: any) => {
   try {

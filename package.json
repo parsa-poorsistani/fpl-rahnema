@@ -13,8 +13,10 @@
   "author": "prxaps,pegahgivi",
   "license": "ISC",
   "dependencies": {
+    "@types/cron": "^2.0.0",
     "@types/mongoose": "^5.11.97",
     "axios": "^0.27.2",
+    "cron": "^2.1.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "mongodb": "^4.9.0",

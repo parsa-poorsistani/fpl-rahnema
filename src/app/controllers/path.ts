@@ -1,3 +1,4 @@
 const playerController = require("./playerController");
+const userController = require("./userController");
 
-export { playerController };
+export { playerController, userController };
