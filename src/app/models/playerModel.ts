@@ -1,25 +1,20 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
 
-const playerSchema = new Schema({
+const playerSchema = new mongoose.Schema({
   generalId: {
-    type: String,
+    type: Number,
     trim: true,
-    required: true,
-    unique: true,
-    default: null,
+    // default: null,
   }, //id
-  fname: { type: String, trim: true, required: true, default: null }, //first_name
-  lname: { type: String, trim: true, required: true, default: null }, //secondName
-  web_name: { type: String, trim: true, required: true, default: null }, //web_name
-  price: { type: String, trim: true, required: true, default: null }, //now_cost/10
-  teamId: { type: String, trim: true, required: true, default: null }, //team
-  team_code: { type: String, trim: true, required: true, default: null }, //team_code
-  photo: { type: String, trim: true, required: true, default: null }, //photo
+  fname: { type: String, trim: true, default: null }, //first_name
+  lname: { type: String, trim: true, default: null }, //secondName
+  web_name: { type: String, trim: true, default: null }, //web_name
+  price: { type: String, trim: true, default: null }, //now_cost/10
+  teamId: { type: String, trim: true, default: null }, //team
+  team_code: { type: String, trim: true, default: null }, //team_code
   positionId: {
-    type: mongoose.Types.ObjectId,
+    type: Number,
     trim: true,
-    required: true,
     default: null,
   }, //element_type
   points: { type: Number, trim: true, default: null }, //total_points

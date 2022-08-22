@@ -1,7 +1,6 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
 
-const positionSchema = new Schema({
+const positionSchema = new mongoose.Schema({
   generalId: {
     type: String,
     trim: true,

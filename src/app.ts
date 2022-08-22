@@ -1,8 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const mint = require("./service/mint");
-const { routes } = require("./routes/path");
+const mint = require("./app/service/mint");
+import routes = require("./app/routes/path");
+const route = require("./app/routes/playerRoute");
 
 function setupServer() {
   app.listen(process.env.APPLICATION_PORT, () => {
@@ -10,12 +11,12 @@ function setupServer() {
   });
 }
 
+app.use("/api/v1", route);
+
 function setRoutes() {
-  for (const route in routes) {
-    app.use("/api/v1", routes[route]);
-  }
+  app.use("/api/v1/player", routes.playerRoute);
 }
 
-mint.connectDb();
 setupServer();
+mint.connectDb();
 setRoutes();
