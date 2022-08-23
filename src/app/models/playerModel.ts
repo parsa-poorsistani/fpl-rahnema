@@ -13,7 +13,7 @@ const playerSchema = new mongoose.Schema({
   teamId: { type: String, trim: true, default: null }, //team
   team_code: { type: String, trim: true, default: null }, //team_code
   positionId: {
-    type: Number,
+    type: String,
     trim: true,
     default: null,
   }, //element_type
@@ -29,4 +29,13 @@ const playerSchema = new mongoose.Schema({
   in_dreamteam: { type: Boolean, trim: true, default: false }, //in_dreamteam
 });
 
+playerSchema.virtual("position", {
+  ref: "position",
+  localField: "positionId",
+  foreignField: "generalId",
+  justOne: true,
+});
+
+playerSchema.set("toObject", { virtuals: true });
+playerSchema.set("toJSON", { virtuals: true });
 module.exports = mongoose.model("player", playerSchema);
