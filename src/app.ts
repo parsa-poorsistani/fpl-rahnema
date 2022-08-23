@@ -5,6 +5,8 @@ const mint = require("./app/service/mint");
 import routes = require("./app/routes/path");
 var cronJob = require("cron").CronJob;
 
+app.use(express.json());
+
 let setupServer = (): any => {
   app.listen(process.env.APPLICATION_PORT, () => {
     console.log(`Server is running on port ${process.env.APPLICATION_PORT}`);
