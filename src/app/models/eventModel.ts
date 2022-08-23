@@ -1,0 +1,25 @@
+import mongoose from "mongoose";
+
+const eventSchema = new mongoose.Schema({
+  generalId: { type: String, trim: true, default: null, unique: true },
+  name: { type: String, trim: true, default: null },
+  deadline_time: { type: String, trim: true, default: null },
+  average_entry_score: { type: String, trim: true, default: null },
+  finished: { type: Boolean, trim: true, default: false },
+  data_checked: { type: Boolean, trim: true, default: false },
+  highest_scoring_entry: { type: Number, trim: true, default: 0 },
+  deadline_time_epoch: { type: String, trim: true, default: null },
+  highest_score: { type: Number, trim: true, default: null },
+  is_previous: { type: Boolean, trim: true, default: false },
+  is_current: { type: Boolean, trim: true, default: false },
+  is_next: { type: Boolean, trim: true, default: false },
+  cup_leagues_created: { type: Boolean, trim: true, default: false },
+  chip_plays: [
+    {
+      chip_name: { type: String, trim: true, default: null },
+      num_played: { type: Number, trim: true, default: 0 },
+    },
+  ],
+});
+
+module.exports = mongoose.model("event", eventSchema);
