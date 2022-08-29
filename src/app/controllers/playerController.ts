@@ -1,6 +1,7 @@
 import models = require("../../app/models/path");
+import { Request, Response } from "express";
 
-const getPlayers = async (req: any, res: any) => {
+const getPlayers = async (req: Request, res: Response) => {
   let players = await models.playerModel
     .find(req.query.filter ? { positionId: req.query.filter } : null)
     .populate({
@@ -12,7 +13,7 @@ const getPlayers = async (req: any, res: any) => {
   res.status(200).json({ data: players });
 };
 
-const getPlayerByName = async (req: any, res: any) => {
+const getPlayerByName = async (req: Request, res: Response) => {
   try {
     const { web_name } = req.body;
     const player = await models.playerModel.find({
