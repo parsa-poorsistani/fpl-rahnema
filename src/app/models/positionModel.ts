@@ -12,22 +12,25 @@ interface Position {
   element_count: Number;
 }
 
-const positionSchema = new mongoose.Schema<Position>({
-  generalId: {
-    type: String,
-    trim: true,
-    required: true,
-    unique: true,
-    default: null,
+const positionSchema = new mongoose.Schema<Position>(
+  {
+    generalId: {
+      type: String,
+      trim: true,
+      required: true,
+      unique: true,
+      default: null,
+    },
+    plural_name: { type: String, trim: true, default: null },
+    plural_name_short: { type: String, trim: true, default: null },
+    singular_name: { type: String, trim: true, default: null },
+    singular_name_short: { type: String, trim: true, default: null },
+    squad_count: { type: Number, trim: true, default: null },
+    squad_min_play: { type: Number, trim: true, default: null },
+    squad_max_play: { type: Number, trim: true, default: null },
+    element_count: { type: Number, trim: true, default: null },
   },
-  plural_name: { type: String, trim: true, default: null },
-  plural_name_short: { type: String, trim: true, default: null },
-  singular_name: { type: String, trim: true, default: null },
-  singular_name_short: { type: String, trim: true, default: null },
-  squad_count: { type: Number, trim: true, default: null },
-  squad_min_play: { type: Number, trim: true, default: null },
-  squad_max_play: { type: Number, trim: true, default: null },
-  element_count: { type: Number, trim: true, default: null },
-});
+  { versionKey: false }
+);
 
 module.exports = mongoose.model("Position", positionSchema);
