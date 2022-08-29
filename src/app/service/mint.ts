@@ -108,51 +108,50 @@ const updatePlayerdata = async (req: Request, res: Response) => {
   return res.status(200).json({ data: players });
 };
 
-// const updateEventdata = async (req) => {
-//   const response = await axios.get(process.env.FPL_URL);
+const updateEventdata = async (req: Request, res: Response) => {
+  const response = await axios.get(process.env.FPL_URL);
 
-//   for (let event of response.data.events) {
-//     let update = await models.eventModel.update(
-//       { generalId: event.id },
-//       {
-//         generalId: event.id,
-//         name: event.name,
-//         deadline_time: event.deadline_time,
-//         average_entry_score: event.average_entry_score,
-//         finished: event.finished,
-//         data_checked: event.data_checked,
-//         highest_scoring_entry: event.highest_scoring_entry,
-//         deadline_time_epoch: event.deadline_time_epoch,
-//         highest_score: event.highest_score,
-//         is_previous: event.is_previous,
-//         is_current: event.is_current,
-//         is_next: event.is_next,
-//         cup_leagues_created: event.cup_leagues_created,
-//         chip_plays: event.chip_plays,
-//       }
-//     );
+  for (let event of response.data.events) {
+    let update = await models.eventModel.update(
+      { generalId: event.id },
+      {
+        name: event.name,
+        deadline_time: event.deadline_time,
+        average_entry_score: event.average_entry_score,
+        finished: event.finished,
+        data_checked: event.data_checked,
+        highest_scoring_entry: event.highest_scoring_entry,
+        deadline_time_epoch: event.deadline_time_epoch,
+        highest_score: event.highest_score,
+        is_current: event.is_current,
+      }
+    );
 
-//     if (update.nMatched == 0) {
-//       await models.playerModel.create({
-//         generalId: event.id,
-//         name: event.name,
-//         deadline_time: event.deadline_time,
-//         average_entry_score: event.average_entry_score,
-//         finished: event.finished,
-//         data_checked: event.data_checked,
-//         highest_scoring_entry: event.highest_scoring_entry,
-//         deadline_time_epoch: event.deadline_time_epoch,
-//         highest_score: event.highest_score,
-//         is_previous: event.is_previous,
-//         is_current: event.is_current,
-//         is_next: event.is_next,
-//         cup_leagues_created: event.cup_leagues_created,
-//         chip_plays: event.chip_plays,
-//       });
-//     }
-//   }
-//   let events = await models.eventModel.find();
-//   res.status(200).json({ data: events });
-// };
+    console.log(update);
 
-export { connectDb, create, updatePlayerdata, updatePlayerPositionsData };
+    if (update.matchedCount == 0) {
+      await models.eventModel.create({
+        generalId: event.id,
+        name: event.name,
+        deadline_time: event.deadline_time,
+        average_entry_score: event.average_entry_score,
+        finished: event.finished,
+        data_checked: event.data_checked,
+        highest_scoring_entry: event.highest_scoring_entry,
+        deadline_time_epoch: event.deadline_time_epoch,
+        highest_score: event.highest_score,
+        is_current: event.is_current,
+      });
+    }
+  }
+  let events = await models.eventModel.find();
+  res.status(200).json({ data: events });
+};
+
+export {
+  connectDb,
+  create,
+  updatePlayerdata,
+  updatePlayerPositionsData,
+  updateEventdata,
+};

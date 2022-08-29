@@ -4,10 +4,7 @@ import { Request, Response } from "express";
 const getPlayers = async (req: Request, res: Response) => {
   let players = await models.playerModel
     .find(req.query.filter ? { positionId: req.query.filter } : null)
-    .populate({
-      path: "position",
-      options: { select: { singular_name_short: 1, generalId: 1 } },
-    })
+
     .exec();
 
   res.status(200).json({ data: players });
