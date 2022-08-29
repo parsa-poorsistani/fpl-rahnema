@@ -1,11 +1,7 @@
 import models = require("../models/path");
-import mongoose = require("mongoose");
 import { Request, Response } from "express";
 const axios = require("axios");
 
-const connectDb = async () => {
-  await mongoose.connect(process.env.MONGO_URI!);
-};
 
 const create = async (model: any, args: any) => {
   if (model) {
@@ -147,7 +143,6 @@ const updateEventdata = async (req: Request, res: Response) => {
 };
 
 export {
-  connectDb,
   create,
   updatePlayerdata,
   updatePlayerPositionsData,
