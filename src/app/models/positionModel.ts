@@ -19,3 +19,5 @@ const positionSchema = new mongoose.Schema({
   sub_positions_locked: [{ type: Number, trim: true, default: null }],
   element_count: { type: Number, trim: true, default: null },
 });
+
+module.exports = mongoose.model("position", positionSchema);

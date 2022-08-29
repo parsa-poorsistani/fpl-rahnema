@@ -145,3 +145,13 @@ const playerSchema = new Schema<IPlayer>({
 const Player = model('Player',playerSchema);
 
 module.exports = Player;
+
+// playerSchema.virtual("position", {
+//   ref: "position",
+//   localField: "positionId",
+//   foreignField: "generalId",
+//   justOne: true,
+// });
+
+// playerSchema.set("toObject", { virtuals: true });
+// playerSchema.set("toJSON", { virtuals: true });
