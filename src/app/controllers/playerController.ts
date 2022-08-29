@@ -1,5 +1,16 @@
 import models = require("../../app/models/path");
+import { Request,Response } from "express";
 
+
+const getAllPlayers = async(req:Request,res:Response) => {
+  try {
+      const players = await models.playerModel.find({}).select('web_name');
+      return res.status(200).json({players});
+  } catch (error) {
+      console.log(error);
+      return res.status(500).json({msg:error});
+  }
+};
 const getPlayers = async (req: any, res: any) => {
   let players = await models.playerModel
     .find(req.query.filter ? { positionId: req.query.filter } : null)
