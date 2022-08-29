@@ -1,13 +1,38 @@
-const mongoose = require('mongoose');
+import {ObjectId,Schema,model, Types} from "mongoose";
 
-const teamSchema = new mongoose.Schema({
+interface ITeam {
+    //needs manager property probably
+    managerId:ObjectId,
+    picks:[
+        {
+            element:Number,
+            team:Number,
+            position:Number,
+            selling_price:Number,
+            multiplier:Number,
+            purchase_price:Number,
+            is_captain:Boolean,
+            is_vice_captain:Boolean
+        }
+    ]
+};
+
+const teamSchema = new Schema<ITeam>({
+    managerId:{
+        type:Schema.Types.ObjectId,
+        required:true,
+        ref:'Manager'
+    },
     picks: [{
         player_id: {
             type: Number,
             default: null
         },
+        team:{
+            type:Number
+        },
         position: {
-            type: Number,
+            type: Types.ObjectId,
             default: null
         },
         multiplier: {
@@ -30,62 +55,9 @@ const teamSchema = new mongoose.Schema({
             type: Boolean,
             default: false
         },
-    }],
-    chips: [{
-        status_for_entry: {
-            type: String,
-            default: "available"
-        },
-        played_by_entry: [],
-        name: {
-            type: String,
-            default: null
-        },
-        number: {
-            type: Number,
-            default: 1
-        },
-        start_event: {
-            type: Number,
-            default: null
-        },
-        stop_event: {
-            type: Number,
-            default: null
-        },
-        chip_type: {
-            type: String,
-            default: null
-        },
-    }],
-    transfers: {
-        cost: {
-            type: Number,
-            default: null
-        },
-        status: {
-            type: String,
-            deafult: null
-        },
-        limit: {
-            type: Number,
-            default: null
-        },
-        made: {
-            type: Number,
-            default: 0
-        },
-        banl: {
-            type: Number,
-            default: null
-        },
-        value: {
-            type: Number,
-            default: null
-        }
-    }
+    }]
 });
 
-const Team = mongoose.model('Team', teamSchema);
+const Team = model('Team', teamSchema);
 
 module.exports = Team;
