@@ -1,41 +1,157 @@
-import mongoose from "mongoose";
+import { ObjectId, model, Schema, Types } from 'mongoose';
 
-const playerSchema = new mongoose.Schema({
-  generalId: {
-    type: Number,
-    trim: true,
-    // default: null,
-  }, //id
-  fname: { type: String, trim: true, default: null }, //first_name
-  lname: { type: String, trim: true, default: null }, //secondName
-  web_name: { type: String, trim: true, default: null }, //web_name
-  price: { type: String, trim: true, default: null }, //now_cost/10
-  teamId: { type: String, trim: true, default: null }, //team
-  team_code: { type: String, trim: true, default: null }, //team_code
-  positionId: {
-    type: String,
-    trim: true,
-    default: null,
-  }, //element_type
-  points: { type: Number, trim: true, default: null }, //total_points
-  value_season: { type: Number, trim: true, default: null }, //value_season
-  minutes: { type: Number, trim: true, default: null }, //minutes
-  goals_scored: { type: Number, trim: true, default: null }, //goals_scored
-  yellow_cards: { type: Number, trim: true, default: null }, //yellow_cards
-  red_cards: { type: Number, trim: true, default: null }, //red_cards
-  influence: { type: Number, trim: true, default: null }, //influence
-  creativity: { type: Number, trim: true, default: null }, //creativity
-  threat: { type: Number, trim: true, default: null }, //threat
-  in_dreamteam: { type: Boolean, trim: true, default: false }, //in_dreamteam
+interface IPlayer {
+  generalId:Number,
+  element_type:ObjectId,
+  news:String,
+  in_dreamteam:Boolean,
+  event_points:Number,
+  first_name:String,
+  form:Number,
+  now_cost:Number,
+  points_per_game:Number,
+  second_name:String,
+  special:Boolean,
+  status:String,
+  team:Number,
+  value_form:Number,
+  value_season:Number,
+  web_name:String,
+  minutes:Number,
+  goals_scored:Number,
+  assists:Number,
+  clean_sheets:Number,
+  goals_conceded:Number,
+  own_goals:Number,
+  penalties_saved:Number,
+  penalties_missed:Number,
+  yellow_cards:Number,
+  red_cards:Number,
+  saves:Number,
+  bonus:Number,
+};
+
+
+const playerSchema = new Schema<IPlayer>({
+  generalId:{
+      type:Number,
+      required:true
+  },
+  element_type:{
+      type: Types.ObjectId,
+      required:true,
+      ref:'Position'
+  },
+  news:{
+      type:String
+  },
+  in_dreamteam:{
+      type:Boolean,
+      default:false
+  },
+  event_points:{
+      type:Number,
+      default:0
+  },
+  first_name:{
+      type:String,
+      required:true
+  },
+  second_name:{
+      type:String,
+      required:true
+  },
+  form:{
+      type:Number,
+      default:0
+  },
+  now_cost:{
+      type:Number,
+      required:true
+  },
+  points_per_game:{
+      type:Number,
+      default:0
+  },
+  special:{
+      type:Boolean,
+      default:false
+  },
+  status:{
+      type:String,
+  },
+  team:{
+      type:Number,
+  },
+  value_form:{
+      type:Number,
+      default:0
+  },
+  value_season:{
+      type:Number,
+      default:0
+  },
+  web_name:{
+      type:String,
+      required:true
+  },
+  minutes:{
+      type:Number,default:0
+  },
+  goals_scored:{
+      type:Number,
+      default:0
+  },
+  assists:{
+      type:Number,
+      default:0
+  },
+  clean_sheets:{
+      type:Number,
+      default:0
+  },
+  goals_conceded:{
+      type:Number
+  },
+  own_goals:{
+      type:Number,
+      default:0
+  },
+  penalties_saved:{
+      type:Number,
+      default:0
+  },
+  penalties_missed:{
+      type:Number,
+      default:0
+  },
+  yellow_cards:{
+      type:Number,
+      default:0
+  },
+  red_cards:{
+      type:Number,
+      default:0
+  },
+  saves:{
+      type:Number,
+      default:0
+  },
+  bonus:{
+      type:Number
+  }
 });
 
-playerSchema.virtual("position", {
-  ref: "position",
-  localField: "positionId",
-  foreignField: "generalId",
-  justOne: true,
-});
+const Player = model('Player',playerSchema);
 
-playerSchema.set("toObject", { virtuals: true });
-playerSchema.set("toJSON", { virtuals: true });
-module.exports = mongoose.model("player", playerSchema);
+module.exports = Player;
+
+// playerSchema.virtual("position", {
+//   ref: "position",
+//   localField: "positionId",
+//   foreignField: "generalId",
+//   justOne: true,
+// });
+
+// playerSchema.set("toObject", { virtuals: true });
+// playerSchema.set("toJSON", { virtuals: true });

@@ -11,19 +11,9 @@ const getAllPlayers = async(req:Request,res:Response) => {
       return res.status(500).json({msg:error});
   }
 };
-const getPlayers = async (req: any, res: any) => {
-  let players = await models.playerModel
-    .find(req.query.filter ? { positionId: req.query.filter } : null)
-    .populate({
-      path: "position",
-      options: { select: { singular_name_short: 1, generalId: 1 } },
-    })
-    .exec();
 
-  res.status(200).json({ data: players });
-};
 
-const getPlayerByName = async (req: any, res: any) => {
+const getPlayerByName = async (req: Request, res: Response) => {
   try {
     const { web_name } = req.body;
     const player = await models.playerModel.find({
@@ -39,6 +29,6 @@ const getPlayerByName = async (req: any, res: any) => {
 };
 
 module.exports = {
-  getPlayers,
+  getAllPlayers,
   getPlayerByName,
 };

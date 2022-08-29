@@ -5,5 +5,4 @@ const controllers = require('../controllers/path');
 
 router.route('/create').post(controllers.managerController.createManager);
 
-
 module.exports = router;
