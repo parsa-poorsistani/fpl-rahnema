@@ -20,4 +20,4 @@ const positionSchema = new mongoose.Schema({
   element_count: { type: Number, trim: true, default: null },
 });
 
-module.exports = mongoose.model("position", positionSchema);
+module.exports = mongoose.model("Position", positionSchema);

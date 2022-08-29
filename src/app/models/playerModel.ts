@@ -38,4 +38,4 @@ playerSchema.virtual("position", {
 
 playerSchema.set("toObject", { virtuals: true });
 playerSchema.set("toJSON", { virtuals: true });
-module.exports = mongoose.model("player", playerSchema);
+module.exports = mongoose.model("Player", playerSchema);
