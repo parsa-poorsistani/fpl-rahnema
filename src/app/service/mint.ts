@@ -127,8 +127,6 @@ const updateEventdata = async (req: Request, res: Response) => {
       }
     );
 
-    console.log(update);
-
     if (update.matchedCount == 0) {
       await models.eventModel.create({
         generalId: event.id,

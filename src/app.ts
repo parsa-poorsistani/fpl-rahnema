@@ -15,6 +15,7 @@ let setupServer = (): any => {
 
 let setRoutes = (): any => {
   app.use("/api/v1/player", routes.playerRoute);
+  app.use("/api/v1/event", routes.eventRoute);
 };
 
 let setCronJob = (): any => {
