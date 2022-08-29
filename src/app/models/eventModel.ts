@@ -10,16 +10,7 @@ const eventSchema = new mongoose.Schema({
   highest_scoring_entry: { type: Number, trim: true, default: 0 },
   deadline_time_epoch: { type: String, trim: true, default: null },
   highest_score: { type: Number, trim: true, default: null },
-  is_previous: { type: Boolean, trim: true, default: false },
   is_current: { type: Boolean, trim: true, default: false },
-  is_next: { type: Boolean, trim: true, default: false },
-  cup_leagues_created: { type: Boolean, trim: true, default: false },
-  chip_plays: [
-    {
-      chip_name: { type: String, trim: true, default: null },
-      num_played: { type: Number, trim: true, default: 0 },
-    },
-  ],
 });
 
 module.exports = mongoose.model("Event", eventSchema);
