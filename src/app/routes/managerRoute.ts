@@ -1,9 +1,8 @@
-export{};
+export {};
 const express = require("express");
 const router = express.Router();
-const controllers = require('../controllers/path');
+const controllers = require("../controllers/path");
 
-router.route('/create').post(controllers.managerController.createManager);
+router.route("/create").post(controllers.managerController.createManager);
 
-
-module.exports = routes;
+module.exports = router;

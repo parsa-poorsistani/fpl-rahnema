@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 interface Position {
-  generalId: String;
+  generalId: Number;
   plural_name: String;
   plural_name_short: String;
   singular_name: String;
@@ -15,7 +15,7 @@ interface Position {
 const positionSchema = new mongoose.Schema<Position>(
   {
     generalId: {
-      type: String,
+      type: Number,
       trim: true,
       required: true,
       unique: true,
