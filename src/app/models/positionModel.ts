@@ -1,6 +1,18 @@
 import mongoose from "mongoose";
 
-const positionSchema = new mongoose.Schema({
+interface Position {
+  generalId: String;
+  plural_name: String;
+  plural_name_short: String;
+  singular_name: String;
+  singular_name_short: String;
+  squad_count: Number;
+  squad_min_play: Number;
+  squad_max_play: Number;
+  element_count: Number;
+}
+
+const positionSchema = new mongoose.Schema<Position>({
   generalId: {
     type: String,
     trim: true,
@@ -15,8 +27,6 @@ const positionSchema = new mongoose.Schema({
   squad_count: { type: Number, trim: true, default: null },
   squad_min_play: { type: Number, trim: true, default: null },
   squad_max_play: { type: Number, trim: true, default: null },
-  ui_shirt_specific: { type: Number, trim: true, default: null },
-  sub_positions_locked: [{ type: Number, trim: true, default: null }],
   element_count: { type: Number, trim: true, default: null },
 });
 

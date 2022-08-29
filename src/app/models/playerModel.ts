@@ -1,10 +1,31 @@
 import mongoose from "mongoose";
 
-const playerSchema = new mongoose.Schema({
+interface Player {
+  generalId: Number;
+  fname: String;
+  lname: String;
+  web_name: String;
+  price: String;
+  teamId: String;
+  team_code: String;
+  positionId: String;
+  points: Number;
+  value_season: Number;
+  minutes: Number;
+  goals_scored: Number;
+  yellow_cards: Number;
+  red_cards: Number;
+  influence: Number;
+  creativity: Number;
+  threat: Number;
+  in_dreamteam: Boolean;
+}
+
+const playerSchema = new mongoose.Schema<Player>({
   generalId: {
     type: Number,
     trim: true,
-    // default: null,
+    default: null,
   }, //id
   fname: { type: String, trim: true, default: null }, //first_name
   lname: { type: String, trim: true, default: null }, //secondName

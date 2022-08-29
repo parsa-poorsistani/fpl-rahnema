@@ -1,6 +1,19 @@
 import mongoose from "mongoose";
 
-const eventSchema = new mongoose.Schema({
+interface Event {
+  generalId: String;
+  name: String;
+  deadline_time: String;
+  average_entry_score: String;
+  finished: Boolean;
+  data_checked: Boolean;
+  highest_scoring_entry: Number;
+  deadline_time_epoch: String;
+  highest_score: Number;
+  is_current: Boolean;
+}
+
+const eventSchema = new mongoose.Schema<Event>({
   generalId: { type: String, trim: true, default: null, unique: true },
   name: { type: String, trim: true, default: null },
   deadline_time: { type: String, trim: true, default: null },
