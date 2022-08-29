@@ -1,4 +1,5 @@
 const playerRoute = require("./playerRoute");
-const managerRoute = require('./managerRoute');
+const eventRoute = require("./eventRoute");
+const managerRoute = require("./managerRoute");
 
-export { playerRoute,managerRoute };
+export { playerRoute, managerRoute, eventRoute };

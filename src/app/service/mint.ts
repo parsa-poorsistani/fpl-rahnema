@@ -1,11 +1,7 @@
 import models = require("../models/path");
-import mongoose = require("mongoose");
 import { Request, Response } from "express";
 const axios = require("axios");
 
-const connectDb = async () => {
-  await mongoose.connect(process.env.MONGO_URI!);
-};
 
 const create = async (model: any, args: any) => {
   if (model) {
@@ -55,16 +51,18 @@ const updatePlayerPositionsData = async (req: Request, res: Response) => {
 };
 
 const updatePlayerdata = async (req: Request, res: Response) => {
+  
   const response = await axios.get(process.env.FPL_URL);
-
+  
   for (let player of response.data.elements) {
+    
     let update = await models.playerModel.update(
       { generalId: player.id },
       {
-        fname: player.first_name,
-        lname: player.second_name,
+        first_name: player.first_name,
+        second_name: player.second_name,
         web_name: player.web_name,
-        price: player.now_cost / 10,
+        now_cost: player.now_cost / 10,
         teamId: player.team,
         team_code: player.team_code,
         positionId: player.element_type,
@@ -84,10 +82,10 @@ const updatePlayerdata = async (req: Request, res: Response) => {
     if (update.matchedCount == 0) {
       await models.playerModel.create({
         generalId: player.id,
-        fname: player.first_name,
-        lname: player.second_name,
+        first_name: player.first_name,
+        second_name: player.second_name,
         web_name: player.web_name,
-        price: player.now_cost / 10,
+        now_cost: player.now_cost / 10,
         teamId: player.team,
         team_code: player.team_code,
         positionId: player.element_type,
@@ -104,8 +102,52 @@ const updatePlayerdata = async (req: Request, res: Response) => {
       });
     }
   }
+  
   let players = await models.playerModel.find();
   return res.status(200).json({ data: players });
 };
 
-export { connectDb, create, updatePlayerdata, updatePlayerPositionsData };
+const updateEventdata = async (req: Request, res: Response) => {
+  const response = await axios.get(process.env.FPL_URL);
+
+  for (let event of response.data.events) {
+    let update = await models.eventModel.update(
+      { generalId: event.id },
+      {
+        name: event.name,
+        deadline_time: event.deadline_time,
+        average_entry_score: event.average_entry_score,
+        finished: event.finished,
+        data_checked: event.data_checked,
+        highest_scoring_entry: event.highest_scoring_entry,
+        deadline_time_epoch: event.deadline_time_epoch,
+        highest_score: event.highest_score,
+        is_current: event.is_current,
+      }
+    );
+
+    if (update.matchedCount == 0) {
+      await models.eventModel.create({
+        generalId: event.id,
+        name: event.name,
+        deadline_time: event.deadline_time,
+        average_entry_score: event.average_entry_score,
+        finished: event.finished,
+        data_checked: event.data_checked,
+        highest_scoring_entry: event.highest_scoring_entry,
+        deadline_time_epoch: event.deadline_time_epoch,
+        highest_score: event.highest_score,
+        is_current: event.is_current,
+      });
+    }
+  }
+  let events = await models.eventModel.find();
+  res.status(200).json({ data: events });
+};
+
+export {
+  create,
+  updatePlayerdata,
+  updatePlayerPositionsData,
+  updateEventdata,
+};
