@@ -1,4 +1,4 @@
-import models = require("../../app/models/path");
+const models = require("../../app/models/path");
 import { Request,Response } from "express";
 
 const getAllPlayers = async (req: Request, res: Response) => {

@@ -1,8 +1,8 @@
 export{};
 const express = require("express");
 const router = express.Router();
-import models = require("../../app/models/path");
-import controllers = require("../controllers/path");
+const models = require("../../app/models/path");
+const controllers = require("../controllers/path");
 
 
 router.route('/').get(controllers.playerController.getAllPlayers);
