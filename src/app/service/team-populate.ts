@@ -121,6 +121,7 @@ const createPlayers = async() => {
                 web_name: player.web_name.toLowerCase(),
                 now_cost: player.now_cost / 10,
                 teamId: player.team,
+                form:player.form,
                 team_short_name:teamShortName(player.team),
                 team_full_name:teamFullName(player.team),
                 team_code: player.team_code,
