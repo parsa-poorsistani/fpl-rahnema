@@ -2,29 +2,32 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const mint = require("./app/service/mint");
-import routes = require("./app/routes/path");
-var cronJob = require("cron").CronJob;
+const routes = require("./app/routes/path");
+const cronJob = require("cron").CronJob;
+const port: Number = parseInt(<string>process.env.PORT);
 
 app.use(express.json());
 
-let setupServer = (): any => {
-  app.listen(process.env.APPLICATION_PORT, () => {
-    console.log(`Server is running on port ${process.env.APPLICATION_PORT}`);
-  });
-};
+app.use("/api/v1/manager", routes.managerRoute);
+app.use("/api/v1/player", routes.playerRoute);
 
-let setRoutes = (): any => {
-  app.use("/api/v1/player", routes.playerRoute);
-};
-
-let setCronJob = (): any => {
-  let job = new cronJob("0 0 * * 0", () => {
-    mint.updatePlayerdata();
+const setupServer = () => {
+  app.listen(port, () => {
+    console.log(`Server is running on port: ${port}`);
   });
-  job.start();
 };
 
 setupServer();
 mint.connectDb();
-setRoutes();
+
+
+// let setCronJob = (): any => {
+//   let job = new cronJob("0 0 * * 0", () => {
+//     mint.updatePlayerdata();
+//   });
+//   job.start();
+// };
+
+
+
 // setCronJob();

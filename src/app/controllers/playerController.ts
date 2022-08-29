@@ -1,11 +1,12 @@
 import models = require("../../app/models/path");
+import { Request,Response } from "express";
 
-const getAllPlayers = async (req: any, res: any) => {
+const getAllPlayers = async (req: Request, res: Response) => {
   let players = await models.playerModel.find();
   models.playerModel.res.status(200).json({ data: players });
 };
 
-const getPlayerByName = async (req: any, res: any) => {
+const getPlayerByName = async (req: Request, res: Response) => {
   try {
     const {web_name} = req.body;
     const player = await models.playerModel.find({web_name:{ $regex: web_name}});
