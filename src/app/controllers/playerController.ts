@@ -17,10 +17,18 @@ const getPlayers = async (req: Request, res: Response) => {
 const getPlayerByName = async (req: Request, res: Response) => {
   try {
     const {web_name} = req.body;
-    const players = await models.playerModel.find(
-      {web_name: new RegExp('^'+web_name+'\w*','i')},
-      'web_name form now_cost team_short_name')
-      .where('positionId').equals(req.query.filter);
+    let players=[];
+    if(Object.keys(req.query).length !== 0){
+      players = await models.playerModel.find(
+        {web_name: new RegExp('^'+web_name+'\w*','i')},
+        'web_name form now_cost team_short_name')
+        .where('positionId').equals(req.query.filter);
+    } else {
+      players = await models.playerModel.find(
+        {web_name: new RegExp('^'+web_name+'\w*','i')},
+        'web_name form now_cost team_short_name'
+      );
+    }
     if(Object.keys(players).length === 0){
         return res.status(404).json({msg:'player not found'});
     }
