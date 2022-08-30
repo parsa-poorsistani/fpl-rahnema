@@ -1,16 +1,15 @@
 import {ObjectId,Schema,model, Types} from "mongoose";
 
 interface ITeam {
-    //needs manager property probably
     managerId:ObjectId,
     picks:[
         {
-            element:Number,
+            player_id:ObjectId,
             team:Number,
-            position:Number,
-            selling_price:Number,
+            position:ObjectId,
+            // selling_price:Number,
             multiplier:Number,
-            purchase_price:Number,
+            // purchase_price:Number,
             is_captain:Boolean,
             is_vice_captain:Boolean
         }
@@ -24,29 +23,28 @@ const teamSchema = new Schema<ITeam>({
         ref:'Manager'
     },
     picks: [{
-        player_id: {
-            type: Number,
-            default: null
-        },
-        team:{
-            type:Number
-        },
-        position: {
+        player: {
             type: Types.ObjectId,
+            ref:'Player',
             default: null
         },
+        // position: {
+        //     type: Types.ObjectId,
+        //     red:'Position',
+        //     default: null
+        // },
         multiplier: {
             type: Number,
             default: 1
         },
-        selling_price: {
-            type: Number,
-            default: null
-        },
-        purchase_price: {
-            type: Number,
-            default: null
-        },
+        // selling_price: {
+        //     type: Number,
+        //     default: null
+        // },
+        // purchase_price: {
+        //     type: Number,
+        //     default: null
+        // },
         is_captain: {
             type: Boolean,
             default: false
@@ -56,7 +54,10 @@ const teamSchema = new Schema<ITeam>({
             default: false
         },
     }]
-});
+}, {
+    versionKey:false
+}
+);
 
 const Team = model('Team', teamSchema);
 
