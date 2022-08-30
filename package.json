@@ -19,6 +19,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.7.11",
     "axios": "^0.27.2",
+    "bcrypt": "^5.0.1",
     "cron": "^2.1.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
@@ -28,6 +29,7 @@
     "nodemon": "^2.0.19"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "typescript": "^4.7.4"
   }
 }
