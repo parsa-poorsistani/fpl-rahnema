@@ -1,53 +1,69 @@
-import {ObjectId, model, Schema, Types} from 'mongoose';
+import { ObjectId, model, Schema, Types } from "mongoose";
 
 interface IManager {
-  first_name:String,
-  player_region_name:String,
-  player_region_iso_code_short:String,
-  player_region_iso_code_long:String,
-  last_name:String,
-  password:String,
-  email:String,
-  joined_time:Date,
-  summary_overall_points:Number,
-  summary_overall_rank:Number,
-  summary_event_points:Number,
-  summary_event_rank:Number,
-  current_event:Number,
-  teamName:String,
-  teamId:ObjectId
-};
+  first_name: String;
+  last_name: String;
+  username: String;
+  country: String;
+  password: String;
+  email: String;
+  budget: Number;
+  teamName: String;
+  teamId: ObjectId;
+  summary_overall_points: Number;
+  summary_overall_rank: Number;
+  summary_event_points: Number;
+  summary_event_rank: Number;
+}
 
 const managerSchema = new Schema<IManager>({
   first_name: {
     type: String,
+    default: null,
     required: true,
     maxlength: 20,
   },
   last_name: {
     type: String,
     required: true,
+    default: null,
     maxlength: 20,
   },
-  player_region_name:{
-    type:String,
-    required:true
+  username: {
+    type: String,
+    default: null,
+    required: true,
   },
-  player_region_iso_code_long:{
-      type:String,
-      required:true
+  country: {
+    type: String,
+    default: null,
+    required: true,
   },
-  player_region_iso_code_short:{
-      type:String,
-      required:true
+  password: {
+    type: String,
+    default: null,
+    required: true,
   },
-  joined_time: {
-    type: Date,
-    default: Date.now(),
+  email: {
+    type: String,
+    default: null,
+    required: true,
+  },
+  budget: {
+    type: Number,
+    default: 0,
+  },
+  teamName: {
+    type: String,
+    default: "",
+  },
+  teamId: {
+    type: Types.ObjectId,
+    ref: "Team",
   },
   summary_overall_points: {
     type: Number,
-    default: null,
+    default: 0,
   },
   summary_overall_rank: {
     type: Number,
@@ -55,23 +71,11 @@ const managerSchema = new Schema<IManager>({
   },
   summary_event_points: {
     type: Number,
-    default: null,
+    default: 0,
   },
   summary_event_rank: {
     type: Number,
     default: null,
-  },
-  current_event: {
-    type: Number,
-    required: true,
-  },
-  teamName: {
-    type: String,
-    required: true,
-  },
-  teamId :{
-    type: Types.ObjectId,
-    ref:'Team'
   },
 });
 
