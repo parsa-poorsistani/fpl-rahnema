@@ -1,4 +1,4 @@
-import models = require("../models/path");
+const models = require("../models/path");
 import { Request,Response } from "express";
 
 const createManager = async (req: any, res: any) => {

@@ -13,7 +13,7 @@ app.use("/api/v1/manager", routes.managerRoute);
 app.use("/api/v1/player", routes.playerRoute);
 app.use("/api/v1/event", routes.eventRoute);
 
-const setupServer = async () => {
+const setupServer = async() => {  
   await db();
   app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

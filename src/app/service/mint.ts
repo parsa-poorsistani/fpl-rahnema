@@ -51,16 +51,18 @@ const updatePlayerPositionsData = async (req: Request, res: Response) => {
 };
 
 const updatePlayerdata = async (req: Request, res: Response) => {
+  
   const response = await axios.get(process.env.FPL_URL);
-
+  
   for (let player of response.data.elements) {
+    
     let update = await models.playerModel.update(
       { generalId: player.id },
       {
-        fname: player.first_name,
-        lname: player.second_name,
+        first_name: player.first_name,
+        second_name: player.second_name,
         web_name: player.web_name,
-        price: player.now_cost / 10,
+        now_cost: player.now_cost / 10,
         teamId: player.team,
         team_code: player.team_code,
         positionId: player.element_type,
@@ -80,10 +82,10 @@ const updatePlayerdata = async (req: Request, res: Response) => {
     if (update.matchedCount == 0) {
       await models.playerModel.create({
         generalId: player.id,
-        fname: player.first_name,
-        lname: player.second_name,
+        first_name: player.first_name,
+        second_name: player.second_name,
         web_name: player.web_name,
-        price: player.now_cost / 10,
+        now_cost: player.now_cost / 10,
         teamId: player.team,
         team_code: player.team_code,
         positionId: player.element_type,
@@ -100,6 +102,7 @@ const updatePlayerdata = async (req: Request, res: Response) => {
       });
     }
   }
+  
   let players = await models.playerModel.find();
   return res.status(200).json({ data: players });
 };

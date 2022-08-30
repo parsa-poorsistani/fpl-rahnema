@@ -13,7 +13,9 @@ interface IPlayer {
   second_name: String;
   special: Boolean;
   status: String;
-  team: Number;
+  teamId: Number;
+  team_short_name:String,
+  team_full_name:String,
   value_form: Number;
   value_season: Number;
   web_name: String;
@@ -66,7 +68,7 @@ const playerSchema = new Schema<IPlayer>(
     },
     now_cost: {
       type: Number,
-      //  required: true,
+      required: true
     },
     points_per_game: {
       type: Number,
@@ -79,7 +81,7 @@ const playerSchema = new Schema<IPlayer>(
     status: {
       type: String,
     },
-    team: {
+    teamId: {
       type: Number,
     },
     value_form: {
@@ -92,7 +94,7 @@ const playerSchema = new Schema<IPlayer>(
     },
     web_name: {
       type: String,
-      // required: true,
+      required: true
     },
     minutes: {
       type: Number,
@@ -140,6 +142,12 @@ const playerSchema = new Schema<IPlayer>(
     bonus: {
       type: Number,
     },
+    team_full_name:{
+        type:String
+    },
+    team_short_name:{
+        type:String
+    }
   },
   { versionKey: false }
 );
