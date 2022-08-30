@@ -11,6 +11,7 @@ app.use(express.json());
 
 app.use("/api/v1/manager", routes.managerRoute);
 app.use("/api/v1/player", routes.playerRoute);
+app.use('/api/v1/team', routes.teamRoute);
 app.use("/api/v1/event", routes.eventRoute);
 
 const setupServer = async() => {  
