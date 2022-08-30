@@ -37,7 +37,7 @@ const teamSchema = new Schema<ITeam>({
         },
         multiplier: {
             type: Number,
-            default: null
+            default: 1
         },
         selling_price: {
             type: Number,
