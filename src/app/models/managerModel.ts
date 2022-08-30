@@ -17,68 +17,71 @@ interface IManager {
   summary_event_rank: Number;
 }
 
-const managerSchema = new Schema<IManager>({
-  first_name: {
-    type: String,
-    default: null,
-    required: true,
-    maxlength: 20,
+const managerSchema = new Schema<IManager>(
+  {
+    first_name: {
+      type: String,
+      default: null,
+      required: true,
+      maxlength: 20,
+    },
+    last_name: {
+      type: String,
+      required: true,
+      default: null,
+      maxlength: 20,
+    },
+    username: {
+      type: String,
+      default: null,
+      required: true,
+    },
+    country: {
+      type: String,
+      default: null,
+      required: true,
+    },
+    password: {
+      type: String,
+      default: null,
+      required: true,
+    },
+    email: {
+      type: String,
+      default: null,
+      required: true,
+    },
+    budget: {
+      type: Number,
+      default: 0,
+    },
+    teamName: {
+      type: String,
+      default: "",
+    },
+    teamId: {
+      type: Types.ObjectId,
+      ref: "Team",
+    },
+    summary_overall_points: {
+      type: Number,
+      default: 0,
+    },
+    summary_overall_rank: {
+      type: Number,
+      default: null,
+    },
+    summary_event_points: {
+      type: Number,
+      default: 0,
+    },
+    summary_event_rank: {
+      type: Number,
+      default: null,
+    },
   },
-  last_name: {
-    type: String,
-    required: true,
-    default: null,
-    maxlength: 20,
-  },
-  username: {
-    type: String,
-    default: null,
-    required: true,
-  },
-  country: {
-    type: String,
-    default: null,
-    required: true,
-  },
-  password: {
-    type: String,
-    default: null,
-    required: true,
-  },
-  email: {
-    type: String,
-    default: null,
-    required: true,
-  },
-  budget: {
-    type: Number,
-    default: 0,
-  },
-  teamName: {
-    type: String,
-    default: "",
-  },
-  teamId: {
-    type: Types.ObjectId,
-    ref: "Team",
-  },
-  summary_overall_points: {
-    type: Number,
-    default: 0,
-  },
-  summary_overall_rank: {
-    type: Number,
-    default: null,
-  },
-  summary_event_points: {
-    type: Number,
-    default: 0,
-  },
-  summary_event_rank: {
-    type: Number,
-    default: null,
-  },
-});
+  { versionKey: false }
+);
 
 managerSchema.pre("save", function (this: any, next: any) {
   if (this.isModified("password")) {
