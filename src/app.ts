@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const db = require('./app/service/db-connection');
+const db = require("./app/service/db-connection");
 const mint = require("./app/service/mint");
 const routes = require("./app/routes/path");
 const cronJob = require("cron").CronJob;
