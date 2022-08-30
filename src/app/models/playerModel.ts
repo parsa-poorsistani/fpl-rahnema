@@ -1,4 +1,5 @@
 import { ObjectId, model, Schema, Types } from "mongoose";
+const mongoosePaginate = require("mongoose-paginate");
 
 interface IPlayer {
   generalId: Number;
@@ -14,8 +15,8 @@ interface IPlayer {
   special: Boolean;
   status: String;
   teamId: Number;
-//   team_short_name:String,
-//   team_full_name:String,
+  //   team_short_name:String,
+  //   team_full_name:String,
   value_form: Number;
   value_season: Number;
   web_name: String;
@@ -168,6 +169,7 @@ playerSchema.virtual("plTeam", {
 
 playerSchema.set("toObject", { virtuals: true });
 playerSchema.set("toJSON", { virtuals: true });
+playerSchema.plugin(mongoosePaginate);
 
 const Player = model("Player", playerSchema);
 module.exports = Player;
