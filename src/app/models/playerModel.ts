@@ -68,7 +68,7 @@ const playerSchema = new Schema<IPlayer>(
     },
     now_cost: {
       type: Number,
-      required: true
+      required: true,
     },
     points_per_game: {
       type: Number,
@@ -94,7 +94,7 @@ const playerSchema = new Schema<IPlayer>(
     },
     web_name: {
       type: String,
-      required: true
+      required: true,
     },
     minutes: {
       type: Number,
@@ -159,12 +159,12 @@ playerSchema.virtual("position", {
   justOne: true,
 });
 
-playerSchema.virtual('plTeam', {
-    ref:'PLTeam',
-    localField:'teamId',
-    foreignField:'generalId',
-    justOne:true
-})
+playerSchema.virtual("plTeam", {
+  ref: "PLTeam",
+  localField: "teamId",
+  foreignField: "generalId",
+  justOne: true,
+});
 
 playerSchema.set("toObject", { virtuals: true });
 playerSchema.set("toJSON", { virtuals: true });
