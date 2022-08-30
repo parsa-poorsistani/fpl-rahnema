@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 const getPlayers = async (req: Request, res: Response) => {
   let players = await models.playerModel
     .find(req.query.filter ? { positionId: req.query.filter } : null)
-    .populate({ path: "position", select: ["plural_name_short", "generalId"] })
+    .populate([{ path: "position", select: ["plural_name_short", "generalId"] }, "plTeam"])
     .exec();
     
   if (Object.keys(players).length === 0) {
@@ -22,12 +22,18 @@ const getPlayerByName = async (req: Request, res: Response) => {
       players = await models.playerModel.find(
         {web_name: new RegExp('^'+web_name+'\w*','i')},
         'web_name form now_cost team_short_name')
-        .where('positionId').equals(req.query.filter);
+        .where('positionId').equals(req.query.filter)
+        .populate({ path: "position", select: ["plural_name_short", "generalId"] })
+        .populate({ path: "plTeam", select: 'short_name' })
+        .exec();
     } else {
       players = await models.playerModel.find(
         {web_name: new RegExp('^'+web_name+'\w*','i')},
         'web_name form now_cost team_short_name'
-      );
+      )
+      .populate({ path: "position", select: ["plural_name_short", "generalId"] })
+      .populate({ path: "plTeam", select: 'short_name' })
+      .exec();
     }
     if(Object.keys(players).length === 0){
         return res.status(404).json({msg:'player not found'});
