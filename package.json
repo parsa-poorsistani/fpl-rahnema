@@ -16,6 +16,7 @@
   "dependencies": {
     "@types/cron": "^2.0.0",
     "@types/express": "^4.17.13",
+    "@types/express-validator": "^3.0.0",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.7.11",
