@@ -17,8 +17,9 @@ const signUpManager = async (req: Request, res: Response) => {
     });
 
     req.body.teamId = team._id;
+
     const manager = await models.managerModel.create(req.body);
-    const token = jwt.sign({ id: manager._id }, "shhhhh");
+    const token = jwt.sign({ id: manager._id }, process.env.HASH_KEY!);
 
     res.status(200).json({
       data: {
