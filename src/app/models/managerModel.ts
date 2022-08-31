@@ -34,6 +34,7 @@ const managerSchema = new Schema<IManager>(
     username: {
       type: String,
       default: null,
+      unique: true,
       required: true,
     },
     country: {
@@ -43,12 +44,14 @@ const managerSchema = new Schema<IManager>(
     },
     password: {
       type: String,
+      select: false,
       default: null,
       required: true,
     },
     email: {
       type: String,
       default: null,
+      unique: true,
       required: true,
     },
     budget: {
