@@ -14,12 +14,11 @@ const addPlayerToTeam = async(req:Request,res:Response) => {
         if(team===null) {
             return res.status(404).json({msg:'team with this id not found.'});
         }
-        if(addPlayerValidation(player,team)) {
+        if(await addPlayerValidation(player,team)) {
             const data = {
                 player:player._id,
             };
             let place:number = findFirstEmpty(player,team);
-            console.log(place);
             manager.teamId.picks[place]=data;
             manager.teamId.save();
             return res.status(200).json({data:manager.teamId.picks});
@@ -78,8 +77,7 @@ const makeCaptain = async(req:Request,res:Response) => {
     const player = await models.playerModel.findOne({generalId:playerId});
     let team = manager.teamId.picks;
     let oldPlace:number = 0;
-    let newPlace:number = 0;
-    
+    let newPlace:number = 0; 
     if(team===null) {
         res.status(404).json({msg:'manager not found'});
     }
@@ -93,7 +91,6 @@ const makeCaptain = async(req:Request,res:Response) => {
         multiplier: 1,
         is_captain: false,
     };
-
     for(let p of team) {
         if(p.player!==null) {
             if(p.player.toString()===player._id.toString()) {
@@ -102,12 +99,10 @@ const makeCaptain = async(req:Request,res:Response) => {
         }
         newPlace++;
     }
-
     const newData = {
         multiplier: 2,
         is_captain: true,
     };
-
     manager.teamId.picks[oldPlace] = oldData;
     manager.teamId.picks[newPlace] = newData;
     manager.teamId.save();
@@ -115,12 +110,14 @@ const makeCaptain = async(req:Request,res:Response) => {
 };
 
 //cheking for no more than 3 players from one team
-const addPlayerValidation = (player:any, team:Array<any>):boolean => {
-    let num:number = 0;
-    
+const addPlayerValidation = async(player:any, team:Array<any>):Promise<boolean> => {
+    let num:number = 0;    
     for(let p of team) {
-        if(player.teamId===p.teamId) {
-            num++;
+        if(p.player!==null) {
+            let p2 = await models.playerModel.findById(p.player);
+            if(player.teamId===p2.teamId) {
+                num++;
+            }
         }
     }
     if(num>=3){

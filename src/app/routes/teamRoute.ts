@@ -4,6 +4,6 @@ const { addPlayerToTeam, deletePlayerFromTeam, makeCaptain } = require('../contr
 
 routes.route('/:id/add-player').patch(addPlayerToTeam);
 routes.route('/:id/delete-player').patch(deletePlayerFromTeam);
-routes.route('/:id/captain').patch(makeCaptain);
+routes.route('/:id/make-captain').patch(makeCaptain);
 
 module.exports = routes;
