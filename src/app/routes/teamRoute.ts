@@ -1,8 +1,9 @@
 import express from 'express';
 const routes = express.Router();
-const { addPlayerToTeam, deletePlayerFromTeam } = require('../controllers/teamController');
+const { addPlayerToTeam, deletePlayerFromTeam, makeCaptain } = require('../controllers/teamController');
 
-routes.route('/:id/add-player').post(addPlayerToTeam);
+routes.route('/:id/add-player').patch(addPlayerToTeam);
 routes.route('/:id/delete-player').patch(deletePlayerFromTeam);
+routes.route('/:id/captain').patch(makeCaptain);
 
 module.exports = routes;

@@ -1,7 +1,7 @@
-import models = require("../../app/models/path");
+import models = require("../models/path");
 import { Request, Response } from "express";
 
-const getPlayers = async (req: Request, res: Response) => {
+const getPlayers = async (req: Request, res: Response) => {  
   let players = await models.playerModel
     .find(req.query.filter ? { positionId: req.query.filter } : null)
     .populate([

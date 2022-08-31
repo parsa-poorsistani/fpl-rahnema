@@ -73,6 +73,8 @@ const managerSchema = new Schema<IManager>({
     type: Types.ObjectId,
     ref:'Team'
   },
+}, {
+  versionKey:false
 });
 
 const Manager = model("Manager", managerSchema);

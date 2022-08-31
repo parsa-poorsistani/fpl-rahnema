@@ -1,17 +1,24 @@
-const models = require("../models/path");
+import models = require("../models/path");
 import { Request,Response } from "express";
 
-const createManager = async (req: any, res: any) => {
+const createManager = async (req: Request, res: Response) => {  
   try {
-    const team = await models.teamModel.create();
-    req.body.teamId = team._id;
-    const manager = await models.managerModel.create(req.body);
-    console.log(team);
+    const managerData:Object = req.body;
+    const manager = await models.managerModel.create(managerData);    
+    let team = await models.teamModel.create();
     
-    res.status(200).json({ manager });
-  } catch (error) {
-    res.status(500).json({ msg: error });
-  }
+    for(let i=0;i<15;i++){
+      let dummy = {
+        element:null
+      };
+      team.picks.push(dummy);
+    }
+    await manager.updateOne({teamId:team._id});
+    return res.status(200).json({manager});
+} catch (error) {
+    console.log(error);
+    return res.status(500).json({msg:error});
+}
 };
 
 const getManager = (req:Request,res:Response) =>{
@@ -22,5 +29,6 @@ const getManager = (req:Request,res:Response) =>{
 
 
 module.exports = {
-  createManager,getManager
+  createManager,
+  getManager
 };
