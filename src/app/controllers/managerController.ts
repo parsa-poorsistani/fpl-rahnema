@@ -1,7 +1,7 @@
-const models = require("../models/path");
-import { Request, Response } from "express";
+import models = require("../models/path");
+import { Request,Response } from "express";
 
-const createManager = async (req: any, res: any) => {
+const createManager = async (req: Request, res: Response) => {  
   try {
     const team = await models.teamModel.create();
     req.body.teamId = team._id;
