@@ -1,12 +1,9 @@
 import { ObjectId, Schema, model, Types } from "mongoose";
 
 interface ITeam {
-  managerId: ObjectId;
   picks: [
     {
       player_id: ObjectId;
-      team: Number;
-      position: ObjectId;
       multiplier: Number;
       is_captain: Boolean;
       is_vice_captain: Boolean;
