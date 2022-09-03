@@ -12,8 +12,9 @@ app.use(express.json());
 app.use("/api/v1/manager", routes.managerRoute);
 app.use("/api/v1/player", routes.playerRoute);
 app.use("/api/v1/event", routes.eventRoute);
+app.use("/api/v1/auth", routes.authRoute);
 
-const setupServer = async() => {  
+const setupServer = async () => {
   await db();
   app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

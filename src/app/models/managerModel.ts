@@ -1,78 +1,119 @@
-import {ObjectId, model, Schema, Types} from 'mongoose';
+import { ObjectId, model, Schema, Types } from "mongoose";
+import bcrypt from "bcrypt";
 
 interface IManager {
-  first_name:String,
-  player_region_name:String,
-  player_region_iso_code_short:String,
-  player_region_iso_code_long:String,
-  last_name:String,
-  password:String,
-  email:String,
-  joined_time:Date,
-  summary_overall_points:Number,
-  summary_overall_rank:Number,
-  summary_event_points:Number,
-  summary_event_rank:Number,
-  current_event:Number,
-  teamName:String,
-  teamId:ObjectId
-};
+  first_name: String;
+  last_name: String;
+  username: String;
+  country: String;
+  password: String;
+  email: String;
+  budget: Number;
+  teamName: String;
+  teamId: ObjectId;
+  summary_overall_points: Number;
+  summary_overall_rank: Number;
+  summary_event_points: Number;
+  summary_event_rank: Number;
+}
 
-const managerSchema = new Schema<IManager>({
-  first_name: {
-    type: String,
-    required: true,
-    maxlength: 20,
+const managerSchema = new Schema<IManager>(
+  {
+    first_name: {
+      type: String,
+      default: null,
+      required: true,
+      maxlength: 20,
+    },
+    last_name: {
+      type: String,
+      required: true,
+      default: null,
+      maxlength: 20,
+    },
+    username: {
+      type: String,
+      default: null,
+      unique: true,
+      required: true,
+    },
+    country: {
+      type: String,
+      default: null,
+      required: true,
+    },
+    password: {
+      type: String,
+      select: false,
+      default: null,
+      required: true,
+    },
+    email: {
+      type: String,
+      default: null,
+      unique: true,
+      required: true,
+    },
+    budget: {
+      type: Number,
+      default: 0,
+    },
+    teamName: {
+      type: String,
+      default: "",
+    },
+    teamId: {
+      type: Types.ObjectId,
+      ref: "Team",
+    },
+    summary_overall_points: {
+      type: Number,
+      default: 0,
+    },
+    summary_overall_rank: {
+      type: Number,
+      default: null,
+    },
+    summary_event_points: {
+      type: Number,
+      default: 0,
+    },
+    summary_event_rank: {
+      type: Number,
+      default: null,
+    },
   },
-  last_name: {
-    type: String,
-    required: true,
-    maxlength: 20,
-  },
-  player_region_name:{
-    type:String,
-    required:true
-  },
-  player_region_iso_code_long:{
-      type:String,
-      required:true
-  },
-  player_region_iso_code_short:{
-      type:String,
-      required:true
-  },
-  joined_time: {
-    type: Date,
-    default: Date.now(),
-  },
-  summary_overall_points: {
-    type: Number,
-    default: null,
-  },
-  summary_overall_rank: {
-    type: Number,
-    default: null,
-  },
-  summary_event_points: {
-    type: Number,
-    default: null,
-  },
-  summary_event_rank: {
-    type: Number,
-    default: null,
-  },
-  current_event: {
-    type: Number,
-    required: true,
-  },
-  teamName: {
-    type: String,
-    required: true,
-  },
-  teamId :{
-    type: Types.ObjectId,
-    ref:'Team'
-  },
+  { versionKey: false }
+);
+
+// managerSchema.pre("save", function (this: any, next: any) {
+//   if (this.password && this.isModified("password")) {
+//     bcrypt.genSalt(10, async (err, salt) => {
+//       if (err) {
+//         return next(err);
+//       }
+//       await bcrypt.hash(this.password, salt, (error, hash) => {
+//         if (error) {
+//           return next(error);
+//         }
+//         this.password = hash;
+
+//         return next();
+//       });
+//     });
+//   }
+//   return next();
+// });
+
+managerSchema.pre("save", async function (next: any) {
+  if (!this.isModified("password")) return next();
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password.toString(), salt);
+    return next();
+  } catch (error) {
+    return next(error);
+  }
 });
 
 const Manager = model("Manager", managerSchema);
