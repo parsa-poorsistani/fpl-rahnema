@@ -15,7 +15,8 @@ interface IManager {
   summary_overall_rank: Number;
   summary_event_points: Number;
   summary_event_rank: Number;
-}
+  is_active:Boolean
+};
 
 const managerSchema = new Schema<IManager>(
   {
@@ -30,6 +31,10 @@ const managerSchema = new Schema<IManager>(
       required: true,
       default: null,
       maxlength: 20,
+    },
+    is_active:{
+      type:Boolean,
+      default:false
     },
     username: {
       type: String,
