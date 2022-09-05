@@ -22,7 +22,7 @@ const addPlayerToTeam = async(req:Request,res:Response) => {
             manager.budget = currentBudget-player.now_cost;
             let place:number = findFirstEmpty(player,team);
             manager.teamId.picks[place]=data;
-            manager.budget.save();
+            manager.save();
             manager.teamId.save();
             return res.status(200).json({data:manager.teamId.picks});
         }
@@ -65,7 +65,7 @@ const deletePlayerFromTeam = async(req:Request,res:Response) => {
         
         manager.budget = currentBudget+player.now_cost;
         manager.teamId.picks[place] = data;
-        manager.budget.save();
+        manager.save();
         manager.teamId.save();
         res.status(200).json({team});
     } catch (error) {
