@@ -10,6 +10,6 @@ export {
   userController,
   eventController,
   managerController,
-  teamController,
   authController,
+  teamController,
 };

@@ -86,25 +86,6 @@ const managerSchema = new Schema<IManager>(
   { versionKey: false }
 );
 
-// managerSchema.pre("save", function (this: any, next: any) {
-//   if (this.password && this.isModified("password")) {
-//     bcrypt.genSalt(10, async (err, salt) => {
-//       if (err) {
-//         return next(err);
-//       }
-//       await bcrypt.hash(this.password, salt, (error, hash) => {
-//         if (error) {
-//           return next(error);
-//         }
-//         this.password = hash;
-
-//         return next();
-//       });
-//     });
-//   }
-//   return next();
-// });
-
 managerSchema.pre("save", async function (next: any) {
   if (!this.isModified("password")) return next();
   try {
