@@ -12,6 +12,7 @@ app.use("/api/v1/managers", routes.managerRoute);
 app.use("/api/v1/players", routes.playerRoute);
 app.use("/api/v1/teams", routes.teamRoute);
 app.use("/api/v1/events", routes.eventRoute);
+app.use("/api/v1/auth", routes.authRoute);
 
 const setupServer = async () => {
   await db();
