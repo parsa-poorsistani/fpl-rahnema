@@ -15,7 +15,7 @@ const addPlayerToTeam = async(req:Request,res:Response) => {
         if(team===null) {
             return res.status(404).json({msg:'team with this id not found.'});
         }
-        if(await addPlayerValidation(player,team)) {
+        if(await addPlayerValidation(player,team) && currentBudget>=player.now_cost) {
             const data = {
                 player:player._id,
             };
