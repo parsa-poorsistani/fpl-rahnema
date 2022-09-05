@@ -8,6 +8,7 @@ const addPlayerToTeam = async(req:Request,res:Response) => {
         .populate('teamId')
         .exec();
         const playerId:Number = req.body.elementId;
+        const currentBudget:number = manager.budget;
         const player = await models.playerModel.findOne({generalId:playerId});
         
         let team:Array<object> = manager.teamId.picks;        
@@ -18,8 +19,10 @@ const addPlayerToTeam = async(req:Request,res:Response) => {
             const data = {
                 player:player._id,
             };
+            manager.budget = currentBudget-player.now_cost;
             let place:number = findFirstEmpty(player,team);
             manager.teamId.picks[place]=data;
+            manager.budget.save();
             manager.teamId.save();
             return res.status(200).json({data:manager.teamId.picks});
         }
@@ -36,6 +39,7 @@ const deletePlayerFromTeam = async(req:Request,res:Response) => {
         const manager = await models.managerModel.findById(managerId)
         .populate('teamId')
         .exec();
+        const currentBudget:number = manager.budget;
         const playerId:Number = req.body.elementId;
         const player = await models.playerModel.findOne({generalId:playerId});
         let team = manager.teamId.picks;
@@ -59,7 +63,9 @@ const deletePlayerFromTeam = async(req:Request,res:Response) => {
             is_vice_captain:false
         };
         
+        manager.budget = currentBudget+player.now_cost;
         manager.teamId.picks[place] = data;
+        manager.budget.save();
         manager.teamId.save();
         res.status(200).json({team});
     } catch (error) {
