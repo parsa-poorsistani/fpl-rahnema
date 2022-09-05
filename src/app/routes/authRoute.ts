@@ -7,5 +7,6 @@ routes.post(
   "/signup",
   controllers.authController.signUpManager
 );
+routes.post("/verify", controllers.authController.verify);
 
 module.exports = routes;

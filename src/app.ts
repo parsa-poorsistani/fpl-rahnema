@@ -31,7 +31,6 @@ const setupServer = async () => {
   });
 };
 
-service.mailSender()
 setupServer();
 
 // let setCronJob = (): any => {
