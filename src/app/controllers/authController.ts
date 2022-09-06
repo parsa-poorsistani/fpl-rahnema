@@ -1,7 +1,6 @@
 require("dotenv").config();
 const models = require("../models/path");
 const service = require("../service/service");
-const nodemailer = require("nodemailer");
 const redis = require("redis");
 let redisClient = redis.createClient();
 redisClient.connect();
@@ -16,10 +15,6 @@ import jwt from "jsonwebtoken";
 
 const signUpManager = async (req: Request, res: Response) => {
 
-  // redisClient.connect();
-  // redisClient.on('connect', () => {
-  //   console.log('Connected!');
-  // });
   const {email,country,first_name,last_name,username,password} = req.body;
   let rand = Math.floor((Math.random() * 100) + 54);
   let encodedMail = Buffer.from(email).toString('base64');
@@ -40,12 +35,7 @@ const signUpManager = async (req: Request, res: Response) => {
 };
 
 const verify = async(req: Request, res: Response) => {
-  // redisClient.connect();
-  // redisClient.on('connect', () => {
-  //   console.log('Connected!');
-  // });
   const { email,code } = req.body;
-  //console.log(await redisClient.hGet(`email:${email}`,"code"));
   const verCode = await redisClient.hGet(`email:${email}`,"code");
   if(code!==verCode) {
     return res.status(403).json({msg:"code is wrong"});
@@ -113,7 +103,6 @@ const logInManager = async(req:Request, res:Response) => {
   }
 
 };
-
 
 module.exports = { 
   signUpManager,logInManager,verify
