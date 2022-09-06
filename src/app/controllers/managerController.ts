@@ -19,7 +19,15 @@ const getManager = (req: Request, res: Response) => {
   return res.status(200).json({ manager });
 };
 
+const getDashboard = async (req: Request, res: Response) => {
+  let manager = await models.managerModel
+    .findById(req._id)
+    .populate(["teamId", { path: "teamId", populate: "picks.player" }]);
+  return res.status(200).json({ data: manager });
+};
+
 module.exports = {
   createManager,
   getManager,
+  getDashboard,
 };

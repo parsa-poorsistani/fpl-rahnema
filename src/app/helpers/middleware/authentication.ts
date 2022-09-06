@@ -2,16 +2,16 @@ const models = require("../../models/path");
 const jwt = require("jsonwebtoken");
 import { Request, Response } from "express";
 
-function authenticate(req: Request, res: Response, next: any) {
-  console.log(req);
-
+function authToken(req: Request, res: Response, next: any) {
   let token = req.headers["token"];
+
   if (token) {
     jwt.verify(token, process.env.HASH_KEY, (err: any, decode: any) => {
-      console.log(decode);
+      req._id = decode.id;
     });
   }
+
   next();
 }
 
-export { authenticate };
+export { authToken };
