@@ -1,5 +1,0 @@
-MONGO_URI = mongodb+srv://prxaps:Y9ak176o69vh2q9b@rc-football-fanatsy.kb1ellg.mongodb.net/RC-football-fanatsy?retryWrites=true&w=majority
-APPLICATION_PORT=8080
-FPL_URL=https://fantasy.premierleague.com/api/bootstrap-static/
-REDIS_PORT = 6379
-HASH_KEY=shhhh
