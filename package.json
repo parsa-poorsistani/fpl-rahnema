@@ -1,38 +1,41 @@
 {
-  "name": "rahenma-fantasy-backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "build": "tsc --w",
-    "start": "tsc && nodemon dist/app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://hamgit.ir/rc-dev-bootcamp-1401-team-2/rahenma-fantasy-backend.git"
-  },
-  "author": "prxaps,pegahgivi",
-  "license": "ISC",
-  "dependencies": {
-    "@types/cron": "^2.0.0",
-    "@types/express": "^4.17.13",
-    "@types/express-validator": "^3.0.0",
-    "@types/jsonwebtoken": "^8.5.9",
-    "@types/mongoose": "^5.11.97",
-    "@types/node": "^18.7.11",
-    "axios": "^0.27.2",
-    "bcrypt": "^5.0.1",
-    "cron": "^2.1.0",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongodb": "^4.9.0",
-    "mongoose": "^6.5.2",
-    "mongoose-paginate": "^5.0.3",
-    "nodemon": "^2.0.19"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "typescript": "^4.7.4"
-  }
+    "name": "rahenma-fantasy-backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "build": "tsc",
+        "prestart": "npm run build",
+        "start": "node dist/app.js",
+        "dev": "nodemon"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://hamgit.ir/rc-dev-bootcamp-1401-team-2/rahenma-fantasy-backend.git"
+    },
+    "author": "prxaps,pegahgivi",
+    "license": "ISC",
+    "dependencies": {
+        "@types/cron": "^2.0.0",
+        "@types/express": "^4.17.13",
+        "@types/express-validator": "^3.0.0",
+        "@types/jsonwebtoken": "^8.5.9",
+        "@types/mongoose": "^5.11.97",
+        "@types/node": "^18.7.11",
+        "axios": "^0.27.2",
+        "bcrypt": "^5.0.1",
+        "cron": "^2.1.0",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "jsonwebtoken": "^8.5.1",
+        "mongodb": "^4.9.0",
+        "mongoose": "^6.5.2",
+        "mongoose-paginate": "^5.0.3",
+        "nodemon": "^2.0.19"
+    },
+    "devDependencies": {
+        "@types/bcrypt": "^5.0.0",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.7.4"
+    }
 }
