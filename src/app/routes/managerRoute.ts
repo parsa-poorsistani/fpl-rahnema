@@ -2,7 +2,8 @@ export {};
 const express = require("express");
 const router = express.Router();
 const controllers = require("../controllers/path");
+import { authToken } from "../helpers/middleware/authentication";
 
-router.route("/create").post(controllers.managerController.createManager);
+router.get("/dashboard", authToken, controllers.managerController.getDashboard);
 
 module.exports = router;

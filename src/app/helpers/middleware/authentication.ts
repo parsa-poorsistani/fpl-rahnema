@@ -2,7 +2,7 @@ const models = require("../../models/path");
 const jwt = require("jsonwebtoken");
 import { Request, Response } from "express";
 
-function authenticate(req: Request, res: Response, next: any) {
+function authToken(req: Request, res: Response, next: any) {
   let token = req.headers["token"];
 
   if (token) {
@@ -14,4 +14,4 @@ function authenticate(req: Request, res: Response, next: any) {
   next();
 }
 
-export { authenticate };
+export { authToken };
