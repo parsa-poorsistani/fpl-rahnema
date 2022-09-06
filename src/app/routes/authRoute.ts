@@ -9,7 +9,7 @@ routes.post(
   controllers.authController.signUpManager
 );
 
-routes.post(
+routes.get(
   '/login',
   controllers.authController.logInManager
 );
