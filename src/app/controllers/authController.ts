@@ -1,6 +1,7 @@
 require("dotenv").config();
 const models = require("../models/path");
 const service = require("../service/service");
+import { GlobalError } from "../helpers/error/globalError";
 import { validationErrorHandler } from "../service/service";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
@@ -38,49 +39,54 @@ const signUpManager = async (req: Request, res: Response) => {
     service.mailSender(email, "confirmation", encodedMail);
     return res.status(200).json({ msg: "ok" });
   } catch (err) {
-    return res.status(403).json(err);
+    return res.status(500).json(err);
   }
 };
 
 const verify = async (req: Request, res: Response) => {
-  const { email, code } = req.body;
-  const verCode = await redisClient.hGet(`email:${email}`, "code");
-  if (code !== verCode) {
-    return res.status(403).json({ msg: "code is wrong" });
-  }
-  let picks = [];
-  for (let i = 0; i < 15; i++) {
-    await picks.push({
-      player_id: null,
+  try {
+    await validationErrorHandler(req);
+    const { email, code } = req.body;
+    const verCode = await redisClient.hGet(`email:${email}`, "code");
+    if (code !== verCode) {
+      return res.status(403).json({ msg: "code is wrong" });
+    }
+    let picks = [];
+    for (let i = 0; i < 15; i++) {
+      await picks.push({
+        player_id: null,
+      });
+    }
+    const team = await models.teamModel.create({
+      picks: picks,
     });
-  }
-  const team = await models.teamModel.create({
-    picks: picks,
-  });
-  const first_name = await redisClient.hGet(`email:${email}`, "first_name");
-  const last_name = await redisClient.hGet(`email:${email}`, "last_name");
-  const username = await redisClient.hGet(`email:${email}`, "username");
-  const password = await redisClient.hGet(`email:${email}`, "password");
-  const country = await redisClient.hGet(`email:${email}`, "country");
-  const managerData = {
-    first_name: first_name,
-    last_name: last_name,
-    username: username,
-    password: password,
-    country: country,
-    teamId: team._id,
-    email: email,
-    is_active: true,
-  };
+    const first_name = await redisClient.hGet(`email:${email}`, "first_name");
+    const last_name = await redisClient.hGet(`email:${email}`, "last_name");
+    const username = await redisClient.hGet(`email:${email}`, "username");
+    const password = await redisClient.hGet(`email:${email}`, "password");
+    const country = await redisClient.hGet(`email:${email}`, "country");
+    const managerData = {
+      first_name: first_name,
+      last_name: last_name,
+      username: username,
+      password: password,
+      country: country,
+      teamId: team._id,
+      email: email,
+      is_active: true,
+    };
 
-  const manager = await models.managerModel.create(managerData);
-  const token = jwt.sign({ id: manager._id }, process.env.HASH_KEY!);
-  return res.status(200).json({
-    data: {
-      manager: await models.managerModel.findById(manager._id),
-      token: token,
-    },
-  });
+    const manager = await models.managerModel.create(managerData);
+    const token = jwt.sign({ id: manager._id }, process.env.HASH_KEY!);
+    return res.status(200).json({
+      data: {
+        manager: await models.managerModel.findById(manager._id),
+        token: token,
+      },
+    });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
 };
 
 const logInManager = async (req: Request, res: Response) => {

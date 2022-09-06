@@ -1,10 +1,3 @@
-interface IError {
-  value: any;
-  msg: String;
-  param: String;
-  location: String;
-}
-
 class ValidationError extends Error {
   errors: any[];
   status: Number;
