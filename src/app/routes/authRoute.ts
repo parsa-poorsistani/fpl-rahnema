@@ -5,9 +5,9 @@ import controllers = require("../controllers/path");
 
 routes.post(
   "/signup",
-  validator.handleSignUp(),
   controllers.authController.signUpManager
 );
+routes.post("/verify", controllers.authController.verify);
 
 routes.get(
   '/login',
