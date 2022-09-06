@@ -62,7 +62,6 @@ const verify = async(req: Request, res: Response) => {
     country:country,
     teamId:team._id,
     email:email,
-    is_active:true
   };
 
   const manager = await models.managerModel.create(managerData);
