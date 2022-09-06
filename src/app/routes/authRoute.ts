@@ -9,4 +9,9 @@ routes.post(
   controllers.authController.signUpManager
 );
 
+routes.post(
+  '/login',
+  controllers.authController.logInManager
+);
+
 module.exports = routes;

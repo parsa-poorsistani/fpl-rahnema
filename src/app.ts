@@ -8,6 +8,8 @@ const cronJob = require("cron").CronJob;
 const port: Number = parseInt(<string>process.env.APPLICATION_PORT);
 app.use(express.json());
 
+
+app.use("'api/v1/auth", routes.authRoute);
 app.use("/api/v1/managers", routes.managerRoute);
 app.use("/api/v1/players", routes.playerRoute);
 app.use("/api/v1/teams", routes.teamRoute);
