@@ -1,17 +1,19 @@
 const express = require("express");
 const routes = express.Router();
-const validator = require("../helpers/validation/authValidation");
+import {
+  handleSignUp,
+  handleLogin,
+  handleVerify,
+} from "../helpers/validation/authValidation";
 import controllers = require("../controllers/path");
 
 routes.post(
   "/signup",
+  handleSignUp(),
   controllers.authController.signUpManager
 );
-routes.post("/verify", controllers.authController.verify);
+routes.post("/verify", handleVerify(), controllers.authController.verify);
 
-routes.get(
-  '/login',
-  controllers.authController.logInManager
-);
+routes.get("/login", handleLogin(), controllers.authController.logInManager);
 
 module.exports = routes;

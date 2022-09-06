@@ -5,15 +5,15 @@ interface IError {
   location: String;
 }
 
-class GlobalError extends Error {
-  errors: IError[];
+class ValidationError extends Error {
+  errors: any[];
   status: Number;
 
-  constructor(errors: IError[], status: 400) {
+  constructor(errors: any[], status: Number) {
     super();
     this.errors = errors;
     this.status = status;
   }
 }
 
-export { GlobalError };
+export { ValidationError };
