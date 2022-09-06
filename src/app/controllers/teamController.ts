@@ -3,7 +3,7 @@ import { Request,Response } from "express";
 
 const addPlayerToTeam = async(req:Request,res:Response) => {
     try {
-        const managerId:String = req.params.id;
+        const managerId:String = req._id;
         let manager = await models.managerModel.findById(managerId)
         .populate('teamId')
         .exec();
@@ -35,7 +35,7 @@ const addPlayerToTeam = async(req:Request,res:Response) => {
 
 const deletePlayerFromTeam = async(req:Request,res:Response) => {
     try {
-        const managerId:String = req.params.id;
+        const managerId:String = req._id;
         const manager = await models.managerModel.findById(managerId)
         .populate('teamId')
         .exec();
@@ -75,7 +75,7 @@ const deletePlayerFromTeam = async(req:Request,res:Response) => {
 };
 
 const makeCaptain = async(req:Request,res:Response) => {
-    const managerId:String = req.params.id;
+    const managerId:String = req._id;
     const manager = await models.managerModel.findById(managerId)
     .populate('teamId')
     .exec();
