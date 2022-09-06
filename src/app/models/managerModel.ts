@@ -56,7 +56,7 @@ const managerSchema = new Schema<IManager>(
     },
     budget: {
       type: Number,
-      default: 0,
+      default: 100,
     },
     teamName: {
       type: String,
