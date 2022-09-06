@@ -6,7 +6,11 @@ const mint = require("./app/service/mint");
 const routes = require("./app/routes/path");
 const cronJob = require("cron").CronJob;
 const port: Number = parseInt(<string>process.env.APPLICATION_PORT);
+const morgan = require("morgan");
+const cors = require("cors");
 app.use(express.json());
+app.use(morgan("dev"));
+app.use(cors());
 
 app.use("/api/v1/managers", routes.managerRoute);
 app.use("/api/v1/players", routes.playerRoute);
