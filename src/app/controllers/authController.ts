@@ -2,11 +2,12 @@ require("dotenv").config();
 const models = require("../models/path");
 const service = require("../service/service");
 const redis = require("redis");
-let redisClient = redis.createClient();
+let redisClient = redis.createClient({ url: 'redis://redis:6379' });
 redisClient.connect();
 redisClient.on('connect', () => {
   console.log('Connected!');
 });  
+
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
