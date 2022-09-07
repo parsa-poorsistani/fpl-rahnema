@@ -1,0 +1,21 @@
+version: '3'
+services:
+    # mongo:
+    #     image: mongo:6.0.1
+    #     env_file:
+    #         - './.env'
+    redis:
+        image: redis:7.0.4
+        env_file:
+            - './.env'
+        
+        # if use password on redis add "--requirepass $REDIS_PASSWORD" at the end of command
+        command: redis-server --save 20 1 --loglevel warning 
+
+    app:
+        build: .
+        ports:
+            - 8080:8080
+        depends_on:
+            - redis
+            # - mongo

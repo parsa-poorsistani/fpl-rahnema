@@ -10,8 +10,6 @@ const port: Number = parseInt(<string>process.env.APPLICATION_PORT);
 const morgan = require("morgan");
 const cors = require("cors");
 
-
-
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
@@ -23,8 +21,7 @@ app.use("/api/v1/players", routes.playerRoute);
 app.use("/api/v1/teams", routes.teamRoute);
 app.use("/api/v1/events", routes.eventRoute);
 
-const setupServer = async () => {
-
+const setupServer = async () => {  
   await db();
   app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
