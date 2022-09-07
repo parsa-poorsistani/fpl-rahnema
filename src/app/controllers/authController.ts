@@ -2,8 +2,8 @@ require("dotenv").config();
 import models = require("../models/path");
 import service = require("../service/service");
 import { validationErrorHandler } from "../service/service";
-import redis = require("redis");
-let redisClient = redis.createClient();
+const redis = require("redis");
+let redisClient = redis.createClient({ url: 'redis://redis:6379' });
 redisClient.connect();
 redisClient.on("connect", () => {
   console.log("Connected!");
@@ -14,8 +14,7 @@ import jwt from "jsonwebtoken";
 import { Mongoose } from "mongoose";
 
 const signUpManager = async (req: Request, res: Response) => {
-  const { email, country, first_name, last_name, username, password } =
-    req.body;
+  const { email, country, first_name, last_name, username, password } = req.body;
   let rand = Math.floor(Math.random() * 100 + 54);
   let encodedMail = Buffer.from(email).toString("base64");
   redisClient.hSet(`email:${email}`, [
