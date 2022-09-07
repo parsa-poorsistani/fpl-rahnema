@@ -3,7 +3,14 @@ import { Request, Response } from "express";
 
 const getPlayers = async (req: Request, res: Response) => {
   let players = await models.playerModel.paginate(
-    { positionId: req.query.filter ? req.query.filter : { $gt: 0 } },
+    {
+      positionId:
+        req.query.filter == "0"
+          ? { $gt: 0 }
+          : req.query.filter
+          ? req.query.filter
+          : { $gt: 0 },
+    },
     {
       page: req.query.page ? req.query.page : 0,
       limit: req.query.limit ? req.query.limit : 10,
