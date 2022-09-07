@@ -9,7 +9,7 @@ routes.post(
 );
 routes.post("/verify", controllers.authController.verify);
 
-routes.get(
+routes.post(
   '/login',
   controllers.authController.logInManager
 );
