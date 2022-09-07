@@ -43,4 +43,31 @@ function handleSignUp() {
   ];
 }
 
-export { handleSignUp };
+function handleLogin() {
+  return [
+    body(["password"]).trim().notEmpty().withMessage("please send password"),
+
+    body("username")
+      .trim()
+      .notEmpty()
+      .withMessage("Send username")
+      .bail()
+      .custom(async (value: any, { req }) => {
+        return await models.managerModel
+          .findOne({ username: value })
+          .then((manager: any) => {
+            if (!manager) {
+              return Promise.reject("manager doesn't exist");
+            }
+          });
+      }),
+  ];
+}
+
+function handleVerify() {
+  return [
+    body(["code", "email"]).trim().notEmpty().withMessage("please send code"),
+  ];
+}
+
+export { handleSignUp, handleLogin, handleVerify };

@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
-const { validationResult } = require("express-validator");
-import { GlobalError } from "../helpers/error/globalError";
-const nodemailer = require("nodemailer");
+import { Result, validationResult } from "express-validator";
+import { ValidationError } from "../helpers/error/validationError";
+import nodemailer from "nodemailer";
 
-function validationErrorHandler(req: Request, res: Response, status = 400) {
-  if (validationResult(req, res).errors.length !== 0) {
-    throw new GlobalError(validationResult(req, res).errors, 400);
+async function validationErrorHandler(req: Request, status = 400) {
+  if (!validationResult(req).isEmpty()) {
+    throw new ValidationError(validationResult(req).array(), status);
   }
 }
 
-export function mailSender(receiver: string, subject: string, text: string) {
+function mailSender(receiver: string, subject: string, text: string) {
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -36,4 +36,4 @@ export function mailSender(receiver: string, subject: string, text: string) {
   );
 }
 
-export { validationErrorHandler };
+export { validationErrorHandler, mailSender };

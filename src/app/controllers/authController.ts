@@ -83,7 +83,6 @@ const logInManager = async (req: Request, res: Response) => {
     const manager = await models.managerModel
       .findOne({ username: username })
       .select("password");
-    console.log(manager);
 
     if (!manager) {
       res.status(404).json({ msg: "wrong username" });

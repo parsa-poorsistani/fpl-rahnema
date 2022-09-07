@@ -1,17 +1,10 @@
-interface IError {
-  value: any;
-  msg: String;
-  param: String;
-  location: String;
-}
-
 class GlobalError extends Error {
-  errors: IError[];
+  error: string;
   status: Number;
 
-  constructor(errors: IError[], status: 400) {
+  constructor(error: string, status: Number) {
     super();
-    this.errors = errors;
+    this.error = error;
     this.status = status;
   }
 }
