@@ -1,6 +1,7 @@
 require("dotenv").config();
 const models = require("../models/path");
 const service = require("../service/service");
+import { validationErrorHandler } from "../service/service";
 // const redis = require("redis");
 // let redisClient = redis.createClient();
 // redisClient.connect();
@@ -79,6 +80,7 @@ import { Mongoose } from "mongoose";
 
 const logInManager = async (req: Request, res: Response) => {
   try {
+    await validationErrorHandler(req);
     const { username, password } = req.body;
     const manager = await models.managerModel
       .findOne({ username: username })
@@ -106,16 +108,22 @@ const logInManager = async (req: Request, res: Response) => {
 };
 
 const createTempManager = async (req: Request, res: Response) => {
-  const { email } = req.body;
-  let confirmationCode = Buffer.from(email).toString("base64");
-  req.body.confirmationCode = confirmationCode;
-  const tempManager = await models.tempManagerModel.create(req.body);
-  service.mailSender(email, "confirmation", confirmationCode);
-  return res.status(200).json({ msg: "email sent successfully" });
+  try {
+    await validationErrorHandler(req);
+    const { email } = req.body;
+    let confirmationCode = Buffer.from(email).toString("base64");
+    req.body.confirmationCode = confirmationCode;
+    const tempManager = await models.tempManagerModel.create(req.body);
+    service.mailSender(email, "confirmation", confirmationCode);
+    return res.status(200).json({ msg: "email sent successfully" });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
 };
 
 const verifyEmail = async (req: Request, res: Response) => {
   try {
+    await validationErrorHandler(req);
     const { email, code } = req.body;
     const tempManager = await models.tempManagerModel.findOne(
       { email: email },
@@ -143,10 +151,7 @@ const verifyEmail = async (req: Request, res: Response) => {
       msg: "wrong confirmation code",
     });
   } catch (err) {
-    console.log(err);
-    return res.status(400).json({
-      err: err,
-    });
+    return res.status(500).json(err);
   }
 };
 
