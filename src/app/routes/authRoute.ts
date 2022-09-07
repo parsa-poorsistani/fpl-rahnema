@@ -14,6 +14,6 @@ routes.post(
 );
 routes.post("/verify", handleVerify(), controllers.authController.verifyEmail);
 
-routes.get("/login", handleLogin(), controllers.authController.logInManager);
+routes.post("/login", handleLogin(), controllers.authController.logInManager);
 
 module.exports = routes;
