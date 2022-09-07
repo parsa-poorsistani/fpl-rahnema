@@ -3,7 +3,14 @@ import { Request, Response } from "express";
 
 const getPlayers = async (req: Request, res: Response) => {
   let players = await models.playerModel.paginate(
-    { positionId: req.query.filter ? req.query.filter : { $gt: 0 } },
+    {
+      positionId:
+        req.query.filter == "0"
+          ? { $gt: 0 }
+          : req.query.filter
+          ? req.query.filter
+          : { $gt: 0 },
+    },
     {
       page: req.query.page ? req.query.page : 0,
       limit: req.query.limit ? req.query.limit : 10,
@@ -17,7 +24,16 @@ const getPlayers = async (req: Request, res: Response) => {
   if (Object.keys(players).length === 0) {
     return res.status(404).json({ msg: "no player found" });
   }
-  res.status(200).json({ data: players });
+
+  res
+    .status(200)
+    .json({
+      data: players.docs,
+      total: players.total,
+      limit: players.limit,
+      page: players.page,
+      pages: players.pages,
+    });
 };
 
 const getPlayerByName = async (req: Request, res: Response) => {

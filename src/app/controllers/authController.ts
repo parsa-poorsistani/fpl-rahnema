@@ -1,6 +1,6 @@
 require("dotenv").config();
-const models = require("../models/path");
-const service = require("../service/service");
+import models = require("../models/path");
+import service = require("../service/service");
 import { validationErrorHandler } from "../service/service";
 const redis = require("redis");
 let redisClient = redis.createClient({ url: 'redis://redis:6379' });
@@ -68,7 +68,9 @@ const verify = async (req: Request, res: Response) => {
   };
 
   const manager = await models.managerModel.create(managerData);
-  const token = jwt.sign({ id: manager._id }, process.env.HASH_KEY!);
+  const token = jwt.sign({ id: manager._id }, process.env.HASH_KEY!, {
+    expiresIn: "15h",
+  });
   return res.status(200).json({
     data: {
       manager: await models.managerModel.findById(manager._id),
@@ -154,7 +156,7 @@ const logInManager = async (req: Request, res: Response) => {
 //   }
 // };
 
-module.exports = {
+export {
   signUpManager,
   logInManager,
   verify,
