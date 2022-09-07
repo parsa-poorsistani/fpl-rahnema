@@ -10,9 +10,9 @@ import controllers = require("../controllers/path");
 routes.post(
   "/signup",
   handleSignUp(),
-  controllers.authController.createTempManager
+  controllers.authController.signUpManager
 );
-routes.post("/verify", handleVerify(), controllers.authController.verifyEmail);
+routes.post("/verify", handleVerify(), controllers.authController.verify);
 
 routes.post("/login", handleLogin(), controllers.authController.logInManager);
 
