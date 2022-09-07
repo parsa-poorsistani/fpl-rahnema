@@ -24,7 +24,16 @@ const getPlayers = async (req: Request, res: Response) => {
   if (Object.keys(players).length === 0) {
     return res.status(404).json({ msg: "no player found" });
   }
-  res.status(200).json({ data: players });
+
+  res
+    .status(200)
+    .json({
+      data: players.docs,
+      total: players.total,
+      limit: players.limit,
+      page: players.page,
+      pages: players.pages,
+    });
 };
 
 const getPlayerByName = async (req: Request, res: Response) => {
