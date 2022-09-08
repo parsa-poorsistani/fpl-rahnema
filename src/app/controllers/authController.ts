@@ -3,7 +3,7 @@ import models = require("../models/path");
 import service = require("../service/service");
 import { validationErrorHandler } from "../service/service";
 const redis = require("redis");
-let redisClient = redis.createClient({ url: 'redis://redis:6379' });
+let redisClient = redis.createClient({url:'redis://redis:6379'});
 redisClient.connect();
 redisClient.on("connect", () => {
   console.log("Connected!");
@@ -11,7 +11,6 @@ redisClient.on("connect", () => {
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { Mongoose } from "mongoose";
 
 const signUpManager = async (req: Request, res: Response) => {
   const { email, country, first_name, last_name, username, password } = req.body;
