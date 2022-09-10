@@ -1,7 +1,6 @@
 require("dotenv").config();
 const models = require("../models/path");
 const service = require("../service/service");
-import { GlobalError } from "../helpers/error/globalError";
 import { validationErrorHandler } from "../service/service";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
@@ -48,7 +47,6 @@ const verify = async (req: Request, res: Response) => {
     await validationErrorHandler(req);
     const { email, code } = req.body;
     const verCode = await redisClient.hGet(`email:${email}`, "code");
-    console.log(verCode);
     if (code !== verCode) {
       return res.status(403).json({ msg: "code is wrong" });
     }
@@ -102,9 +100,7 @@ const logInManager = async (req: Request, res: Response) => {
       res.status(404).json({ msg: "wrong username" });
     }
     const userPassword: string = manager.password;
-    const isValid: boolean = await bcrypt.compare(password, userPassword);
-    console.log(isValid);
-    
+    const isValid: boolean = await bcrypt.compare(password, userPassword);    
     
     if (isValid) {      
       const token = jwt.sign({ id: manager._id }, process.env.HASH_KEY!);
