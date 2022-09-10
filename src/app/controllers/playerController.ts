@@ -63,7 +63,13 @@ const getPlayerByName = async (req: Request, res: Response) => {
     if (Object.keys(players).length === 0) {
       return res.status(404).json({ msg: "player not found" });
     }
-    return res.status(200).json({ data: players });
+    return res.status(200).json({
+      data: players.docs,
+      total: players.total,
+      limit: players.limit,
+      page: players.page,
+      pages: players.pages,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: error });
