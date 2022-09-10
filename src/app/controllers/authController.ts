@@ -117,8 +117,4 @@ const logInManager = async (req: Request, res: Response) => {
   }
 };
 
-module.exports = {
-  signUpManager,
-  logInManager,
-  verify,
-};
+export { signUpManager, logInManager, verify };
