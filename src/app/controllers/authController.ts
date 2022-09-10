@@ -103,7 +103,7 @@ const logInManager = async (req: Request, res: Response) => {
     const userPassword: string = manager.password;
     const isValid: boolean = await bcrypt.compare(password, userPassword);
     if (isValid) {
-      const token = jwt.sign({ id: manager._id }, process.env.SECRET_KEY!);
+      const token = jwt.sign({ id: manager._id }, process.env.HASH_KEY!);
       return res.status(200).json({
         data: {
           managerId: manager._id,
@@ -117,9 +117,4 @@ const logInManager = async (req: Request, res: Response) => {
   }
 };
 
-
-export {
-  signUpManager,
-  logInManager,
-  verify,
-};
+export { signUpManager, logInManager, verify };
