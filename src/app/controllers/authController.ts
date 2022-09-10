@@ -48,6 +48,7 @@ const verify = async (req: Request, res: Response) => {
     await validationErrorHandler(req);
     const { email, code } = req.body;
     const verCode = await redisClient.hGet(`email:${email}`, "code");
+    console.log(verCode);
     if (code !== verCode) {
       return res.status(403).json({ msg: "code is wrong" });
     }
