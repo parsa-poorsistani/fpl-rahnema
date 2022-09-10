@@ -38,7 +38,6 @@ const getPlayers = async (req: Request, res: Response) => {
 
 const getPlayerByName = async (req: Request, res: Response) => {
   try {
-    //const { web_name } = req.body;
     let players = [];
     if (Object.keys(req.query).length !== 0) {
       players = await models.playerModel.paginate(
