@@ -38,13 +38,18 @@ const getPlayers = async (req: Request, res: Response) => {
 
 const getPlayerByName = async (req: Request, res: Response) => {
   try {
-    const { web_name } = req.body;
+    //const { web_name } = req.body;
     let players = [];
     if (Object.keys(req.query).length !== 0) {
       players = await models.playerModel.paginate(
         {
-          web_name: new RegExp("^" + web_name + "w*", "i"),
-          positionId: req.query.filter ? req.query.filter : { $gt: 0 },
+          web_name: new RegExp("^" + req.query.web_name + "w*", "i"),
+          positionId:
+        req.query.filter == "0"
+          ? { $gt: 0 }
+          : req.query.filter
+          ? req.query.filter
+          : { $gt: 0 },
         },
         {
           page: req.query.page ? req.query.page : 0,
