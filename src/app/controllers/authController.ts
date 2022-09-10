@@ -107,58 +107,9 @@ const logInManager = async (req: Request, res: Response) => {
   }
 };
 
-// const createTempManager = async (req: Request, res: Response) => {
-//   try {
-//     await validationErrorHandler(req);
-//     const { email } = req.body;
-//     let confirmationCode = Buffer.from(email).toString("base64");
-//     req.body.confirmationCode = confirmationCode;
-//     const tempManager = await models.tempManagerModel.create(req.body);
-//     service.mailSender(email, "confirmation", confirmationCode);
-//     return res.status(200).json({ msg: "email sent successfully" });
-//   } catch (err) {
-//     return res.status(500).json(err);
-//   }
-// };
-
-// const verifyEmail = async (req: Request, res: Response) => {
-//   try {
-//     await validationErrorHandler(req);
-//     const { email, code } = req.body;
-//     const tempManager = await models.tempManagerModel.findOne(
-//       { email: email },
-//       { _id: 0 }
-//     );
-
-//     const newManager = {
-//       first_name: tempManager.first_name,
-//       last_name: tempManager.last_name,
-//       username: tempManager.username,
-//       country: tempManager.country,
-//       password: tempManager.password,
-//       email: tempManager.email,
-//     };
-//     if (code == tempManager.confirmationCode) {
-//       const manager = await models.managerModel.create(newManager);
-//       await models.tempManagerModel.deleteOne({ email: email });
-//       const token = await jwt.sign({ id: manager._id }, process.env.HASH_KEY!);
-//       return res.status(200).json({
-//         msg: "signup successful",
-//         data: { token: token, manager: manager },
-//       });
-//     }
-//     return res.status(200).json({
-//       msg: "wrong confirmation code",
-//     });
-//   } catch (err) {
-//     return res.status(500).json(err);
-//   }
-// };
 
 export {
   signUpManager,
   logInManager,
   verify,
-  // createTempManager,
-  // verifyEmail,
 };
