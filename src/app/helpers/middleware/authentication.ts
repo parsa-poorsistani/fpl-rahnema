@@ -1,17 +1,39 @@
-const models = require("../../models/path");
-const jwt = require("jsonwebtoken");
+import models = require("../../models/path");
+import jwt = require("jsonwebtoken");
 import { Request, Response } from "express";
+import { GlobalError } from "../error/globalError";
+import { JsonWebTokenError, TokenExpiredError } from "../error/jwtError";
+import mongoose from "mongoose";
 
-function authToken(req: Request, res: Response, next: any) {
-  let token = req.headers["token"];
+type Next = (err?: String) => void | Promise<void>;
+
+function authToken(req: Request, res: Response, next: Next) {
+  type token = string;
+
+  type Secret = string | Buffer | { key: string | Buffer; passphrase: string };
+
+  let token = req.headers.token as token;
+  let secret_key = process.env.SECRET_KEY as Secret;
 
   if (token) {
-    jwt.verify(token, process.env.HASH_KEY, (err: any, decode: any) => {
-      req._id = decode.id;
+    jwt.verify(token, secret_key, async (err: any, decode: any) => {
+      if (decode) {
+        let manager = await models.managerModel.findById(decode.id);
+        if (manager) {
+          req._id = decode.id;
+          return next();
+        } else {
+          return res
+            .status(403)
+            .json(new GlobalError("User with sent token doesn't exist", 403));
+        }
+      } else {
+        return res.status(403).json(new GlobalError("Token is invalid", 403));
+      }
     });
+  } else {
+    return res.status(403).json(new GlobalError("Token not sent", 403));
   }
-
-  next();
 }
 
 export { authToken };
