@@ -12,7 +12,7 @@ function authToken(req: Request, res: Response, next: Next) {
   type Secret = string | Buffer | { key: string | Buffer; passphrase: string };
 
   let token = req.headers.token as token;
-  let secret_key = process.env.SECRET_KEY as Secret;
+  let secret_key = process.env.HASH_KEY as Secret;
 
   if (token) {
     jwt.verify(token, secret_key, async (err: any, decode: any) => {

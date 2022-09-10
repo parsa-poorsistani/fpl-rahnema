@@ -1,14 +1,6 @@
-import models = require("../models/path");
+import models = require("../../models/path");
 import { Request, Response } from "express";
 const axios = require("axios");
-
-
-const create = async (model: any, args: any) => {
-  if (model) {
-    let document = await model.create(args);
-    return document._id;
-  }
-};
 
 const updatePlayerPositionsData = async (req: Request, res: Response) => {
   const response = await axios.get(process.env.FPL_URL);
@@ -51,11 +43,9 @@ const updatePlayerPositionsData = async (req: Request, res: Response) => {
 };
 
 const updatePlayerdata = async (req: Request, res: Response) => {
-  
   const response = await axios.get(process.env.FPL_URL);
-  
+
   for (let player of response.data.elements) {
-    
     let update = await models.playerModel.update(
       { generalId: player.id },
       {
@@ -102,7 +92,7 @@ const updatePlayerdata = async (req: Request, res: Response) => {
       });
     }
   }
-  
+
   let players = await models.playerModel.find();
   return res.status(200).json({ data: players });
 };
@@ -145,9 +135,4 @@ const updateEventdata = async (req: Request, res: Response) => {
   res.status(200).json({ data: events });
 };
 
-export {
-  create,
-  updatePlayerdata,
-  updatePlayerPositionsData,
-  updateEventdata,
-};
+export { updatePlayerdata, updatePlayerPositionsData, updateEventdata };

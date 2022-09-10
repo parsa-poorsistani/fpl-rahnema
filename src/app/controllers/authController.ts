@@ -6,7 +6,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const redis = require("redis");
-let redisClient = redis.createClient({ url:"redis://redis:6379"});
+let redisClient = redis.createClient({ url: "redis://redis:6379" });
 redisClient.connect();
 redisClient.on("connect", () => {
   console.log("Connected!");
@@ -100,9 +100,8 @@ const logInManager = async (req: Request, res: Response) => {
       res.status(404).json({ msg: "wrong username" });
     }
     const userPassword: string = manager.password;
-    const isValid: boolean = await bcrypt.compare(password, userPassword);    
-    
-    if (isValid) {      
+    const isValid: boolean = await bcrypt.compare(password, userPassword);
+    if (isValid) {
       const token = jwt.sign({ id: manager._id }, process.env.HASH_KEY!);
       return res.status(200).json({
         data: {
@@ -113,13 +112,8 @@ const logInManager = async (req: Request, res: Response) => {
     }
     return res.status(403).json({ msg: "wrong password" });
   } catch (err) {
-    res.status(500).json({msg:err});
+    res.status(500).json({ msg: err });
   }
 };
 
-
-export {
-  signUpManager,
-  logInManager,
-  verify,
-};
+export { signUpManager, logInManager, verify };
