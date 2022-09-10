@@ -2,7 +2,6 @@ import models = require("../../models/path");
 import jwt = require("jsonwebtoken");
 import { Request, Response } from "express";
 import { GlobalError } from "../error/globalError";
-import { JsonWebTokenError, TokenExpiredError } from "../error/jwtError";
 import mongoose from "mongoose";
 
 type Next = (err?: String) => void | Promise<void>;
