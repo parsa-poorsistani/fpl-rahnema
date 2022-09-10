@@ -1,4 +1,4 @@
-const models = require("../models/path");
+import models = require("../models/path");
 import { Request, Response } from "express";
 
 const addPlayerToTeam = async (req: Request, res: Response) => {
