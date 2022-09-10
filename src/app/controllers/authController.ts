@@ -113,7 +113,7 @@ const logInManager = async (req: Request, res: Response) => {
     }
     return res.status(403).json({ msg: "wrong password" });
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({msg:err});
   }
 };
 
