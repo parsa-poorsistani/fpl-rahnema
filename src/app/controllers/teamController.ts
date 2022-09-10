@@ -11,15 +11,17 @@ const addPlayerToTeam = async (req: Request, res: Response) => {
     const playerId: Number = req.body.elementId;
     const currentBudget: number = manager.budget;
     const player = await models.playerModel.findOne({ generalId: playerId });
-
+    
     let team: Array<object> = manager.teamId.picks;
     if (team === null) {
       return res.status(404).json({ msg: "team with this id not found." });
     }
+    if(await checkPlayerIsAvailable(player,team)==false) {
+      return res.status(403).json({msg:"player alredy in the team."});
+    }
     if (
       (await addPlayerValidation(player, team)) &&
-      currentBudget >= player.now_cost
-    ) {
+      currentBudget >= player.now_cost) {
       const data = {
         player: player._id,
       };
@@ -123,11 +125,25 @@ const makeCaptain = async (req: Request, res: Response) => {
   res.status(200).json({ team });
 };
 
+const checkPlayerIsAvailable = async (player:any,team:Array<any>): Promise<boolean>=> {
+  const playerId:string = player.web_name;
+  for(let p of team) {
+
+    if(p.player===null) {
+      continue;
+    }
+    let p2 = await models.playerModel.findById(p.player);
+    if(p2.web_name==playerId) {
+      
+      return false;
+    }
+  }
+  
+  return true;
+};
+
 //cheking for no more than 3 players from one team
-const addPlayerValidation = async (
-  player: any,
-  team: Array<any>
-): Promise<boolean> => {
+const addPlayerValidation = async (player: any, team: Array<any>): Promise<boolean> => {
   let num: number = 0;
   for (let p of team) {
     if (p.player !== null) {
