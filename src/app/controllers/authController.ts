@@ -48,7 +48,6 @@ const verify = async (req: Request, res: Response) => {
     await validationErrorHandler(req);
     const { email, code } = req.body;
     const verCode = await redisClient.hGet(`email:${email}`, "code");
-    console.log(verCode);
     if (code !== verCode) {
       return res.status(403).json({ msg: "code is wrong" });
     }
@@ -106,11 +105,8 @@ const logInManager = async (req: Request, res: Response) => {
     console.log(isValid);
     
     
-    if (isValid) {
-      console.log("here");
-      
-      const token = jwt.sign({ id: manager._id }, process.env.SECRET_KEY!);
-      console.log(token);
+    if (isValid) {      
+      const token = jwt.sign({ id: manager._id }, process.env.HASH_KEY!);
       return res.status(200).json({
         data: {
           managerId: manager._id,
