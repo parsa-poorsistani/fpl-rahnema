@@ -206,7 +206,7 @@ const findFirstEmpty = (player: any, team: Array<any>): number => {
     }
   }
 
-  return 0;
+  return -1;
 };
 
 module.exports = {
