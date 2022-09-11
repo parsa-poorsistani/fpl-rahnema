@@ -8,9 +8,9 @@ const addPlayerToTeam = async (req: Request, res: Response) => {
       .findById(managerId)
       .populate("teamId")
       .exec();
-    const playerId: Number = req.body.elementId;
+    const playerId: Number = req.body.id;
     const currentBudget: number = manager.budget;
-    const player = await models.playerModel.findOne({ generalId: playerId });
+    const player = await models.playerModel.findById(playerId);
     
     let team: Array<object> = manager.teamId.picks;
     if (team === null) {
@@ -49,8 +49,8 @@ const deletePlayerFromTeam = async (req: Request, res: Response) => {
       .populate("teamId")
       .exec();
     const currentBudget: number = manager.budget;
-    const playerId: Number = req.body.elementId;
-    const player = await models.playerModel.findOne({ generalId: playerId });
+    const playerId: Number = req.body.id;
+    const player = await models.playerModel.findById(playerId);
     let team = manager.teamId.picks;
     let place: number = 0;
 
