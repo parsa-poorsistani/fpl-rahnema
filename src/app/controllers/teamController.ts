@@ -3,12 +3,12 @@ import { Request, Response } from "express";
 
 const addPlayerToTeam = async (req: Request, res: Response) => {
   try {
-    const managerId: String = req._id;
+    const managerId: string = req._id;
     let manager = await models.managerModel
       .findById(managerId)
       .populate("teamId")
       .exec();
-    const playerId: Number = req.body.id;
+    const playerId: number = req.body.id;
     const index: number = req.body.index;
     const currentBudget: number = manager.budget;
     const player = await models.playerModel.findById(playerId);
@@ -46,25 +46,17 @@ const addPlayerToTeam = async (req: Request, res: Response) => {
 
 const deletePlayerFromTeam = async (req: Request, res: Response) => {
   try {
-    const managerId: String = req._id;
+    const managerId: string = req._id;
     const manager = await models.managerModel
       .findById(managerId)
       .populate("teamId")
       .exec();
     const currentBudget: number = manager.budget;
-    const playerId: Number = req.body.id;
+    const playerId: number = req.body.id;
+    const index: number = req.body.index;
     const player = await models.playerModel.findOne(playerId);
     let team = manager.teamId.picks;
     let place: number = 0;
-
-    for (let p of team) {
-      if (p.player !== null) {
-        if (p.player.toString() === player._id.toString()) {
-          break;
-        }
-      }
-      place++;
-    }
 
     if (team === null) {
       res.status(404).json({ msg: "manager not found" });
@@ -76,7 +68,7 @@ const deletePlayerFromTeam = async (req: Request, res: Response) => {
     };
 
     manager.budget = currentBudget + player.now_cost;
-    manager.teamId.picks[place] = data;
+    manager.teamId.picks[index] = data;
     manager.save();
     manager.teamId.save();
     res.status(200).json({ team });
