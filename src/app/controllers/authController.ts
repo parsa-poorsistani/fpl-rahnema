@@ -6,7 +6,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const redis = require("redis");
-let redisClient = redis.createClient({ url: "redis://redis:6379" });
+let redisClient = redis.createClient();
 redisClient.connect();
 redisClient.on("connect", () => {
   console.log("Connected!");
