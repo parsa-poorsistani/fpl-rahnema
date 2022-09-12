@@ -54,9 +54,8 @@ const deletePlayerFromTeam = async (req: Request, res: Response) => {
     const currentBudget: number = manager.budget;
     const playerId: number = req.body.id;
     const index: number = req.body.index;
-    const player = await models.playerModel.findOne(playerId);
+    const player = await models.playerModel.findById(playerId);
     let team = manager.teamId.picks;
-    let place: number = 0;
 
     if (team === null) {
       res.status(404).json({ msg: "manager not found" });
