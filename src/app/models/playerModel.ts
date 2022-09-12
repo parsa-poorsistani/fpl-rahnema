@@ -1,5 +1,5 @@
 import { ObjectId, model, Schema, Types } from "mongoose";
-import { IPlayer } from "../database/Interface/player.interface";
+import { IPlayer } from "../Interface/player.interface";
 const mongoosePaginate = require("mongoose-paginate");
 
 const playerSchema = new Schema<IPlayer>(

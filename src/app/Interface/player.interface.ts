@@ -1,15 +1,20 @@
+import mongoose from "mongoose";
+
 interface IPlayerFunctions {
   paginatePlayers(
     filter: string,
     page: Number,
-    limit: Number
-  ): Promise<IPlayer[]>;
+    limit: Number,
+    pickIds: mongoose.Types.ObjectId[]
+  ): Promise<playerPaginateResponse>;
+
   getPlayerByName(
     filter: string,
     page: Number,
     limit: Number,
-    web_name: string
-  ): Promise<IPlayer[]>;
+    web_name: string,
+    pickIds: mongoose.Types.ObjectId[]
+  ): Promise<playerPaginateResponse>;
 }
 
 interface IPlayer {
@@ -43,4 +48,12 @@ interface IPlayer {
   bonus: Number;
 }
 
-export { IPlayer, IPlayerFunctions };
+type playerPaginateResponse = {
+  docs: IPlayer[];
+  total: Number;
+  limit: Number;
+  page: Number;
+  pages: Number;
+};
+
+export { IPlayer, IPlayerFunctions, playerPaginateResponse };

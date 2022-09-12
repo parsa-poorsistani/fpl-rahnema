@@ -1,18 +1,24 @@
+import mongoose from "mongoose";
 import models = require("../../models/path");
-import { IPlayer, IPlayerFunctions } from "../Interface/player.interface";
+import {
+  IPlayerFunctions,
+  playerPaginateResponse,
+} from "../../Interface/player.interface";
 
 export class playerRepo implements IPlayerFunctions {
   public paginatePlayers = async (
     filter: string,
     page: Number,
-    limit: Number
-  ): Promise<IPlayer[]> => {
-    let players: IPlayer[] = await models.playerModel.paginate(
+    limit: Number,
+    pickIds: mongoose.Types.ObjectId[] = []
+  ): Promise<playerPaginateResponse> => {
+    let players: playerPaginateResponse = await models.playerModel.paginate(
       {
+        _id: { $nin: pickIds },
         positionId: filter == "0" ? { $gt: 0 } : filter ? filter : { $gt: 0 },
       },
       {
-        page: page ? page : 0,
+        page: page ? page : 1,
         limit: limit ? limit : 10,
         populate: [
           { path: "position", select: ["plural_name_short", "generalId"] },
@@ -27,15 +33,17 @@ export class playerRepo implements IPlayerFunctions {
     filter: string,
     page: Number,
     limit: Number,
-    web_name: string
-  ): Promise<IPlayer[]> => {
-    let players = await models.playerModel.paginate(
+    web_name: string,
+    pickIds: mongoose.Types.ObjectId[] = []
+  ): Promise<playerPaginateResponse> => {
+    let players: playerPaginateResponse = await models.playerModel.paginate(
       {
         web_name: new RegExp("^" + web_name + "w*", "i"),
-        positionId: filter ? filter : { $gt: 0 },
+        positionId: filter == "0" ? { $gt: 0 } : filter ? filter : { $gt: 0 },
+        _id: { $nin: pickIds },
       },
       {
-        page: page ? page : 0,
+        page: page ? page : 1,
         limit: limit ? limit : 10,
         populate: [
           { path: "position", select: ["plural_name_short", "generalId"] },
