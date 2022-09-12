@@ -41,8 +41,7 @@ const getPlayers = async (req: Request, res: Response) => {
 
 const getPlayerByName = async (req: Request, res: Response) => {
   try {
-    const { web_name } = req.body;
-    const { filter, page, limit } = req.query;
+    const { filter, page, limit, web_name } = req.query;
     let manager = await models.managerModel
       .findById(req._id)
       .populate(["teamId", { path: "teamId", populate: "picks.player" }]);

@@ -1,13 +1,12 @@
 require("dotenv").config();
 const models = require("../models/path");
 const service = require("../service/service");
-import { GlobalError } from "../helpers/error/globalError";
 import { validationErrorHandler } from "../service/service";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const redis = require("redis");
-let redisClient = redis.createClient({ url: "redis://redis:6379" });
+let redisClient = redis.createClient({url:'redis://redis:6379'});
 redisClient.connect();
 redisClient.on("connect", () => {
   console.log("Connected!");
@@ -48,7 +47,6 @@ const verify = async (req: Request, res: Response) => {
     await validationErrorHandler(req);
     const { email, code } = req.body;
     const verCode = await redisClient.hGet(`email:${email}`, "code");
-    console.log(verCode);
     if (code !== verCode) {
       return res.status(403).json({ msg: "code is wrong" });
     }
