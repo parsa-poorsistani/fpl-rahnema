@@ -3,6 +3,8 @@ const findById = require('../database/repo/manager.repo');
 import { StatusCodes } from "http-status-codes";
 import { ObjectId } from "mongoose";
 import { Request, Response } from "express";
+const {managerRepo,playerRepo} = require('../database/repo/path');
+
 
 type managerByIdResponse = {
   _id: ObjectId,
