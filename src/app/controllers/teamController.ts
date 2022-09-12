@@ -2,46 +2,46 @@ import models = require("../models/path");
 import { Request, Response } from "express";
 
 const addPlayerToTeam = async (req: Request, res: Response) => {
-  try {
-    const managerId: string = req._id;
-    let manager = await models.managerModel
-      .findById(managerId)
-      .populate("teamId")
-      .exec();
-    const playerId: number = req.body.id;
-    const index: number = req.body.index;
-    const currentBudget: number = manager.budget;
-    const player = await models.playerModel.findById(playerId);
+  // try {
+  //   const managerId: string = req._id;
+  //   let manager = await models.managerModel
+  //     .findById(managerId)
+  //     .populate("teamId")
+  //     .exec();
+  //   const playerId: number = req.body.id;
+  //   const index: number = req.body.index;
+  //   const currentBudget: number = manager.budget;
+  //   const player = await models.playerModel.findById(playerId);
     
-    let team: Array<object> = manager.teamId.picks;
-    if (team === null) {
-      return res.status(404).json({ msg: "team with this id not found." });
-    }
-    if(await checkPlayerIsAvailable(player,team)==false) {
-      return res.status(403).json({msg:"player alredy in the team."});
-    }
-    if(!checkIndex(player,index)) {
-      return res.status(403).json({msg:"index is not right"});
-    }
-    if (
-      (await addPlayerValidation(player, team)) &&
-      currentBudget >= player.now_cost) {
-      const data = {
-        player: player._id,
-      };
-      manager.budget = currentBudget - player.now_cost;
-      manager.teamId.picks[index] = data;
-      manager.save();
-      manager.teamId.save();
-      return res.status(200).json({ data: manager.teamId.picks });
-    }
-    return res
-      .status(403)
-      .json({ msg: "not allowed to add more than 3 players from one team" });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: error });
-  }
+  //   let team: Array<object> = manager.teamId.picks;
+  //   if (team === null) {
+  //     return res.status(404).json({ msg: "team with this id not found." });
+  //   }
+  //   if(await checkPlayerIsAvailable(player,team)==false) {
+  //     return res.status(403).json({msg:"player alredy in the team."});
+  //   }
+  //   if(!checkIndex(player,index)) {
+  //     return res.status(403).json({msg:"index is not right"});
+  //   }
+  //   if (
+  //     (await addPlayerValidation(player, team)) &&
+  //     currentBudget >= player.now_cost) {
+  //     const data = {
+  //       player: player._id,
+  //     };
+  //     manager.budget = currentBudget - player.now_cost;
+  //     manager.teamId.picks[index] = data;
+  //     manager.save();
+  //     manager.teamId.save();
+  //     return res.status(200).json({ data: manager.teamId.picks });
+  //   }
+  //   return res
+  //     .status(403)
+  //     .json({ msg: "not allowed to add more than 3 players from one team" });
+  // } catch (error) {
+  //   console.log(error);
+  //   res.status(500).json({ msg: error });
+  // }
 };
 
 const deletePlayerFromTeam = async (req: Request, res: Response) => {
