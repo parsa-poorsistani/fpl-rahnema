@@ -14,7 +14,7 @@ const getDashboard = async (req: Request, res: Response) => {
     manager.budget = Math.round(manager.budget*10)/10;
     manager.save();
     
-    return res.status(200).json({ data: manager,nb:nb });
+    return res.status(200).json({ data: {manager,nb});
   } catch (err) {
     res.status(403).json({ msg: err });
   }
