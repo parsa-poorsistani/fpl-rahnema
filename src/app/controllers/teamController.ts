@@ -31,8 +31,8 @@ const addPlayerToTeam = async (req: Request, res: Response) => {
       };
       manager.budget = currentBudget - player.now_cost;
       manager.teamId.picks[index] = data;
-      manager.save();
-      manager.teamId.save();
+      await manager.save();
+      await manager.teamId.save();
       return res.status(200).json({ data: manager.teamId.picks });
     }
     return res
@@ -68,8 +68,8 @@ const deletePlayerFromTeam = async (req: Request, res: Response) => {
 
     manager.budget = currentBudget + player.now_cost;
     manager.teamId.picks[index] = data;
-    manager.save();
-    manager.teamId.save();
+    await manager.save();
+    await manager.teamId.save();
     res.status(200).json({ team });
   } catch (error) {
     console.log(error);
