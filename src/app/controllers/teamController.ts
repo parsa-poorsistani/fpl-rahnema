@@ -15,6 +15,7 @@ const addPlayerToTeam = async (req: Request, res: Response) => {
     console.log("typeof p : ",typeof(player));
     console.log(typeof(manager));
     const currentBudget: number = manager.budget;
+    const player = await models.playerModel.findById(playerId);
     
     let team: Array<object> = manager.teamId.picks;
     if (team === null) {
@@ -23,6 +24,9 @@ const addPlayerToTeam = async (req: Request, res: Response) => {
     if(await checkPlayerIsAvailable(player,team)==false) {
       return res.status(403).json({msg:"player alredy in the team."});
     }
+    if(!checkIndex(player,index)) {
+      return res.status(403).json({msg:"index is not right"});
+    }
     if (
       (await addPlayerValidation(player, team)) &&
       currentBudget >= player.now_cost) {
@@ -30,8 +34,7 @@ const addPlayerToTeam = async (req: Request, res: Response) => {
         player: player._id,
       };
       manager.budget = currentBudget - player.now_cost;
-      let place: number = findFirstEmpty(player, team);
-      manager.teamId.picks[place] = data;
+      manager.teamId.picks[index] = data;
       manager.save();
       manager.teamId.save();
       return res.status(200).json({ data: manager.teamId.picks });
@@ -47,25 +50,16 @@ const addPlayerToTeam = async (req: Request, res: Response) => {
 
 const deletePlayerFromTeam = async (req: Request, res: Response) => {
   try {
-    const managerId: String = req._id;
+    const managerId: string = req._id;
     const manager = await models.managerModel
       .findById(managerId)
       .populate("teamId")
       .exec();
     const currentBudget: number = manager.budget;
-    const playerId: Number = req.body.elementId;
-    const player = await models.playerModel.findOne({ generalId: playerId });
+    const playerId: number = req.body.id;
+    const index: number = req.body.index;
+    const player = await models.playerModel.findById(playerId);
     let team = manager.teamId.picks;
-    let place: number = 0;
-
-    for (let p of team) {
-      if (p.player !== null) {
-        if (p.player.toString() === player._id.toString()) {
-          break;
-        }
-      }
-      place++;
-    }
 
     if (team === null) {
       res.status(404).json({ msg: "manager not found" });
@@ -77,7 +71,7 @@ const deletePlayerFromTeam = async (req: Request, res: Response) => {
     };
 
     manager.budget = currentBudget + player.now_cost;
-    manager.teamId.picks[place] = data;
+    manager.teamId.picks[index] = data;
     manager.save();
     manager.teamId.save();
     res.status(200).json({ team });
@@ -163,54 +157,32 @@ const addPlayerValidation = async (player: any, team: Array<any>): Promise<boole
   return true;
 };
 
-const findFirstEmpty = (player: any, team: Array<any>): number => {
+const checkIndex = (player: any, index: number): boolean => {
   if (player.positionId === 1) {
-    if (team[0].player == null) {
-      return 0;
-    } else if (team[1].player == null) {
-      return 1;
-    }
+    if (index === 0 || index===1) {
+      return true;
+    } 
   }
 
   if (player.positionId === 2) {
-    if (team[2].player == null) {
-      return 2;
-    } else if (team[3].player == null) {
-      return 3;
-    } else if (team[4].player == null) {
-      return 4;
-    } else if (team[5].player == null) {
-      return 5;
-    } else if (team[6].player == null) {
-      return 6;
-    }
+    if (index === 2 || index===3 || index === 4 || index===5 || index===6) {
+      return true;
+    } 
   }
 
   if (player.positionId === 3) {
-    if (team[7].player == null) {
-      return 7;
-    } else if (team[8].player == null) {
-      return 8;
-    } else if (team[9].player == null) {
-      return 9;
-    } else if (team[10].player == null) {
-      return 10;
-    } else if (team[11].player == null) {
-      return 11;
-    }
+    if (index === 7 || index===8 || index === 9 || index===10 || index===11) {
+      return true;
+    } 
   }
 
   if (player.positionId === 4) {
-    if (team[12].player == null) {
-      return 12;
-    } else if (team[13].player == null) {
-      return 13;
-    } else if (team[14].player == null) {
-      return 14;
-    }
+    if (index === 12 || index===13 || index === 14) {
+      return true;
+    } 
   }
 
-  return -1;
+  return false;
 };
 
 module.exports = {

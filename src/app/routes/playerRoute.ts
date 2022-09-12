@@ -1,14 +1,10 @@
 export {};
-const express = require("express");
+import express from "express";
+import controllers = require("../controllers/path");
+import { authToken } from "../helpers/middleware/authentication";
 const routes = express.Router();
-const models = require("../../app/models/path");
-const controllers = require("../controllers/path");
-const mint = require("../service/mint");
 
-routes.get("/positionsData", mint.updatePlayerPositionsData);
-routes.get("/playerData", mint.updatePlayerdata);
-routes.get("/eventData", mint.updateEventdata);
-routes.get("/search", controllers.playerController.getPlayerByName);
-routes.get("/", controllers.playerController.getPlayers);
+routes.get("/search", authToken, controllers.playerController.getPlayerByName);
+routes.get("/", authToken, controllers.playerController.getPlayers);
 
 module.exports = routes;
