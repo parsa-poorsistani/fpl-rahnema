@@ -1,21 +1,6 @@
-import { ObjectId, model, Schema, Types } from "mongoose";
+import { model, Schema, Types } from "mongoose";
+import {IManager} from '../Interface/manager.interface';
 import bcrypt from "bcrypt";
-
-interface IManager {
-  first_name: String;
-  last_name: String;
-  username: String;
-  country: String;
-  password: String;
-  email: String;
-  budget: Number;
-  teamName: String;
-  teamId: ObjectId;
-  summary_overall_points: Number;
-  summary_overall_rank: Number;
-  summary_event_points: Number;
-  summary_event_rank: Number;
-};
 
 const managerSchema = new Schema<IManager>(
   {
@@ -58,27 +43,23 @@ const managerSchema = new Schema<IManager>(
       type: Number,
       default: 100,
     },
-    teamName: {
-      type: String,
-      default: "",
-    },
     teamId: {
       type: Types.ObjectId,
       ref: "Team",
     },
-    summary_overall_points: {
+    summaryOverallPoints: {
       type: Number,
       default: 0,
     },
-    summary_overall_rank: {
+    summaryOverallRank: {
       type: Number,
       default: null,
     },
-    summary_event_points: {
+    summaryEventPoints: {
       type: Number,
       default: 0,
     },
-    summary_event_rank: {
+    summaryEventRank: {
       type: Number,
       default: null,
     },
@@ -97,6 +78,6 @@ managerSchema.pre("save", async function (next: any) {
   }
 });
 
-const Manager = model("Manager", managerSchema);
+const Manager = model<IManager>("Manager", managerSchema);
 
 module.exports = Manager;

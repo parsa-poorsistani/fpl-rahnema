@@ -53,7 +53,7 @@ const verify = async (req: Request, res: Response) => {
     let picks = [];
     for (let i = 0; i < 15; i++) {
       await picks.push({
-        player_id: null,
+        player_id: null,index:i
       });
     }
     const team = await models.teamModel.create({
