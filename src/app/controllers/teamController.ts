@@ -1,15 +1,19 @@
 import models = require("../models/path");
 import { Request, Response } from "express";
+const {managerRepo,playerRepo} = require('../database/repo/path');
+
 
 const addPlayerToTeam = async (req: Request, res: Response) => {
   try {
-    const managerId: string = req._id;
-    let manager = await models.managerModel
-      .findById(managerId)
-      .populate("teamId")
-      .exec();
-    const playerId: number = req.body.id;
-    const index: number = req.body.index;
+    const managerId: String = req._id;
+    const playerId: Number = req.body.elementId;
+    let manager:object = await managerRepo.getManagerById(managerId);
+    console.log("manager: ",manager);
+    console.log("typeof m : ",typeof(manager));
+    const player = await playerRepo.getPlayerByGeneralId(playerId);
+    console.log("player: ",player);
+    console.log("typeof p : ",typeof(player));
+    console.log(typeof(manager));
     const currentBudget: number = manager.budget;
     const player = await models.playerModel.findById(playerId);
     
