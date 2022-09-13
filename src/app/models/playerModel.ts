@@ -6,46 +6,30 @@ const playerSchema = new Schema<IPlayer>(
   {
     generalId: {
       type: Number,
-      // required: true,
     },
     positionId: {
       type: Number,
-      // required: true,
     },
-    news: {
-      type: String,
-    },
-    in_dreamteam: {
-      type: Boolean,
-      default: false,
-    },
-    event_points: {
+    eventPoints: {
       type: Number,
       default: 0,
     },
-    first_name: {
+    firstName: {
       type: String,
-      // required: true,
     },
-    second_name: {
+    secondName: {
       type: String,
-      // required: true,
     },
     form: {
       type: Number,
       default: 0,
     },
-    now_cost: {
+    nowCost: {
       type: Number,
-      required: true,
     },
-    points_per_game: {
+    pointsPerGame: {
       type: Number,
       default: 0,
-    },
-    special: {
-      type: Boolean,
-      default: false,
     },
     status: {
       type: String,
@@ -53,15 +37,11 @@ const playerSchema = new Schema<IPlayer>(
     teamId: {
       type: Number,
     },
-    value_form: {
+    valueSeason: {
       type: Number,
       default: 0,
     },
-    value_season: {
-      type: Number,
-      default: 0,
-    },
-    web_name: {
+    webName: {
       type: String,
       required: true,
     },
@@ -69,7 +49,7 @@ const playerSchema = new Schema<IPlayer>(
       type: Number,
       default: 0,
     },
-    goals_scored: {
+    goalsScored: {
       type: Number,
       default: 0,
     },
@@ -77,30 +57,30 @@ const playerSchema = new Schema<IPlayer>(
       type: Number,
       default: 0,
     },
-    clean_sheets: {
+    cleanSheets: {
       type: Number,
       default: 0,
     },
-    goals_conceded: {
+    goalsConceded: {
       type: Number,
     },
-    own_goals: {
-      type: Number,
-      default: 0,
-    },
-    penalties_saved: {
+    ownGoals: {
       type: Number,
       default: 0,
     },
-    penalties_missed: {
+    penaltiesSaved: {
       type: Number,
       default: 0,
     },
-    yellow_cards: {
+    penaltiesMissed: {
       type: Number,
       default: 0,
     },
-    red_cards: {
+    yellowCards: {
+      type: Number,
+      default: 0,
+    },
+    redCards: {
       type: Number,
       default: 0,
     },
@@ -133,5 +113,5 @@ playerSchema.set("toObject", { virtuals: true });
 playerSchema.set("toJSON", { virtuals: true });
 playerSchema.plugin(mongoosePaginate);
 
-const Player = model("Player", playerSchema);
+const Player = model<IPlayer>("Player", playerSchema);
 module.exports = Player;
