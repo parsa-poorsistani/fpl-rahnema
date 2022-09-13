@@ -1,16 +1,16 @@
-import mongoose from "mongoose";
 import models = require("../../models/path");
+import mongoose from "mongoose";
 import { IPlayerRepo } from "../../Interface/player.interface";
-import { playerPaginateResponse } from "../../Types/player.type";
+import { paginateResponseType } from "../../Types/response.type";
 
-export class playerRepo implements IPlayerRepo {
+export class PlayerRepo implements IPlayerRepo {
   public paginatePlayers = async (
     filter: string,
     page: Number,
     limit: Number,
     pickIds: mongoose.Types.ObjectId[] = []
-  ): Promise<playerPaginateResponse> => {
-    let players: playerPaginateResponse = await models.playerModel.paginate(
+  ): Promise<paginateResponseType> => {
+    let players: paginateResponseType = await models.playerModel.paginate(
       {
         _id: { $nin: pickIds },
         positionId: filter == "0" ? { $gt: 0 } : filter ? filter : { $gt: 0 },
@@ -33,8 +33,8 @@ export class playerRepo implements IPlayerRepo {
     limit: Number,
     web_name: string,
     pickIds: mongoose.Types.ObjectId[] = []
-  ): Promise<playerPaginateResponse> => {
-    let players: playerPaginateResponse = await models.playerModel.paginate(
+  ): Promise<paginateResponseType> => {
+    let players: paginateResponseType = await models.playerModel.paginate(
       {
         web_name: new RegExp("^" + web_name + "w*", "i"),
         positionId: filter == "0" ? { $gt: 0 } : filter ? filter : { $gt: 0 },
@@ -50,5 +50,10 @@ export class playerRepo implements IPlayerRepo {
       }
     );
     return players;
+  };
+
+  public getPlayerByGeneralId = async (id: Number) => {
+    const player = await models.playerModel.findOne({ elementId: id });
+    return player;
   };
 }

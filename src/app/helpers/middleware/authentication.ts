@@ -1,7 +1,7 @@
 import models = require("../../models/path");
 import jwt = require("jsonwebtoken");
 import { Request, Response } from "express";
-import { GlobalError } from "../error/globalError";
+import { ApiError } from "../error/apiError";
 import mongoose from "mongoose";
 
 type Next = (err?: String) => void | Promise<void>;
@@ -24,14 +24,14 @@ function authToken(req: Request, res: Response, next: Next) {
         } else {
           return res
             .status(403)
-            .json(new GlobalError("User with sent token doesn't exist", 403));
+            .json(new ApiError("User with sent token doesn't exist", 403));
         }
       } else {
-        return res.status(403).json(new GlobalError("Token is invalid", 403));
+        return res.status(403).json(new ApiError("Token is invalid", 403));
       }
     });
   } else {
-    return res.status(403).json(new GlobalError("Token not sent", 403));
+    return res.status(403).json(new ApiError("Token not sent", 403));
   }
 }
 

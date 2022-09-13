@@ -1,10 +1,9 @@
-export {};
 import express from "express";
-import controllers = require("../controllers/path");
+import { PlayerController } from "../controllers/playerController";
 import { authToken } from "../helpers/middleware/authentication";
 const routes = express.Router();
+let playerController = new PlayerController();
 
-routes.get("/search", authToken, controllers.playerController.getPlayerByName);
-routes.get("/", authToken, controllers.playerController.getPlayers);
+routes.get("", authToken, playerController.getPlayerByName);
 
 module.exports = routes;

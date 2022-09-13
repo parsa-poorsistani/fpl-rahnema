@@ -1,4 +1,4 @@
-class GlobalError extends Error {
+class ApiError extends Error {
   error: string;
   status: Number;
 
@@ -9,4 +9,4 @@ class GlobalError extends Error {
   }
 }
 
-export { GlobalError };
+export { ApiError };

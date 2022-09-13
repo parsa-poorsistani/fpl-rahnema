@@ -1,43 +1,41 @@
-import models = require("../models/path");
 import { Request, Response } from "express";
-import { playerRepo } from "../database/Repository/player.repo";
-import { IPlayer, IPlayerRepo } from "../Interface/player.interface";
-import { playerPaginateResponse } from "../Types/player.type";
+import { PlayerService } from "../service/player.service";
+import { ManagerService } from "../service/manager.service";
+import { IPlayerController } from "../Interface/player.interface";
 import mongoose = require("mongoose");
+import {
+  paginateResponseToFrontType,
+  paginateResponseType,
+} from "../Types/response.type";
+import { ApiError } from "../helpers/error/apiError";
 
-
-const getPlayerByName = async (req: Request, res: Response) => {
-  try {
-    const { filter, page, limit, web_name } = req.query;
-    let manager = await models.managerModel
-      .findById(req._id)
-      .populate(["teamId", { path: "teamId", populate: "picks.player" }]);
-    let players: playerPaginateResponse;
-    let myPlayerRepo = new playerRepo();
-    let picks = manager.teamId.picks;
-    let pickIds: mongoose.Types.ObjectId[] = [];
-    picks.map((element: any) => {
-      if (element.player) {
-        pickIds.push(element.player._id);
-      }
-    });
-    players = await myPlayerRepo.getPlayerByName(
-      filter as string,
-      Number(page),
-      Number(limit),
-      web_name as string,
-      pickIds
-    );
-    return res.status(200).json({
-      data: players.docs,
-      total: players.total,
-      limit: players.limit,
-      page: players.page,
-      pages: players.pages,
-    });
-  } catch (err) {
-    return res.status(500).json({ msg: err });
+export class PlayerController implements IPlayerController {
+  myPlayerService: PlayerService;
+  managerService: ManagerService;
+  constructor() {
+    this.myPlayerService = new PlayerService();
+    this.managerService = new ManagerService();
   }
-};
 
-module.exports = getPlayerByName;
+  public getPlayerByName = async (req: Request, res: Response) => {
+    try {
+      const { filter, page, limit, web_name } = req.query;
+      let pickIds = await this.managerService.getTeamPlayerIdsByManagerId(
+        new mongoose.Types.ObjectId(req._id)
+      );
+      let players: paginateResponseToFrontType =
+        await this.myPlayerService.paginatePlayerByName(
+          pickIds,
+          filter as string,
+          Number(page),
+          Number(limit),
+          web_name as string
+        );
+      return res.status(200).json(players);
+    } catch (err) {
+      return res
+        .status(500)
+        .json(new ApiError("An error ocurred while getting players", 500));
+    }
+  };
+}

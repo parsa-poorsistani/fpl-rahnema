@@ -1,5 +1,18 @@
 import { Types } from "mongoose";
-import { playerPaginateResponse } from "../Types/player.type";
+import {
+  generalResponseType,
+  paginateResponseType,
+} from "../Types/response.type";
+import { Request, Response } from "express";
+
+interface IPlayerController {
+  myPlayerService: IPlayerService;
+  getPlayerByName(req: Request, res: Response): Promise<Response>;
+}
+
+interface IPlayerService {
+  myPlayerRepo: IPlayerRepo;
+}
 
 interface IPlayerRepo {
   paginatePlayers(
@@ -7,7 +20,7 @@ interface IPlayerRepo {
     page: Number,
     limit: Number,
     pickIds: Types.ObjectId[]
-  ): Promise<playerPaginateResponse>;
+  ): Promise<paginateResponseType>;
 
   getPlayerByName(
     filter: string,
@@ -15,7 +28,9 @@ interface IPlayerRepo {
     limit: Number,
     web_name: string,
     pickIds: Types.ObjectId[]
-  ): Promise<playerPaginateResponse>;
+  ): Promise<paginateResponseType>;
+
+  getPlayerByGeneralId(id: Number): Promise<IPlayer>;
 }
 
 interface IPlayer {
@@ -45,4 +60,4 @@ interface IPlayer {
   bonus: Number;
 }
 
-export { IPlayerRepo, IPlayer };
+export { IPlayerRepo, IPlayer, IPlayerController };
