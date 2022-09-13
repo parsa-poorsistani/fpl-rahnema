@@ -1,42 +1,39 @@
 import models = require("../models/path");
 import { Request, Response } from "express";
-const {managerRepo,playerRepo} = require('../database/repo/path');
-
 
 const addPlayerToTeam = async (req: Request, res: Response) => {
   try {
-    const managerId: String = req._id;
-    const playerId: Number = req.body.elementId;
-    let manager:object = await managerRepo.getManagerById(managerId);
-    console.log("manager: ",manager);
-    console.log("typeof m : ",typeof(manager));
-    const player = await playerRepo.getPlayerByGeneralId(playerId);
-    console.log("player: ",player);
-    console.log("typeof p : ",typeof(player));
-    console.log(typeof(manager));
+    const managerId: string = req._id;
+    let manager = await models.managerModel
+      .findById(managerId)
+      .populate("teamId")
+      .exec();
+    const playerId: number = req.body.id;
+    const index: number = req.body.index;
     const currentBudget: number = manager.budget;
     const player = await models.playerModel.findById(playerId);
-    
+
     let team: Array<object> = manager.teamId.picks;
     if (team === null) {
       return res.status(404).json({ msg: "team with this id not found." });
     }
-    if(await checkPlayerIsAvailable(player,team)==false) {
-      return res.status(403).json({msg:"player alredy in the team."});
+    if ((await checkPlayerIsAvailable(player, team)) == false) {
+      return res.status(403).json({ msg: "player alredy in the team." });
     }
-    if(!checkIndex(player,index)) {
-      return res.status(403).json({msg:"index is not right"});
+    if (!checkIndex(player, index)) {
+      return res.status(403).json({ msg: "index is not right" });
     }
     if (
       (await addPlayerValidation(player, team)) &&
-      currentBudget >= player.now_cost) {
+      currentBudget >= player.now_cost
+    ) {
       const data = {
         player: player._id,
       };
       manager.budget = currentBudget - player.now_cost;
       manager.teamId.picks[index] = data;
-      manager.save();
-      manager.teamId.save();
+      await manager.save();
+      await manager.teamId.save();
       return res.status(200).json({ data: manager.teamId.picks });
     }
     return res
@@ -72,8 +69,8 @@ const deletePlayerFromTeam = async (req: Request, res: Response) => {
 
     manager.budget = currentBudget + player.now_cost;
     manager.teamId.picks[index] = data;
-    manager.save();
-    manager.teamId.save();
+    await manager.save();
+    await manager.teamId.save();
     res.status(200).json({ team });
   } catch (error) {
     console.log(error);
@@ -123,25 +120,29 @@ const makeCaptain = async (req: Request, res: Response) => {
   res.status(200).json({ team });
 };
 
-const checkPlayerIsAvailable = async (player:any,team:Array<any>): Promise<boolean>=> {
-  const playerId:string = player.web_name;
-  for(let p of team) {
-
-    if(p.player===null) {
+const checkPlayerIsAvailable = async (
+  player: any,
+  team: Array<any>
+): Promise<boolean> => {
+  const playerId: string = player.web_name;
+  for (let p of team) {
+    if (p.player === null) {
       continue;
     }
     let p2 = await models.playerModel.findById(p.player);
-    if(p2.web_name==playerId) {
-      
+    if (p2.web_name == playerId) {
       return false;
     }
   }
-  
+
   return true;
 };
 
 //cheking for no more than 3 players from one team
-const addPlayerValidation = async (player: any, team: Array<any>): Promise<boolean> => {
+const addPlayerValidation = async (
+  player: any,
+  team: Array<any>
+): Promise<boolean> => {
   let num: number = 0;
   for (let p of team) {
     if (p.player !== null) {
@@ -159,27 +160,39 @@ const addPlayerValidation = async (player: any, team: Array<any>): Promise<boole
 
 const checkIndex = (player: any, index: number): boolean => {
   if (player.positionId === 1) {
-    if (index === 0 || index===1) {
+    if (index === 0 || index === 1) {
       return true;
-    } 
+    }
   }
 
   if (player.positionId === 2) {
-    if (index === 2 || index===3 || index === 4 || index===5 || index===6) {
+    if (
+      index === 2 ||
+      index === 3 ||
+      index === 4 ||
+      index === 5 ||
+      index === 6
+    ) {
       return true;
-    } 
+    }
   }
 
   if (player.positionId === 3) {
-    if (index === 7 || index===8 || index === 9 || index===10 || index===11) {
+    if (
+      index === 7 ||
+      index === 8 ||
+      index === 9 ||
+      index === 10 ||
+      index === 11
+    ) {
       return true;
-    } 
+    }
   }
 
   if (player.positionId === 4) {
-    if (index === 12 || index===13 || index === 14) {
+    if (index === 12 || index === 13 || index === 14) {
       return true;
-    } 
+    }
   }
 
   return false;
