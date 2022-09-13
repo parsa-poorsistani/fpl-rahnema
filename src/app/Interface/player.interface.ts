@@ -1,11 +1,12 @@
-import mongoose from "mongoose";
+import { Types } from "mongoose";
+import { playerPaginateResponse } from "../Types/player.type";
 
-interface IPlayerFunctions {
+interface IPlayerRepo {
   paginatePlayers(
     filter: string,
     page: Number,
     limit: Number,
-    pickIds: mongoose.Types.ObjectId[]
+    pickIds: Types.ObjectId[]
   ): Promise<playerPaginateResponse>;
 
   getPlayerByName(
@@ -13,47 +14,35 @@ interface IPlayerFunctions {
     page: Number,
     limit: Number,
     web_name: string,
-    pickIds: mongoose.Types.ObjectId[]
+    pickIds: Types.ObjectId[]
   ): Promise<playerPaginateResponse>;
 }
 
 interface IPlayer {
-  generalId: Number;
+  generalId?: Types.ObjectId;
   positionId: Number;
-  news: String;
-  in_dreamteam: Boolean;
-  event_points: Number;
-  first_name: String;
+  eventPoints: Number;
+  firstName: String;
+  secondName: String;
+  webName: String;
   form: Number;
-  now_cost: Number;
-  points_per_game: Number;
-  second_name: String;
-  special: Boolean;
+  nowCost: Number;
+  pointsPerGame: Number;
   status: String;
   teamId: Number;
-  value_form: Number;
-  value_season: Number;
-  web_name: String;
+  valueSeason: Number;
   minutes: Number;
-  goals_scored: Number;
+  goalsScored: Number;
   assists: Number;
-  clean_sheets: Number;
-  goals_conceded: Number;
-  own_goals: Number;
-  penalties_saved: Number;
-  penalties_missed: Number;
-  yellow_cards: Number;
-  red_cards: Number;
+  cleanSheets: Number;
+  goalsConceded: Number;
+  ownGoals: Number;
+  penaltiesSaved: Number;
+  penaltiesMissed: Number;
+  yellowCards: Number;
+  redCards: Number;
   saves: Number;
   bonus: Number;
 }
 
-type playerPaginateResponse = {
-  docs: IPlayer[];
-  total: Number;
-  limit: Number;
-  page: Number;
-  pages: Number;
-};
-
-export { IPlayer, IPlayerFunctions, playerPaginateResponse };
+export { IPlayerRepo, IPlayer };

@@ -1,7 +1,8 @@
 import models = require("../models/path");
 import { Request, Response } from "express";
 import { playerRepo } from "../database/Repository/player.repo";
-import { IPlayer, playerPaginateResponse } from "../Interface/player.interface";
+import { IPlayer, IPlayerRepo } from "../Interface/player.interface";
+import { playerPaginateResponse } from "../Types/player.type";
 import mongoose = require("mongoose");
 
 
