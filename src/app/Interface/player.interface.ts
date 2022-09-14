@@ -2,9 +2,9 @@ import { Types } from "mongoose";
 import {
   paginateResponseToFrontType,
   paginateResponseType,
-} from "../Types/response.type";
+} from "../types/response.type";
 import { Request, Response } from "express";
-import objId from "../Types/types";
+import objId from "../types/types";
 
 interface IPlayerController {
   myPlayerService: IPlayerService;
@@ -43,28 +43,32 @@ interface IPlayerRepo {
 }
 
 interface IPlayer {
-  generalId?: Types.ObjectId;
+  _id: objId;
+  generalId: Number;
   positionId: Number;
-  eventPoints: Number;
-  firstName: String;
-  secondName: String;
-  web_name: String;
+  news: String;
+  event_points: Number;
+  first_name: String;
   form: Number;
-  nowCost: Number;
-  pointsPerGame: Number;
+  now_cost: Number;
+  points_per_game: Number;
+  second_name: String;
+  special: Boolean;
   status: String;
   teamId: Number;
-  valueSeason: Number;
+  value_form: Number;
+  value_season: Number;
+  web_name: String;
   minutes: Number;
-  goalsScored: Number;
+  goals_scored: Number;
   assists: Number;
-  cleanSheets: Number;
-  goalsConceded: Number;
-  ownGoals: Number;
-  penaltiesSaved: Number;
-  penaltiesMissed: Number;
-  yellowCards: Number;
-  redCards: Number;
+  clean_sheets: Number;
+  goals_conceded: Number;
+  own_goals: Number;
+  penalties_saved: Number;
+  penalties_missed: Number;
+  yellow_cards: Number;
+  red_cards: Number;
   saves: Number;
   bonus: Number;
 }
