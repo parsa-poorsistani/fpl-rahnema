@@ -6,8 +6,6 @@ import {IPick} from '../Interface/team.interface';
 import ITeamService = require('../Interface/teamService');
 import objId from '../types/types';
 
-
-
 class TeamService implements ITeamService{
     managerRepo = new ManagerRepo();
     playerRepo = new PlayerRepo();

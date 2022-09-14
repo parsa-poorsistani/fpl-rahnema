@@ -2,7 +2,6 @@ import models = require('../../models/path');
 import {IPick, ITeam} from "../../Interface/team.interface";
 import {IManagerRepo,IManager} from '../../Interface/manager.interface';
 import objId from '../../types/types';
-import { Schema } from 'express-validator';
 
 
 export class ManagerRepo implements IManagerRepo{
@@ -12,7 +11,7 @@ export class ManagerRepo implements IManagerRepo{
         return manager;
     };
 
-
+    //where is this used?
     getTeamByManagerId = async(managerId:objId): Promise<Array<IPick>> => {
         const manager = await models.managerModel
         .findById(managerId)
@@ -21,6 +20,7 @@ export class ManagerRepo implements IManagerRepo{
         return manager.teamId.picks;
     };
     
+    //where is this used?
     getTeamDetailByManagerId = async(managerId:objId):Promise<object> => {
         const team = await models.managerModel.findById(managerId)
         .populate(["teamId", {path:"teamId", populate: "picks.player"}])
@@ -34,10 +34,10 @@ export class ManagerRepo implements IManagerRepo{
 
     updateTeamById = async(teamId: objId,data:objId|null, index:number):Promise<void> => { 
         //maybe team repo needed        
-        const team:ITeam = await models.teamModel.findByIdAndUpdate(teamId,{"$set":
+        await models.teamModel.findByIdAndUpdate(teamId,{"$set":
             {
                 [`picks.${index}.player`]:data
             }
-        },{"new":true});                        
+        });                        
     };
 };
