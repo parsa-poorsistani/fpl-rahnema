@@ -1,4 +1,6 @@
-interface IEvent {
+import { Request, Response } from "express";
+
+export interface IEvent {
   generalId: String;
   name: String;
   deadline_time: String;
@@ -11,6 +13,16 @@ interface IEvent {
   is_current: Boolean;
 }
 
-interface IEventFunctions {
-  getCurrentWeekInfo(): Promise<IEvent>;
+export interface IEventRepo {
+  getCurrentEvent(): Promise<IEvent>;
+}
+
+export interface IEventService {
+  eventRepo: IEventRepo;
+  getCurrentEvent(): Promise<IEvent>;
+}
+
+export interface IEventController {
+  eventService: IEventService;
+  getCurrentEvent(req: Request, res: Response): Promise<Response>;
 }
