@@ -41,7 +41,7 @@ const playerSchema = new Schema<IPlayer>(
       type: Number,
       default: 0,
     },
-    webName: {
+    web_name: {
       type: String,
       required: true,
     },

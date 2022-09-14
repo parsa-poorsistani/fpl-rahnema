@@ -1,24 +1,32 @@
 import mongoose from "mongoose";
 import { PlayerRepo } from "../database/repository/player.repo";
+import { IPlayerService } from "../Interface/player.interface";
 import {
   paginateResponseToFrontType,
   paginateResponseType,
 } from "../Types/response.type";
-import generalService = require("../service/general.service");
+import { ManagerService } from "./manager.service";
+import utils = require("../helpers/utils/utils");
 
-export class PlayerService {
+export class PlayerService implements IPlayerService {
   myPlayerRepo: PlayerRepo;
+  managerService: ManagerService;
+
   constructor() {
     this.myPlayerRepo = new PlayerRepo();
+    this.managerService = new ManagerService();
   }
 
   public async paginatePlayerByName(
-    pickIds: Array<mongoose.Types.ObjectId>,
     filter: string,
     page: Number,
     limit: Number,
-    web_name: string
+    web_name: string,
+    managerId: mongoose.Types.ObjectId
   ): Promise<paginateResponseToFrontType> {
+    let pickIds = await this.managerService.getTeamPlayerIdsByManagerId(
+      new mongoose.Types.ObjectId(managerId)
+    );
     let players: paginateResponseType = await this.myPlayerRepo.getPlayerByName(
       filter as string,
       Number(page),
@@ -27,7 +35,7 @@ export class PlayerService {
       pickIds
     );
 
-    let response = generalService.paginationResponseToFront(players);
+    let response = utils.paginationResponseToFront(players);
 
     return response;
   }

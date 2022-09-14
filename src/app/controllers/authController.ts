@@ -1,7 +1,6 @@
 require("dotenv").config();
 const models = require("../models/path");
-const service = require("../service/service");
-import { validationErrorHandler } from "../service/service";
+import utils = require("../helpers/utils/utils");
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -14,7 +13,7 @@ redisClient.on("connect", () => {
 
 const signUpManager = async (req: Request, res: Response) => {
   try {
-    await validationErrorHandler(req);
+    await utils.validationErrorHandler(req);
     const { email, country, first_name, last_name, username, password } =
       req.body;
     let rand = Math.floor(Math.random() * 100 + 54);
@@ -35,7 +34,7 @@ const signUpManager = async (req: Request, res: Response) => {
     ]);
 
     redisClient.expire(`email:${email}`, 900);
-    service.mailSender(email, "confirmation", encodedMail);
+    utils.mailSender(email, "confirmation", encodedMail);
     return res.status(200).json({ msg: "ok" });
   } catch (err) {
     return res.status(500).json(err);
@@ -44,7 +43,7 @@ const signUpManager = async (req: Request, res: Response) => {
 
 const verify = async (req: Request, res: Response) => {
   try {
-    await validationErrorHandler(req);
+    await utils.validationErrorHandler(req);
     const { email, code } = req.body;
     const verCode = await redisClient.hGet(`email:${email}`, "code");
     if (code !== verCode) {
@@ -90,7 +89,7 @@ const verify = async (req: Request, res: Response) => {
 
 const logInManager = async (req: Request, res: Response) => {
   try {
-    await validationErrorHandler(req);
+    await utils.validationErrorHandler(req);
     const { username, password } = req.body;
     const manager = await models.managerModel
       .findOne({ username: username })

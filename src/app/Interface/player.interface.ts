@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import {
-  generalResponseType,
+  paginateResponseToFrontType,
   paginateResponseType,
 } from "../Types/response.type";
 import { Request, Response } from "express";
@@ -12,6 +12,14 @@ interface IPlayerController {
 
 interface IPlayerService {
   myPlayerRepo: IPlayerRepo;
+
+  paginatePlayerByName(
+    filter: string,
+    page: Number,
+    limit: Number,
+    web_name: string,
+    managerId: Types.ObjectId
+  ): Promise<paginateResponseToFrontType>;
 }
 
 interface IPlayerRepo {
@@ -39,7 +47,7 @@ interface IPlayer {
   eventPoints: Number;
   firstName: String;
   secondName: String;
-  webName: String;
+  web_name: String;
   form: Number;
   nowCost: Number;
   pointsPerGame: Number;
@@ -60,4 +68,4 @@ interface IPlayer {
   bonus: Number;
 }
 
-export { IPlayerRepo, IPlayer, IPlayerController };
+export { IPlayerRepo, IPlayer, IPlayerController, IPlayerService };
