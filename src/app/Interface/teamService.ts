@@ -1,6 +1,5 @@
 import {IPlayer} from '../Interface/player.interface';
-import {ITeam,IPick} from '../Interface/team.interface'; 
-import mongoose from 'mongoose';
+import {IPick} from '../Interface/team.interface'; 
 import objId from '../types/types';
 
 
