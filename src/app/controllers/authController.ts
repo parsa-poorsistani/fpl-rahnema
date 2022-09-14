@@ -16,8 +16,7 @@ const signUpManager = async (req: Request, res: Response) => {
     await utils.validationErrorHandler(req);
     const { email, country, first_name, last_name, username, password } =
       req.body;
-    let rand = Math.floor(Math.random() * 100 + 54);
-    let encodedMail = Buffer.from(email).toString("base64");
+    const confirmationCode = await utils.confirmationCodeGenerator();
     redisClient.hSet(`email:${email}`, [
       "first_name",
       first_name,
@@ -30,11 +29,11 @@ const signUpManager = async (req: Request, res: Response) => {
       "country",
       country,
       "code",
-      encodedMail,
+      confirmationCode,
     ]);
 
     redisClient.expire(`email:${email}`, 900);
-    utils.mailSender(email, "confirmation", encodedMail);
+    utils.mailSender(email, "confirmation", confirmationCode.toString());
     return res.status(200).json({ msg: "ok" });
   } catch (err) {
     return res.status(500).json(err);
