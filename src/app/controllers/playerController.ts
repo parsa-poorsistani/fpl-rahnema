@@ -11,7 +11,10 @@ export class PlayerController implements IPlayerController {
     this.myPlayerService = new PlayerService();
   }
 
-  public getPlayerByName = async (req: Request, res: Response) => {
+  public getPlayerByName = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
     try {
       const { filter, page, limit, web_name } = req.query;
 
