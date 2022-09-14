@@ -4,6 +4,7 @@ import {
   paginateResponseType,
 } from "../Types/response.type";
 import { Request, Response } from "express";
+import objId from "../Types/types";
 
 interface IPlayerController {
   myPlayerService: IPlayerService;
@@ -38,7 +39,7 @@ interface IPlayerRepo {
     pickIds: Types.ObjectId[]
   ): Promise<paginateResponseType>;
 
-  getPlayerByGeneralId(id: Number): Promise<IPlayer>;
+  getPlayerById(playerId: objId): Promise<IPlayer>;
 }
 
 interface IPlayer {
@@ -68,4 +69,18 @@ interface IPlayer {
   bonus: Number;
 }
 
-export { IPlayerRepo, IPlayer, IPlayerController, IPlayerService };
+type playerPaginateResponse = {
+  docs: IPlayer[];
+  total: Number;
+  limit: Number;
+  page: Number;
+  pages: Number;
+};
+
+export {
+  IPlayer,
+  playerPaginateResponse,
+  IPlayerRepo,
+  IPlayerService,
+  IPlayerController,
+};

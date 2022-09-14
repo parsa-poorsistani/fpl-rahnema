@@ -1,6 +1,6 @@
 import models = require("../../models/path");
 import mongoose from "mongoose";
-import { IPlayerRepo } from "../../Interface/player.interface";
+import { IPlayer, IPlayerRepo } from "../../Interface/player.interface";
 import { paginateResponseType } from "../../Types/response.type";
 
 export class PlayerRepo implements IPlayerRepo {
@@ -54,8 +54,10 @@ export class PlayerRepo implements IPlayerRepo {
     return players;
   };
 
-  public getPlayerByGeneralId = async (id: Number) => {
-    const player = await models.playerModel.findOne({ elementId: id });
+  public getPlayerById = async (
+    playerId: mongoose.Types.ObjectId
+  ): Promise<IPlayer> => {
+    const player: IPlayer = await models.playerModel.findById(playerId);
     return player;
   };
 }

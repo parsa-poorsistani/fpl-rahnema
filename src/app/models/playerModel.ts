@@ -1,4 +1,4 @@
-import { ObjectId, model, Schema, Types } from "mongoose";
+import { model, Schema } from "mongoose";
 import { IPlayer } from "../Interface/player.interface";
 const mongoosePaginate = require("mongoose-paginate");
 

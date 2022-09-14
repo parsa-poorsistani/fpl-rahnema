@@ -4,6 +4,6 @@ import { authToken } from "../helpers/middleware/authentication";
 const routes = express.Router();
 let playerController = new PlayerController();
 
-routes.get("", authToken, playerController.getPlayerByName);
+routes.get("/search", authToken, playerController.getPlayerByName);
 
 module.exports = routes;
