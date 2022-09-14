@@ -1,13 +1,11 @@
-import models = require('../../models/path');
+import models = require("../../models/path");
 
-
-const getManagerById = async(id:string) => {
-    const manager = await models.managerModel.findById(id)
+const getManagerById = async (id: string) => {
+  const manager = await models.managerModel
+    .findById(id)
     .populate("teamId")
     .exec();
-    console.log(manager); 
-    console.log("type of manager: ",typeof(manager));
-    return manager;
+  return manager;
 };
 
-module.exports = {getManagerById};
+module.exports = { getManagerById };

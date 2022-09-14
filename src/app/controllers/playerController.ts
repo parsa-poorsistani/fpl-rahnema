@@ -14,7 +14,6 @@ export class PlayerController implements IPlayerController {
   public getPlayerByName = async (req: Request, res: Response) => {
     try {
       const { filter, page, limit, web_name } = req.query;
-      console.log(filter);
 
       let players: paginateResponseToFrontType =
         await this.myPlayerService.paginatePlayerByName(
