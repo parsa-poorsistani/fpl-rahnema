@@ -4,7 +4,7 @@ import { IPlayerService } from "../Interface/player.interface";
 import {
   paginateResponseToFrontType,
   paginateResponseType,
-} from "../Types/response.type";
+} from "../types/response.type";
 import { ManagerService } from "./manager.service";
 import utils = require("../helpers/utils/utils");
 

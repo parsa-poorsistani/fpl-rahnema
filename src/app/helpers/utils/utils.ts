@@ -3,7 +3,7 @@ import { IPlayer } from "../../Interface/player.interface";
 import {
   paginateResponseToFrontType,
   paginateResponseType,
-} from "../../Types/response.type";
+} from "../../types/response.type";
 import { ValidationError } from "../error/validationError";
 import nodemailer from "nodemailer";
 import { Request, Response } from "express";

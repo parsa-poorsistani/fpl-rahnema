@@ -1,11 +1,16 @@
 import models = require("../../models/path");
 import { IPick, ITeam } from "../../Interface/team.interface";
 import { IManagerRepo, IManager } from "../../Interface/manager.interface";
-import objId from "../../Types/types";
+import objId from "../../types/types";
 
 export class ManagerRepo implements IManagerRepo {
-  getManagerById = async (managerId: objId): Promise<IManager> => {
-    const manager = await models.managerModel.findById(managerId);
+  getManagerById = async (
+    managerId: objId,
+    populate?: any
+  ): Promise<IManager> => {
+    const manager = await models.managerModel
+      .findById(managerId)
+      .populate(populate);
     return manager;
   };
 
