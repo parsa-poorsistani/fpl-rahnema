@@ -10,24 +10,24 @@ const playerSchema = new Schema<IPlayer>(
     positionId: {
       type: Number,
     },
-    eventPoints: {
+    event_points: {
       type: Number,
       default: 0,
     },
-    firstName: {
+    first_name: {
       type: String,
     },
-    secondName: {
+    second_name: {
       type: String,
     },
     form: {
       type: Number,
       default: 0,
     },
-    nowCost: {
+    now_cost: {
       type: Number,
     },
-    pointsPerGame: {
+    points_per_game: {
       type: Number,
       default: 0,
     },
@@ -37,7 +37,7 @@ const playerSchema = new Schema<IPlayer>(
     teamId: {
       type: Number,
     },
-    valueSeason: {
+    value_season: {
       type: Number,
       default: 0,
     },
@@ -49,7 +49,7 @@ const playerSchema = new Schema<IPlayer>(
       type: Number,
       default: 0,
     },
-    goalsScored: {
+    goals_scored: {
       type: Number,
       default: 0,
     },
@@ -57,30 +57,30 @@ const playerSchema = new Schema<IPlayer>(
       type: Number,
       default: 0,
     },
-    cleanSheets: {
+    clean_sheets: {
       type: Number,
       default: 0,
     },
-    goalsConceded: {
+    goals_conceded: {
       type: Number,
     },
-    ownGoals: {
-      type: Number,
-      default: 0,
-    },
-    penaltiesSaved: {
+    own_goals: {
       type: Number,
       default: 0,
     },
-    penaltiesMissed: {
+    penalties_saved: {
       type: Number,
       default: 0,
     },
-    yellowCards: {
+    penalties_missed: {
       type: Number,
       default: 0,
     },
-    redCards: {
+    yellow_cards: {
+      type: Number,
+      default: 0,
+    },
+    red_cards: {
       type: Number,
       default: 0,
     },

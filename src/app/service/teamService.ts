@@ -4,7 +4,7 @@ import { IPlayer } from "../Interface/player.interface";
 import {IManager} from '../Interface/manager.interface';
 import {IPick} from '../Interface/team.interface';
 import ITeamService = require('../Interface/teamService');
-import objId from '../types/types';
+import {objId} from '../Types/types';
 
 class TeamService implements ITeamService{
     managerRepo = new ManagerRepo();
