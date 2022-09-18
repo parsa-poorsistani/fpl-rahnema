@@ -1,7 +1,8 @@
 const express = require("express");
 const routes = express.Router();
-import controllers = require("../controllers/path");
+import { EventController } from "../controllers/eventController";
+const eventController = new EventController();
 
-routes.get("/current/info", controllers.eventController.getCurrentWeekInfo);
+routes.get("/current/info", eventController.getCurrentEvent);
 
 module.exports = routes;

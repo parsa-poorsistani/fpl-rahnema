@@ -4,7 +4,6 @@ const app = express();
 const db = require("./app/database/db-connection");
 const routes = require("./app/routes/path");
 const cronJob = require("cron").CronJob;
-const service = require("./app/service/service");
 const port: Number = parseInt(<string>process.env.APPLICATION_PORT);
 const morgan = require("morgan");
 const cors = require("cors");

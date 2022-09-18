@@ -1,14 +1,10 @@
 import express from "express";
+import TeamController from "../controllers/teamController";
 const routes = express.Router();
-const {
-  addPlayerToTeam,
-  deletePlayerFromTeam,
-  makeCaptain,
-} = require("../controllers/teamController");
 import { authToken } from "../helpers/middleware/authentication";
+const teamController = new TeamController();
 
-routes.patch("/delete-player", authToken, deletePlayerFromTeam);
-routes.patch("/add-player", authToken, addPlayerToTeam);
-routes.patch("/make-captain", authToken, makeCaptain);
+routes.patch("/delete-player", authToken, teamController.deletePlayerFromTeam);
+routes.patch("/add-player", authToken, teamController.addPlayerToTeam);
 
 module.exports = routes;

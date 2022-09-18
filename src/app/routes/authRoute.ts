@@ -5,15 +5,15 @@ import {
   handleLogin,
   handleVerify,
 } from "../helpers/validation/authValidation";
-import controllers = require("../controllers/path");
-
+import { AuthController } from "../controllers/authController";
+const authController = new AuthController();
 routes.post(
   "/signup",
   handleSignUp(),
-  controllers.authController.signUpManager
+  authController.signUpManager
 );
-routes.post("/verify", handleVerify(), controllers.authController.verify);
+routes.post("/verify", handleVerify(), authController.verify);
 
-routes.post("/login", handleLogin(), controllers.authController.logInManager);
+routes.post("/login", handleLogin(), authController.login);
 
 module.exports = routes;
