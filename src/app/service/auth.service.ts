@@ -47,7 +47,7 @@ export class AuthService implements IauthService {
       return result;
     }
     return result;
-  }
+  };
 
   async verify(
     email: string,
@@ -80,7 +80,7 @@ export class AuthService implements IauthService {
       token: token,
     };
     return data;
-  }
+  };
 
   async login(
     username: string,
@@ -103,5 +103,5 @@ export class AuthService implements IauthService {
       token: token,
     };
     return data;
-  }
-}
+  };
+};
