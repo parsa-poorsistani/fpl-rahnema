@@ -25,4 +25,9 @@ type managerSignUpType = {
     email: string,
 };
 
-export {objId,managerSignUpType,signInputData,authResponseData};
+type substitution = {
+    in:objId,
+    out:objId
+};
+
+export {objId,managerSignUpType,signInputData,authResponseData,substitution};

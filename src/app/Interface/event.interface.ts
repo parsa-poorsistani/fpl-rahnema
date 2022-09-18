@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
+import { objId } from "../types/types";
 
 export interface IEvent {
+  _id:objId,
   generalId: String;
   name: String;
   deadline_time: String;
