@@ -11,13 +11,15 @@ class AuthController implements IauthController {
   async signUpManager(req: Request, res: Response): Promise<Response> {
     try {
       await utils.validationErrorHandler(req);
+      const { first_name, last_name, password, username, country, email } =
+        req.body;
       const inputData: signInputData = {
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        password: req.body.password,
-        username: req.body.username,
-        country: req.body.country,
-        email: req.body.email,
+        first_name: first_name,
+        last_name: last_name,
+        password: password,
+        username: username,
+        country: country,
+        email: email,
       };
 
       const result: string = await authService.signUpManager(inputData);
