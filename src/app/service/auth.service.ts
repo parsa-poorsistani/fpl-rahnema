@@ -3,6 +3,7 @@ import utils = require("../helpers/utils/utils");
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { ManagerRepo } from "../database/repository/manager.repo";
+import { FeedRepo } from "../database/repository/feed.repo";
 import { IManager } from "../Interface/manager.interface";
 import {
   objId,
@@ -19,6 +20,7 @@ redisClient.on("connect", () => {
 
 export class AuthService implements IauthService {
   managerRepo = new ManagerRepo();
+  feedRepo = new FeedRepo();
 
   async signUpManager(input: signInputData): Promise<string> {
     const { email, country, first_name, last_name, username, password } = input;
@@ -74,6 +76,7 @@ export class AuthService implements IauthService {
     };
 
     const manager: IManager = await this.managerRepo.createManager(managerData);
+    await this.feedRepo.createFeed(manager._id);
     const token: string = jwt.sign({ id: manager._id }, process.env.HASH_KEY!);
     const data: authResponseData = {
       manager: manager._id,
