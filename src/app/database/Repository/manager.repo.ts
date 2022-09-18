@@ -1,7 +1,7 @@
 import models = require("../../models/path");
 import { IPick, ITeam } from "../../Interface/team.interface";
 import { IManagerRepo, IManager } from "../../Interface/manager.interface";
-import objId from "../../types/types";
+import { managerSignUpType, objId } from "../../types/types";
 
 export class ManagerRepo implements IManagerRepo {
   getManagerById = async (
@@ -53,5 +53,31 @@ export class ManagerRepo implements IManagerRepo {
         [`picks.${index}.player`]: data,
       },
     });
+  };
+
+  createManager = async (managerData: managerSignUpType): Promise<IManager> => {
+    const manager: IManager = await models.managerModel.create(managerData);
+    return manager;
+  };
+
+  findManager = async (username: string): Promise<IManager | null> => {
+    const manager: IManager = await models.managerModel.findOne({
+      username: username,
+    });
+    return manager;
+  };
+
+  createTeam = async (): Promise<objId> => {
+    let picks = [];
+    for (let i = 0; i < 15; i++) {
+      await picks.push({
+        player_id: null,
+        index: i,
+      });
+    }
+    const team = await models.teamModel.create({
+      picks: picks,
+    });
+    return team._id;
   };
 }

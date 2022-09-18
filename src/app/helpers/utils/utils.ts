@@ -27,11 +27,8 @@ export const validationErrorHandler = async (req: Request, status = 400) => {
   }
 };
 
-export const mailSender = async (
-  receiver: string,
-  subject: string,
-  text: string
-) => {
+export const mailSender = async (receiver: string, subject: string, text: string):Promise<string> => {
+  let flag = 0;
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -46,16 +43,19 @@ export const mailSender = async (
     text: text,
   };
 
-  transporter.sendMail(
-    mailOptions,
-    function (error: any, info: { response: string }) {
+  transporter.sendMail(mailOptions, function (error: any, info: { response: string }):void {
       if (error) {
         console.log(error);
       } else {
         console.log("Email sent: " + info.response);
+        flag = 1;
       }
     }
   );
+  if(flag===1) {
+    return 'error';
+  }
+  return 'OK';
 };
 
 export const confirmationCodeGenerator = async (): Promise<Number> => {

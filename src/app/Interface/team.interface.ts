@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
+import {objId} from '../Types/types';
 
 export interface ITeam {
-    save(): unknown;
+    _id:objId,
     picks: Array<IPick>
 };
 

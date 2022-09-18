@@ -27,4 +27,4 @@ export class ManagerService {
     });
     return pickIds;
   }
-}
+};

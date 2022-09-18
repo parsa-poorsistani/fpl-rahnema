@@ -29,7 +29,7 @@ const managerSchema = new Schema<IManager>(
     },
     password: {
       type: String,
-      select: false,
+      select: true,
       default: null,
       required: true,
     },

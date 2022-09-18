@@ -1,5 +1,5 @@
-import objId from '../types/types';
-import {IPick,ITeam} from '../Interface/team.interface';
+import {objId} from '../Types/types'
+import {IPick} from '../Interface/team.interface';
 
 
 interface IManagerRepo {
@@ -8,6 +8,9 @@ interface IManagerRepo {
     getTeamDetailByManagerId(managerId:objId):Promise<any>;
     updateManagerBudgetById(managerId:objId,budget:number):Promise<void>;
     updateTeamById(teamId: objId,data:objId|null, index:number):Promise<void>;
+    createManager(managerData:object):Promise<IManager>;
+    findManager(username:string):Promise<IManager|null>;
+    createTeam():Promise<objId>;
 };
 
 interface IManager {

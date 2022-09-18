@@ -4,7 +4,7 @@ import {
   paginateResponseType,
 } from "../types/response.type";
 import { Request, Response } from "express";
-import objId from "../types/types";
+import { objId } from "../types/types";
 
 interface IPlayerController {
   myPlayerService: IPlayerService;
