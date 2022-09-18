@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {objId} from '../Types/types';
+import {objId} from '../types/types';
 
 export interface ITeam {
     _id:objId,

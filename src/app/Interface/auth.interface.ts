@@ -1,5 +1,5 @@
 import {Request,Response} from 'express';
-import { authResponseData, signInputData } from '../Types/types';
+import { authResponseData, signInputData } from '../types/types';
 
 interface IauthController {
     signUpManager(req:Request,res:Response):Promise<Response>;
