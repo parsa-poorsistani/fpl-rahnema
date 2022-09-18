@@ -28,6 +28,4 @@ const countPlayers = (team: Array<any>): number => {
   return count;
 };
 
-module.exports = {
-  getDashboard,
-};
+export { getDashboard, countPlayers };

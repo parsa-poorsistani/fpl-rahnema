@@ -3,7 +3,7 @@ import TeamService = require("../service/teamService");
 import ITeamController = require("../Interface/team.controller");
 import { StatusCodes } from "http-status-codes";
 import { Request, Response } from "express";
-import { objId } from "../Types/types";
+import { objId } from "../types/types";
 
 class TeamController implements ITeamController {
   teamService = new TeamService();

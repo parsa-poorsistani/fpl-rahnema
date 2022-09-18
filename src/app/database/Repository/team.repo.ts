@@ -1,6 +1,6 @@
 import models = require("../../models/path");
 import { IPick, ITeam } from "../../Interface/team.interface";
-import objId from "../../types/types";
+import { objId } from "../../types/types";
 
 export class TeamRepo {
   getTeamById = async (teamId: objId): Promise<ITeam> => {

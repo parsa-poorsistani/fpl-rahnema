@@ -4,7 +4,7 @@ import { TeamRepo } from "../database/repository/team.repo";
 import { IManager } from "../Interface/manager.interface";
 import { IPick, ITeam } from "../Interface/team.interface";
 import models = require("../models/path");
-import objId = require("../types/types");
+import { objId } from "../types/types";
 
 export class ManagerService {
   managerRepo: ManagerRepo;
@@ -27,4 +27,4 @@ export class ManagerService {
     });
     return pickIds;
   }
-};
+}
