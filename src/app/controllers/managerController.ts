@@ -1,13 +1,18 @@
-import models = require("../models/path");
 import { Request, Response } from "express";
-import { IManager, IManagerService } from "../Interface/manager.interface";
+import {
+  IManager,
+  IManagerController,
+  IManagerService,
+} from "../Interface/manager.interface";
 import { ApiGeneralService } from "../service/api.general.service";
 import { ManagerService } from "../service/manager.service";
-import { objId } from "../types/types";
 import TeamService = require("../service/teamService");
 import { ITeamService, ITeam } from "../Interface/team.interface";
 
-export class ManagerController extends ApiGeneralService {
+export class ManagerController
+  extends ApiGeneralService
+  implements IManagerController
+{
   managerService: IManagerService;
   teamService: ITeamService;
   constructor() {

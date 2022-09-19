@@ -1,5 +1,6 @@
 import { objId } from "../types/types";
 import { IPick, ITeam } from "../Interface/team.interface";
+import { Request, Response } from "express";
 
 export interface IManager {
   _id: objId;
@@ -19,6 +20,7 @@ export interface IManager {
 
 export interface IManagerController {
   managerService: IManagerService;
+  getDashboard(req: Request, res: Response): Promise<Response>;
 }
 
 export interface IManagerService {

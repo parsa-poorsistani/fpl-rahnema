@@ -13,6 +13,7 @@ export interface IPick {
 }
 
 export interface ITeamController {
+  teamService: ITeamService;
   addPlayerToTeam(req: Request, res: Response): Promise<Response>;
   deletePlayerFromTeam(req: Request, res: Response): Promise<Response>;
 }
