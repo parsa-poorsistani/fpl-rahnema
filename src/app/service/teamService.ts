@@ -2,13 +2,19 @@ import { ManagerRepo } from "../database/repository/manager.repo";
 import { PlayerRepo } from "../database/repository/player.repo";
 import { IPlayer } from "../Interface/player.interface";
 import { IManager } from "../Interface/manager.interface";
-import { IPick } from "../Interface/team.interface";
-import ITeamService = require("../Interface/teamService");
+import { IPick, ITeam } from "../Interface/team.interface";
+import { ITeamService } from "../Interface/team.interface";
 import { objId } from "../types/types";
+import { TeamRepo } from "../database/repository/team.repo";
 
 class TeamService implements ITeamService {
   managerRepo = new ManagerRepo();
   playerRepo = new PlayerRepo();
+  teamRepo = new TeamRepo();
+
+  getTeamById = async (teamId: objId): Promise<ITeam> => {
+    return await this.teamRepo.getTeamById(teamId);
+  };
 
   async addPlayerToTeam(
     managerId: objId,

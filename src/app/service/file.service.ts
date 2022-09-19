@@ -1,8 +1,6 @@
-import multer from "multer";
 import utils = require("../helpers/utils/utils");
-import models = require("../../app/models/path");
 import { IFile, IFileRepo, IFileService } from "../Interface/file.interface";
-import { FileRepo } from "../database/Repository/file.repo";
+import { FileRepo } from "../database/repository/file.repo";
 
 export class FileService implements IFileService {
   fileRepo: IFileRepo;

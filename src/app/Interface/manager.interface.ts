@@ -1,22 +1,7 @@
 import { objId } from "../types/types";
-import { IPick } from "../Interface/team.interface";
+import { IPick, ITeam } from "../Interface/team.interface";
 
-interface IManagerRepo {
-  getManagerById(managerId: objId): Promise<IManager>;
-  getTeamByManagerId(managerId: objId): Promise<Array<IPick>>;
-  getTeamDetailByManagerId(managerId: objId): Promise<any>;
-  updateManagerBudgetById(managerId: objId, budget: number): Promise<void>;
-  updateTeamById(
-    teamId: objId,
-    data: objId | null,
-    index: number
-  ): Promise<void>;
-  createManager(managerData: object): Promise<IManager>;
-  findManager(username: string): Promise<IManager | null>;
-  createTeam(): Promise<objId>;
-}
-
-interface IManager {
+export interface IManager {
   _id: objId;
   first_name: string;
   last_name: string;
@@ -32,4 +17,28 @@ interface IManager {
   summaryEventRank: number;
 }
 
-export { IManager, IManagerRepo };
+export interface IManagerController {
+  managerService: IManagerService;
+}
+
+export interface IManagerService {
+  managerRepo: IManagerRepo;
+  countPlayersInTeam(team: ITeam): number;
+  getTeamPlayerIdsByManagerId(id: objId): Promise<Array<objId>>;
+  getManagerById(managerId: objId): Promise<IManager>;
+}
+
+export interface IManagerRepo {
+  getManagerById(managerId: objId): Promise<IManager>;
+  getTeamByManagerId(managerId: objId): Promise<Array<IPick>>;
+  getTeamDetailByManagerId(managerId: objId): Promise<any>;
+  updateManagerBudgetById(managerId: objId, budget: number): Promise<void>;
+  updateTeamById(
+    teamId: objId,
+    data: objId | null,
+    index: number
+  ): Promise<void>;
+  createManager(managerData: object): Promise<IManager>;
+  findManager(username: string): Promise<IManager | null>;
+  createTeam(): Promise<objId>;
+}
