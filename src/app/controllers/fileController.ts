@@ -4,11 +4,16 @@ import {
   IFileController,
   IFileService,
 } from "../Interface/file.interface";
+import { ApiGeneralService } from "../service/api.general.service";
 import { FileService } from "../service/file.service";
 
-export class FileController implements IFileController {
+export class FileController
+  extends ApiGeneralService
+  implements IFileController
+{
   fileService: IFileService;
   constructor() {
+    super();
     this.fileService = new FileService();
   }
 
@@ -20,7 +25,11 @@ export class FileController implements IFileController {
       let myFile: IFile;
       if (req.file) {
         myFile = await this.fileService.createFile(req.file);
-        return res.status(200).json(myFile);
+        return await this.createSuccessfulResponse(
+          res,
+          "file successfully created",
+          myFile
+        );
       }
       return res.status(400).json({ msg: "no file was sent" });
     } catch (err) {
