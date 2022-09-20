@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
+
+
 type objId = mongoose.Types.ObjectId;
+
+export type connectionResponse = {
+    managerId:objId,
+    following:boolean,
+    first_name:string,
+    last_name:string,
+    img:any
+};
 
 type signInputData = {
     email:string,

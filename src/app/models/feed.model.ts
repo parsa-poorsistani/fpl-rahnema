@@ -14,8 +14,9 @@ const feedSchema = new Schema<IFeed>({
     substitutions:{
         type:Array<substitution>
     },
-    likes:{
-        type:Number
+    likers:{
+        type:Array<objId>,
+        default:null
     },
     event:{
         type:mongoose.Types.ObjectId,
