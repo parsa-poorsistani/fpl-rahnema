@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import models = require('../../models/path');
 import {IFeed, IFeedRepo} from '../../Interface/feed.interface';
 import { objId, substitution } from '../../types/types';
+import { IEvent } from '../../Interface/event.interface';
 
 export class FeedRepo implements IFeedRepo {
     getFeed(gameWeek: number, managerIds: mongoose.Types.ObjectId[]): Promise<IFeed[]> {
@@ -20,8 +21,8 @@ export class FeedRepo implements IFeedRepo {
         throw new Error('Method not implemented.');
     }
     async createFeed(managerId:objId): Promise<void> {
-        for(let i=0;i<38;i++) {
-            const event = await models.eventModel.findOne({generalId:i.toString()});
+        for(let i=1;i<=20;i++) {
+            const event:IEvent = await models.eventModel.findOne({generalId:i.toString()});
             const data:IFeed = {
                 managerId:managerId,
                 points:0,

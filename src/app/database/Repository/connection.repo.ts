@@ -12,11 +12,7 @@ export class ConnectionRepo implements IConnectionRepo {
     };
 
     async disconnect(following: objId,follower:objId): Promise<void> {
-        await models.connectionModel.deleteOne({following:following,follower:follower},(error:Error)=>{
-            console.log(error);
-            
-        });
-        throw new Error('Method not implemented.');
+        await models.connectionModel.deleteOne({following:following,follower:follower});
     };
 
     // async findFollowings(managerId: objId): Promise<objId[]> {

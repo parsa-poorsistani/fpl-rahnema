@@ -4,8 +4,6 @@ import {IConnectionController} from '../Interface/connection.interface';
 import { connectionResponse, objId } from "../types/types";
 import { ConnectionService } from "../service/connection.service";
 import mongoose from 'mongoose';
-import { ParamsDictionary } from "express-serve-static-core";
-import { ParsedQs } from "qs";
 const connectionServive = new ConnectionService();
 
 export class ConnectionController implements IConnectionController {
@@ -25,7 +23,7 @@ export class ConnectionController implements IConnectionController {
     async unfollow(req: Request, res: Response): Promise<Response> {
         try {
             const managerId:objId = new mongoose.Types.ObjectId(req._id);
-            const target:objId = new mongoose.Types.ObjectId(req.params.userId);
+            const target:objId = new mongoose.Types.ObjectId(req.body.target);            
             await connectionServive.unfollow(managerId,target);
             return res.status(StatusCodes.OK).json({msg:"OK"});
         } catch (error) {
@@ -72,7 +70,7 @@ export class ConnectionController implements IConnectionController {
     async searchInFollowers(req: Request, res: Response): Promise<Response> {
         try {
             const managerId:objId = new mongoose.Types.ObjectId(req._id);
-            const name:string = req.body;
+            const name:string = req.body.name;
             const data:connectionResponse[]|null = await connectionServive.searchInFollowers(managerId,name);
             return res.status(StatusCodes.OK).json({data:data});
         } catch (error) {
@@ -84,7 +82,7 @@ export class ConnectionController implements IConnectionController {
     async searchInFollowings(req: Request, res: Response): Promise<Response> {
         try {
             const managerId:objId = new mongoose.Types.ObjectId(req._id);
-            const name:string = req.body;
+            const name:string = req.body.name;
             const data:connectionResponse[]|null = await connectionServive.searchInFollowings(managerId,name);
             return res.status(StatusCodes.OK).json({data:data});
         } catch (error) {

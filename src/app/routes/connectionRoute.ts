@@ -5,7 +5,7 @@ import { authToken } from "../helpers/middleware/authentication";
 const connectionController = new ConnectionController();
 
 routes.post('/follow',authToken,connectionController.follow);
-routes.delete('/unfollow/:userId',authToken,connectionController.unfollow);
+routes.post('/unfollow',authToken,connectionController.unfollow);
 routes.get('/followers',authToken,connectionController.displayFollowers);
 routes.get('/followings',authToken,connectionController.displayFollowings);
 routes.post('/followings/search',authToken,connectionController.searchInFollowings);
