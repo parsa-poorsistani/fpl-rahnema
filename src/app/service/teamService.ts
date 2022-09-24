@@ -1,9 +1,9 @@
 import { ManagerRepo } from "../database/repository/manager.repo";
 import { PlayerRepo } from "../database/repository/player.repo";
-import { IPlayer } from "../Interface/player.interface";
-import { IManager } from "../Interface/manager.interface";
-import { IPick, ITeam } from "../Interface/team.interface";
-import { ITeamService } from "../Interface/team.interface";
+import { IPlayer } from "../interface/player.interface";
+import { IManager } from "../interface/manager.interface";
+import { IPick, ITeam } from "../interface/team.interface";
+import { ITeamService } from "../interface/team.interface";
 import { objId } from "../types/types";
 import { TeamRepo } from "../database/repository/team.repo";
 

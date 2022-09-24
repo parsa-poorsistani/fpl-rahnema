@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import { IPlayer } from "../../Interface/player.interface";
+import { IPlayer } from "../../interface/player.interface";
 import {
   paginateResponseToFrontType,
   paginateResponseType,

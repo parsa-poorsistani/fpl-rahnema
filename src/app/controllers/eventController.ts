@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { EventService } from "../service/event.service";
 import { ApiGeneralService } from "../service/api.general.service";
-import { IEventController, IEventService } from "../Interface/event.interface";
+import { IEventController, IEventService } from "../interface/event.interface";
 import errors = require("../helpers/error/internalServerError");
 
 export class EventController

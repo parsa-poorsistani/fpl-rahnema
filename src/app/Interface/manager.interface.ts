@@ -1,5 +1,5 @@
 import { objId } from "../types/types";
-import { IPick, ITeam } from "../Interface/team.interface";
+import { IPick, ITeam } from "./team.interface";
 import { Request, Response } from "express";
 
 export interface IManager {

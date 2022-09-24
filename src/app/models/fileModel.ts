@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import { IFile } from "../interface/file.interface";
 
-const fileSchema = new mongoose.Schema(
+const fileSchema = new mongoose.Schema<IFile>(
   {
     name: { type: String, trim: true, default: null },
     url: { type: String, trim: true, default: null },

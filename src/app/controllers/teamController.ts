@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import TeamService = require("../service/teamService");
-import { ITeamController } from "../Interface/team.interface";
+import { ITeamController } from "../interface/team.interface";
 import { StatusCodes } from "http-status-codes";
 import { Request, Response } from "express";
 import { objId } from "../types/types";

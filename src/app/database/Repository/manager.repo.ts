@@ -1,6 +1,6 @@
 import models = require("../../models/path");
-import { IPick, ITeam } from "../../Interface/team.interface";
-import { IManagerRepo, IManager } from "../../Interface/manager.interface";
+import { IPick, ITeam } from "../../interface/team.interface";
+import { IManagerRepo, IManager } from "../../interface/manager.interface";
 import { managerSignUpType, objId } from "../../types/types";
 
 export class ManagerRepo implements IManagerRepo {

@@ -1,6 +1,6 @@
 require("dotenv").config();
 import utils = require("../helpers/utils/utils");
-import { IauthController } from "../Interface/auth.interface";
+import { IauthController } from "../interface/auth.interface";
 import { Request, Response } from "express";
 import { AuthService } from "../service/auth.service";
 import { StatusCodes } from "http-status-codes";

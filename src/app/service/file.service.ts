@@ -1,5 +1,5 @@
 import utils = require("../helpers/utils/utils");
-import { IFile, IFileRepo, IFileService } from "../Interface/file.interface";
+import { IFile, IFileRepo, IFileService } from "../interface/file.interface";
 import { FileRepo } from "../database/repository/file.repo";
 
 export class FileService implements IFileService {

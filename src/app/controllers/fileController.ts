@@ -3,7 +3,7 @@ import {
   IFile,
   IFileController,
   IFileService,
-} from "../Interface/file.interface";
+} from "../interface/file.interface";
 import { ApiGeneralService } from "../service/api.general.service";
 import { FileService } from "../service/file.service";
 

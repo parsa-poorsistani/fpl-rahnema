@@ -1,4 +1,4 @@
-import { IFile, IFileRepo } from "../../Interface/file.interface";
+import { IFile, IFileRepo } from "../../interface/file.interface";
 import models = require("../../models/path");
 
 export class FileRepo implements IFileRepo {

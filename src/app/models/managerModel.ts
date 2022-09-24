@@ -1,5 +1,5 @@
 import { model, Schema, Types } from "mongoose";
-import {IManager} from '../Interface/manager.interface';
+import { IManager } from "../interface/manager.interface";
 import bcrypt from "bcrypt";
 
 const managerSchema = new Schema<IManager>(

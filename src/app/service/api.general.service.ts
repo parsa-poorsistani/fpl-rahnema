@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import { Response } from "express";
-import { IApiGeneralService } from "../Interface/api.general.interface";
+import { IApiGeneralService } from "../interface/api.general.interface";
 import errors = require("../helpers/error/path");
 
 export class ApiGeneralService implements IApiGeneralService {

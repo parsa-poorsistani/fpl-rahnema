@@ -1,8 +1,8 @@
 import { Types } from "mongoose";
 import { ManagerRepo } from "../database/repository/manager.repo";
 import { TeamRepo } from "../database/repository/team.repo";
-import { IManager, IManagerService } from "../Interface/manager.interface";
-import { IPick, ITeam } from "../Interface/team.interface";
+import { IManager, IManagerService } from "../interface/manager.interface";
+import { IPick, ITeam } from "../interface/team.interface";
 import { objId } from "../types/types";
 
 export class ManagerService implements IManagerService {

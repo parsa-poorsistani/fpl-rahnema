@@ -3,11 +3,11 @@ import {
   IManager,
   IManagerController,
   IManagerService,
-} from "../Interface/manager.interface";
+} from "../interface/manager.interface";
 import { ApiGeneralService } from "../service/api.general.service";
 import { ManagerService } from "../service/manager.service";
 import TeamService = require("../service/teamService");
-import { ITeamService, ITeam } from "../Interface/team.interface";
+import { ITeamService, ITeam } from "../interface/team.interface";
 import mongoose from "mongoose";
 
 export class ManagerController

@@ -1,9 +1,9 @@
-import { IauthService } from "../Interface/auth.interface";
+import { IauthService } from "../interface/auth.interface";
 import utils = require("../helpers/utils/utils");
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { ManagerRepo } from "../database/repository/manager.repo";
-import { IManager } from "../Interface/manager.interface";
+import { IManager } from "../interface/manager.interface";
 import {
   objId,
   managerSignUpType,
