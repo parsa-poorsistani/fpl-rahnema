@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { PlayerService } from "../service/player.service";
 import { IPlayerController } from "../Interface/player.interface";
-import mongoose = require("mongoose");
+import mongoose from "mongoose";
 import { paginateResponseToFrontType } from "../types/response.type";
 import { ApiError } from "../helpers/error/apiError";
 import { ApiGeneralService } from "../service/api.general.service";

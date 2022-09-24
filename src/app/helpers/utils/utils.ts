@@ -24,7 +24,11 @@ export const paginationResponseToFront = async (
 
 export const validationErrorHandler = async (req: Request, status = 400) => {
   if (!validationResult(req).isEmpty()) {
-    throw new ValidationError(validationResult(req).array(), status);
+    throw new ValidationError(
+      validationResult(req).array(),
+      "validation error",
+      status
+    );
   }
 };
 

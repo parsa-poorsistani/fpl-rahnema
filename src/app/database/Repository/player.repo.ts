@@ -34,8 +34,6 @@ export class PlayerRepo implements IPlayerRepo {
     web_name: string,
     pickIds: mongoose.Types.ObjectId[] = []
   ): Promise<paginateResponseType> => {
-    console.log(web_name);
-
     let players: paginateResponseType = await models.playerModel.paginate(
       {
         web_name: new RegExp("^" + web_name + "w*", "i"),

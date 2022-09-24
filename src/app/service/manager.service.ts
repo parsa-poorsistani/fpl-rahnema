@@ -1,11 +1,8 @@
-import { constants } from "fs/promises";
 import { Types } from "mongoose";
 import { ManagerRepo } from "../database/repository/manager.repo";
 import { TeamRepo } from "../database/repository/team.repo";
 import { IManager, IManagerService } from "../Interface/manager.interface";
-import { IPlayer } from "../Interface/player.interface";
 import { IPick, ITeam } from "../Interface/team.interface";
-import models = require("../models/path");
 import { objId } from "../types/types";
 
 export class ManagerService implements IManagerService {

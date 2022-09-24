@@ -1,7 +1,7 @@
 import { Request } from "express";
 import multer from "multer";
 import utils = require("../utils/utils");
-import { DestinationCallback, FileNameCallback } from "../../Types/file.type";
+import { DestinationCallback, FileNameCallback } from "../../types/file.type";
 
 let storage = multer.diskStorage({
   destination: (
