@@ -29,7 +29,9 @@ class AuthController extends ApiGeneralService implements IauthController {
           .status(StatusCodes.NOT_ACCEPTABLE)
           .json({ msg: "sign up failed" });
       }
-      return this.generalSuccessfulResponse(res, "Email sent successfully");
+      return res
+        .status(StatusCodes.OK)
+        .json({ msg: "Email sent successfully", result });
     } catch (error) {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
@@ -49,11 +51,9 @@ class AuthController extends ApiGeneralService implements IauthController {
           .status(StatusCodes.NOT_ACCEPTABLE)
           .json({ msg: "code is wrong" });
       }
-      return this.generalSuccessfulResponse(
-        res,
-        "User created successfully",
-        result
-      );
+      return res
+        .status(StatusCodes.OK)
+        .json({ msg: "User created successfully", result });
     } catch (error) {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
@@ -75,7 +75,9 @@ class AuthController extends ApiGeneralService implements IauthController {
       if (result === "wrong password") {
         return res.status(StatusCodes.FORBIDDEN).json({ msg: result });
       }
-      return this.generalSuccessfulResponse(res, "login successful", result);
+      return res
+        .status(StatusCodes.OK)
+        .json({ msg: "login successful", result });
     } catch (error) {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
