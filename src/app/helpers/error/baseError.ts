@@ -1,7 +1,7 @@
 export class BaseError extends Error {
-  status: Number;
+  status: number;
 
-  constructor(msg: string, status: Number) {
+  constructor(msg: string, status: number) {
     super();
     this.message = msg;
     this.status = status;
