@@ -4,8 +4,9 @@ const managerModel = require("./managerModel");
 const teamModel = require("./teamModel");
 const eventModel = require("./eventModel");
 const pl_teamModel = require("./pl-teamModel");
-const feed_model = require('./feed.model');
-const connectionModel = require('./connection.model');
+const feed_model = require("./feed.model");
+const connectionModel = require("./connection.model");
+const fileModel = require("./fileModel");
 
 export {
   playerModel,
@@ -15,5 +16,6 @@ export {
   eventModel,
   pl_teamModel,
   feed_model,
-  connectionModel
+  connectionModel,
+  fileModel,
 };

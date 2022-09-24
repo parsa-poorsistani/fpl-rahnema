@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { PlayerRepo } from "../database/repository/player.repo";
-import { IPlayerService } from "../Interface/player.interface";
+import { IPlayerService } from "../interface/player.interface";
 import {
   paginateResponseToFrontType,
   paginateResponseType,
@@ -39,4 +39,4 @@ export class PlayerService implements IPlayerService {
 
     return response;
   }
-};
+}

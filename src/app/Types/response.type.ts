@@ -1,4 +1,4 @@
-import { IPlayer } from "../Interface/player.interface";
+import { IPlayer } from "../interface/player.interface";
 
 export type generalResponseType = {
   msg: String;

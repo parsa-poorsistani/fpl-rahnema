@@ -1,6 +1,5 @@
 import { ObjectId, Schema, model, Types } from "mongoose";
-import {ITeam} from "../Interface/team.interface";
-
+import { ITeam } from "../interface/team.interface";
 
 const teamSchema = new Schema<ITeam>(
   {
@@ -10,7 +9,7 @@ const teamSchema = new Schema<ITeam>(
           type: Types.ObjectId,
           ref: "Player",
           default: null,
-        }
+        },
       },
     ],
   },

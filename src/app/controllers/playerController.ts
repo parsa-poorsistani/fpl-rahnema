@@ -1,13 +1,18 @@
 import { Request, Response } from "express";
 import { PlayerService } from "../service/player.service";
-import { IPlayerController } from "../Interface/player.interface";
-import mongoose = require("mongoose");
+import { IPlayerController } from "../interface/player.interface";
+import mongoose from "mongoose";
 import { paginateResponseToFrontType } from "../types/response.type";
 import { ApiError } from "../helpers/error/apiError";
+import { ApiGeneralService } from "../service/api.general.service";
 
-export class PlayerController implements IPlayerController {
+export class PlayerController
+  extends ApiGeneralService
+  implements IPlayerController
+{
   myPlayerService: PlayerService;
   constructor() {
+    super();
     this.myPlayerService = new PlayerService();
   }
 
@@ -26,7 +31,11 @@ export class PlayerController implements IPlayerController {
           web_name as string,
           new mongoose.Types.ObjectId(req._id)
         );
-      return res.status(200).json(players);
+      return await this.generalSuccessfulResponse(
+        res,
+        "players sent successfully",
+        players
+      );
     } catch (err) {
       return res
         .status(500)

@@ -1,10 +1,11 @@
 import { objId } from "../types/types";
-import { IPick } from "../Interface/team.interface";
+import { IPick, ITeam } from "./team.interface";
+import { Request, Response } from "express";
 
-interface IManagerRepo {
+export interface IManagerRepo {
   getManagerById(managerId: objId): Promise<IManager | null>;
-  getManagersByName(name:string):Promise<IManager[] | null>;
-  getManagers():Promise<Array<IManager>>;
+  getManagersByName(name: string): Promise<IManager[] | null>;
+  getManagers(): Promise<Array<IManager>>;
   getTeamByManagerId(managerId: objId): Promise<Array<IPick>>;
   getTeamDetailByManagerId(managerId: objId): Promise<any>;
   updateManagerBudgetById(managerId: objId, budget: number): Promise<void>;
@@ -34,4 +35,14 @@ interface IManager {
   summaryEventRank: number;
 }
 
-export { IManager, IManagerRepo };
+export interface IManagerController {
+  managerService: IManagerService;
+  getDashboard(req: Request, res: Response): Promise<Response>;
+}
+
+export interface IManagerService {
+  managerRepo: IManagerRepo;
+  countPlayersInTeam(team: ITeam): number;
+  getTeamPlayerIdsByManagerId(id: objId): Promise<Array<objId>>;
+  getManagerById(managerId: objId): Promise<IManager>;
+}

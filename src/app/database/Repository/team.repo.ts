@@ -1,5 +1,5 @@
 import models = require("../../models/path");
-import { IPick, ITeam } from "../../Interface/team.interface";
+import { IPick, ITeam } from "../../interface/team.interface";
 import { objId } from "../../types/types";
 
 export class TeamRepo {

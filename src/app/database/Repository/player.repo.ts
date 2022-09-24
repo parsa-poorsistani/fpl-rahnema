@@ -1,6 +1,6 @@
 import models = require("../../models/path");
 import mongoose from "mongoose";
-import { IPlayer, IPlayerRepo } from "../../Interface/player.interface";
+import { IPlayer, IPlayerRepo } from "../../interface/player.interface";
 import { paginateResponseType } from "../../types/response.type";
 
 export class PlayerRepo implements IPlayerRepo {
@@ -34,8 +34,6 @@ export class PlayerRepo implements IPlayerRepo {
     web_name: string,
     pickIds: mongoose.Types.ObjectId[] = []
   ): Promise<paginateResponseType> => {
-    console.log(web_name);
-
     let players: paginateResponseType = await models.playerModel.paginate(
       {
         web_name: new RegExp("^" + web_name + "w*", "i"),
