@@ -47,11 +47,6 @@ export class ManagerService implements IManagerService {
       "teamId",
       { path: "teamId", populate: "picks.player" },
     ]);
-    // let team: ITeam = await this.teamRepo.getTeamById(manager.teamId?._id!);
-    // let nb: number = 0;
-    // if (manager) {
-    //   nb = await this.countPlayersInTeam(team);
-    // }
     manager.budget = Math.round(manager.budget * 10) / 10;
     return manager;
   };

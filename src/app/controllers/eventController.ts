@@ -1,8 +1,8 @@
-import models = require("../../app/models/path");
 import { Request, Response } from "express";
 import { EventService } from "../service/event.service";
 import { ApiGeneralService } from "../service/api.general.service";
 import { IEventController, IEventService } from "../Interface/event.interface";
+import errors = require("../helpers/error/internalServerError");
 
 export class EventController
   extends ApiGeneralService
@@ -18,11 +18,17 @@ export class EventController
     req: Request,
     res: Response
   ): Promise<Response> => {
-    let event = await this.eventService.getCurrentEvent();
-    return await this.generalSuccessfulResponse(
+    const event = await this.eventService.getCurrentEvent();
+    if (event) {
+      return await this.generalSuccessfulResponse(
+        res,
+        "Event sent successfult",
+        event
+      );
+    }
+    return await this.sendFailedResponse(
       res,
-      "Event sent successfult",
-      event
+      new errors.InternalServerError("error while getting current event")
     );
   };
 }
