@@ -1,11 +1,11 @@
-class ValidationError extends Error {
-  errors: any[];
-  status: Number;
+import { BaseError } from "./baseError";
 
-  constructor(errors: any[], status: Number) {
-    super();
+class ValidationError extends BaseError {
+  errors: any[];
+
+  constructor(errors: any[], msg: string, status: Number) {
+    super(msg, status);
     this.errors = errors;
-    this.status = status;
   }
 }
 

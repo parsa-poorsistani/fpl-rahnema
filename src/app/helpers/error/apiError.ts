@@ -1,12 +1,7 @@
-class ApiError extends Error {
-  error: string;
-  status: Number;
+import { BaseError } from "./baseError";
 
-  constructor(error: string, status: Number) {
-    super();
-    this.error = error;
-    this.status = status;
+export class ApiError extends BaseError {
+  constructor(msg: string, status: Number) {
+    super(msg, status);
   }
 }
-
-export { ApiError };
