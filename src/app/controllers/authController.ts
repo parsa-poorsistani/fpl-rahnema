@@ -33,7 +33,7 @@ class AuthController implements IauthController {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
     }
-  }
+  };
 
   async verify(req: Request, res: Response): Promise<Response> {
     try {
@@ -53,7 +53,7 @@ class AuthController implements IauthController {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
     }
-  }
+  };
 
   async login(req: Request, res: Response): Promise<Response> {
     try {
@@ -75,7 +75,7 @@ class AuthController implements IauthController {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
     }
-  }
-}
+  };
+};
 
 export { AuthController };

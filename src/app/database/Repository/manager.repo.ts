@@ -4,6 +4,33 @@ import { IManagerRepo, IManager } from "../../Interface/manager.interface";
 import { managerSignUpType, objId } from "../../types/types";
 
 export class ManagerRepo implements IManagerRepo {
+
+  getManagersByName(name: string): Promise<IManager[] | null> {
+    const managers = models.managerModel.find({
+      $expr: {
+        $regexMatch: {
+          input: {
+            $concat: [
+              "$first_name",
+              " ",
+              "$last_name",
+              "$username"
+            ]
+          },
+          regex: name,
+          options: "i"
+        }
+      }
+    })
+    return managers;
+  };
+
+
+  async getManagers(): Promise<IManager[]> {
+    return await models.managerModel.find();
+  };
+
+
   getManagerById = async (
     managerId: objId,
     populate?: any
@@ -13,6 +40,8 @@ export class ManagerRepo implements IManagerRepo {
       .populate(populate);
     return manager;
   };
+
+
 
   //where is this used?
   getTeamByManagerId = async (managerId: objId): Promise<Array<IPick>> => {

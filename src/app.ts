@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
 
+app.use("/api/v1/connections", routes.connectionRoute);
 app.use("/api/v1/auth", routes.authRoute);
 app.use("/api/v1/managers", routes.managerRoute);
 app.use("/api/v1/players", routes.playerRoute);
