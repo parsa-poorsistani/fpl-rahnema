@@ -19,7 +19,7 @@ export interface IManagerRepo {
   createTeam(): Promise<objId>;
 }
 
-interface IManager {
+export interface IManager {
   _id: objId;
   first_name: string;
   last_name: string;
