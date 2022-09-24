@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import errors = require("../helpers/error/path");
 import {
   IFile,
   IFileController,
@@ -25,15 +26,21 @@ export class FileController
       let myFile: IFile;
       if (req.file) {
         myFile = await this.fileService.createFile(req.file);
-        return await this.createSuccessfulResponse(
-          res,
-          "file successfully created",
-          myFile
-        );
+        if (myFile) {
+          return await this.createSuccessfulResponse(
+            res,
+            "file successfully created",
+            myFile
+          );
+        }
+        throw "creating file failed";
       }
-      return res.status(400).json({ msg: "no file was sent" });
+      return this.sendFailedResponse(
+        res,
+        new errors.BadRequestError("no file was sent")
+      );
     } catch (err) {
-      return res.status(400);
+      return this.sendFailedResponse(res, new errors.InternalServerError(err));
     }
   };
 }

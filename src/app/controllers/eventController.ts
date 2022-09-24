@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
 import { EventService } from "../service/event.service";
 import { ApiGeneralService } from "../service/api.general.service";
-import { IEventController, IEventService } from "../interface/event.interface";
+import {
+  IEvent,
+  IEventController,
+  IEventService,
+} from "../interface/event.interface";
 import errors = require("../helpers/error/internalServerError");
 
 export class EventController
@@ -18,17 +22,19 @@ export class EventController
     req: Request,
     res: Response
   ): Promise<Response> => {
-    const event = await this.eventService.getCurrentEvent();
-    if (event) {
+    try {
+      const event: IEvent = await this.eventService.getCurrentEvent();
+      if (!event) throw "error while geting event";
       return await this.generalSuccessfulResponse(
         res,
         "Event sent successfult",
         event
       );
+    } catch (err) {
+      return await this.sendFailedResponse(
+        res,
+        new errors.InternalServerError(err)
+      );
     }
-    return await this.sendFailedResponse(
-      res,
-      new errors.InternalServerError("error while getting current event")
-    );
   };
 }

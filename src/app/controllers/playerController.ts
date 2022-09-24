@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { paginateResponseToFrontType } from "../types/response.type";
 import { ApiError } from "../helpers/error/apiError";
 import { ApiGeneralService } from "../service/api.general.service";
+import errors = require("../helpers/error/path");
 
 export class PlayerController
   extends ApiGeneralService
@@ -31,15 +32,17 @@ export class PlayerController
           web_name as string,
           new mongoose.Types.ObjectId(req._id)
         );
+      if (!players) throw "Internal server error";
       return await this.generalSuccessfulResponse(
         res,
         "players sent successfully",
         players
       );
     } catch (err) {
-      return res
-        .status(500)
-        .json(new ApiError("An error ocurred while getting players", 500));
+      return await this.sendFailedResponse(
+        res,
+        new errors.InternalServerError(err)
+      );
     }
   };
 }
