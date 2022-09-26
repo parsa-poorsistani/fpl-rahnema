@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import { objId, substitution } from "../types/types";
 import { IFeed } from "../interface/feed.interface";
 
-const feedSchema = new Schema<IFeed>({
+const feedSchema = new Schema({
   managerId: {
     type: mongoose.Types.ObjectId,
     ref: "Manager",
