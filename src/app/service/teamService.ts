@@ -113,6 +113,21 @@ class TeamService implements ITeamService {
 
     return false;
   }
+
+  getTeamPoint = async (managerId: objId): Promise<number> => {
+    const team: IPick[] = await this.managerRepo.getTeamByManagerId(managerId);
+    let totalPoints: number = 0;
+    for (let pick of team) {
+      let player = await this.playerRepo.getPlayerById(pick.player);
+      console.log(player);
+
+      if (player) {
+        console.log(player.event_points);
+        totalPoints += player.event_points;
+      }
+    }
+    return totalPoints;
+  };
 }
 
 export = TeamService;
