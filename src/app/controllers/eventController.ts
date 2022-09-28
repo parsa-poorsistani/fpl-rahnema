@@ -1,11 +1,20 @@
-import models = require("../../app/models/path");
 import { Request, Response } from "express";
 import { EventService } from "../service/event.service";
-import { IEventController } from "../Interface/event.interface";
+import { ApiGeneralService } from "../service/api.general.service";
+import {
+  IEvent,
+  IEventController,
+  IEventService,
+} from "../interface/event.interface";
+import errors = require("../helpers/error/internalServerError");
 
-export class EventController implements IEventController {
-  eventService;
+export class EventController
+  extends ApiGeneralService
+  implements IEventController
+{
+  eventService: IEventService;
   constructor() {
+    super();
     this.eventService = new EventService();
   }
 
@@ -13,7 +22,19 @@ export class EventController implements IEventController {
     req: Request,
     res: Response
   ): Promise<Response> => {
-    let event = await this.eventService.getCurrentEvent();
-    return res.status(200).json({ data: event });
+    try {
+      const event: IEvent = await this.eventService.getCurrentEvent();
+      if (!event) throw "error while geting event";
+      return await this.generalSuccessfulResponse(
+        res,
+        "Event sent successfult",
+        event
+      );
+    } catch (err) {
+      return await this.sendFailedResponse(
+        res,
+        new errors.InternalServerError(err)
+      );
+    }
   };
 }

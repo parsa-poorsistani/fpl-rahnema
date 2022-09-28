@@ -1,5 +1,5 @@
 import models = require("../../models/path");
-import { IEventRepo, IEvent } from "../../Interface/event.interface";
+import { IEventRepo, IEvent } from "../../interface/event.interface";
 
 export class EventRepo implements IEventRepo {
   public getCurrentEvent = async (): Promise<IEvent> => {

@@ -1,10 +1,12 @@
 require("dotenv").config();
 import utils = require("../helpers/utils/utils");
-import { IauthController } from "../Interface/auth.interface";
+import { IauthController } from "../interface/auth.interface";
 import { Request, Response } from "express";
 import { AuthService } from "../service/auth.service";
 import { StatusCodes } from "http-status-codes";
 import { authResponseData, signInputData } from "../types/types";
+import { ApiGeneralService } from "../service/api.general.service";
+const authService = new AuthService();
 
 class AuthController implements IauthController {
   authService:AuthService;
@@ -33,12 +35,14 @@ class AuthController implements IauthController {
           .status(StatusCodes.NOT_ACCEPTABLE)
           .json({ msg: "sign up failed" });
       }
-      return res.status(StatusCodes.OK).json({ msg: "OK" });
+      return res
+        .status(StatusCodes.OK)
+        .json({ msg: "Email sent successfully", result });
     } catch (error) {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
     }
-  };
+  }
 
   verify = async (req: Request, res: Response): Promise<Response> => {
     try {
@@ -53,12 +57,14 @@ class AuthController implements IauthController {
           .status(StatusCodes.NOT_ACCEPTABLE)
           .json({ msg: "code is wrong" });
       }
-      return res.status(StatusCodes.CREATED).json({ data: result });
+      return res
+        .status(StatusCodes.OK)
+        .json({ msg: "User created successfully", result });
     } catch (error) {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
     }
-  };
+  }
 
   login = async(req: Request, res: Response): Promise<Response> => {
     try {
@@ -75,12 +81,14 @@ class AuthController implements IauthController {
       if (result === "wrong password") {
         return res.status(StatusCodes.FORBIDDEN).json({ msg: result });
       }
-      return res.status(StatusCodes.OK).json({ data: result });
+      return res
+        .status(StatusCodes.OK)
+        .json({ msg: "login successful", result });
     } catch (error) {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
     }
-  };
-};
+  }
+}
 
 export { AuthController };

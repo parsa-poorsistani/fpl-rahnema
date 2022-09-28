@@ -28,6 +28,6 @@ const feedSchema = new Schema<IFeed>(
     }
 );
 
-const Feed = mongoose.model("Feed",feedSchema);
+const Feed = mongoose.model("Feed", feedSchema);
 
 export = Feed;

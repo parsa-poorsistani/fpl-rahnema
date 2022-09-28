@@ -3,6 +3,7 @@ import eventController = require("./eventController");
 import managerController = require("./managerController");
 import authController = require("./authController");
 import teamController = require("./teamController");
+import fileController = require("./fileController");
 
 export {
   playerController,
@@ -10,4 +11,5 @@ export {
   managerController,
   authController,
   teamController,
+  fileController,
 };

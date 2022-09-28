@@ -1,5 +1,5 @@
 import { EventRepo } from "../database/repository/event.repo";
-import { IEventService, IEvent } from "../Interface/event.interface";
+import { IEventService, IEvent } from "../interface/event.interface";
 
 export class EventService implements IEventService {
   eventRepo;
