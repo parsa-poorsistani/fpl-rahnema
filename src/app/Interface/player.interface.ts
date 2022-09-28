@@ -46,31 +46,27 @@ interface IPlayer {
   _id: objId;
   generalId: Number;
   positionId: Number;
-  news: String;
   event_points: number;
   first_name: String;
-  form: Number;
-  now_cost: Number;
-  points_per_game: Number;
   second_name: String;
-  special: Boolean;
-  status: String;
-  teamId: Number;
-  value_form: Number;
-  value_season: Number;
   web_name: String;
+  now_cost: Number;
+  teamId: Number;
+  value_season: Number;
+  form: Number;
   minutes: Number;
   goals_scored: Number;
-  assists: Number;
-  clean_sheets: Number;
-  goals_conceded: Number;
-  own_goals: Number;
-  penalties_saved: Number;
-  penalties_missed: Number;
   yellow_cards: Number;
   red_cards: Number;
-  saves: Number;
-  bonus: Number;
+  // status: String;
+  // assists: Number;
+  // clean_sheets: Number;
+  // goals_conceded: Number;
+  // own_goals: Number;
+  // penalties_saved: Number;
+  // penalties_missed: Number;
+  // saves: Number;
+  // bonus: Number;
 }
 
 type playerPaginateResponse = {
