@@ -42,7 +42,7 @@ export class PlayerRepo implements IPlayerRepo {
         positionId: filter == "0" ? { $gt: 0 } : filter ? filter : { $gt: 0 },
         _id: { $nin: pickIds },
       },
-      {
+      {s
         page: page ? page : 1,
         limit: limit ? limit : 10,
         populate: [
