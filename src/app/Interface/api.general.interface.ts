@@ -5,11 +5,11 @@ export interface IApiGeneralService {
     res: Response,
     msg?: string,
     data?: any
-  ): Promise<Response>;
+  ): Response;
 
   createSuccessfulResponse(
     res: Response,
     msg?: string,
     data?: any
-  ): Promise<Response>;
+  ): Response;
 }
