@@ -35,9 +35,17 @@ type managerSignUpType = {
     email: string,
 };
 
+type feedCreationType = {
+    managerId:objId,
+    points:number,
+    substitutions:Array<substitution>|null,
+    likers:Array<objId>|null,
+    event:objId
+};
+
 type substitution = {
     in:objId,
     out:objId
 };
 
-export {objId,managerSignUpType,signInputData,authResponseData,substitution};
+export {objId,managerSignUpType,signInputData,authResponseData,substitution,feedCreationType};

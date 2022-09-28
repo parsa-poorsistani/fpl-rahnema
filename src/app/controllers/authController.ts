@@ -5,10 +5,15 @@ import { Request, Response } from "express";
 import { AuthService } from "../service/auth.service";
 import { StatusCodes } from "http-status-codes";
 import { authResponseData, signInputData } from "../types/types";
-const authService = new AuthService();
 
 class AuthController implements IauthController {
-  async signUpManager(req: Request, res: Response): Promise<Response> {
+  authService:AuthService;
+
+  constructor() {
+    this.authService = new AuthService();
+  };
+
+  signUpManager = async(req: Request, res: Response): Promise<Response> => {
     try {
       await utils.validationErrorHandler(req);
       const { first_name, last_name, password, username, country, email } =
@@ -22,7 +27,7 @@ class AuthController implements IauthController {
         email: email,
       };
 
-      const result: string = await authService.signUpManager(inputData);
+      const result: string = await this.authService.signUpManager(inputData);
       if (result === "error") {
         return res
           .status(StatusCodes.NOT_ACCEPTABLE)
@@ -35,11 +40,11 @@ class AuthController implements IauthController {
     }
   };
 
-  async verify(req: Request, res: Response): Promise<Response> {
+  verify = async (req: Request, res: Response): Promise<Response> => {
     try {
       await utils.validationErrorHandler(req);
       const { code, email } = req.body;
-      const result: string | authResponseData = await authService.verify(
+      const result: string | authResponseData = await this.authService.verify(
         email,
         code
       );
@@ -55,11 +60,11 @@ class AuthController implements IauthController {
     }
   };
 
-  async login(req: Request, res: Response): Promise<Response> {
+  login = async(req: Request, res: Response): Promise<Response> => {
     try {
       await utils.validationErrorHandler(req);
       const { username, password } = req.body;
-      const result: authResponseData | string = await authService.login(
+      const result: authResponseData | string = await this.authService.login(
         username,
         password
       );

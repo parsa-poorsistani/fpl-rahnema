@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import models = require('../../models/path');
 import {IFeed, IFeedRepo} from '../../Interface/feed.interface';
-import { objId, substitution } from '../../types/types';
+import { objId, substitution,feedCreationType } from '../../types/types';
 import { IEvent } from '../../Interface/event.interface';
 
 export class FeedRepo implements IFeedRepo {
@@ -23,7 +23,7 @@ export class FeedRepo implements IFeedRepo {
     async createFeed(managerId:objId): Promise<void> {
         for(let i=1;i<=20;i++) {
             const event:IEvent = await models.eventModel.findOne({generalId:i.toString()});
-            const data:IFeed = {
+            const data:feedCreationType = {
                 managerId:managerId,
                 points:0,
                 substitutions:null,

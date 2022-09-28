@@ -13,6 +13,17 @@ import {
 } from "../types/types";
 const redis = require("redis");
 let redisClient = redis.createClient();
+// redisClient.connect().then(() => {
+//   console.log("ok");
+// }).catch(err=>{
+//   log
+// })
+// (async () => {
+//   await redisClient.connect();
+//   redisClient.on("connect", () => {
+//     console.log("Connected!");
+//   });
+// })();
 redisClient.connect();
 redisClient.on("connect", () => {
   console.log("Connected!");
