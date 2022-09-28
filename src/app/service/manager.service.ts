@@ -1,8 +1,8 @@
 import { Types } from "mongoose";
 import { ManagerRepo } from "../database/repository/manager.repo";
 import { TeamRepo } from "../database/repository/team.repo";
-import { IManager } from "../Interface/manager.interface";
-import { IPick, ITeam } from "../Interface/team.interface";
+import { IManager } from "../interface/manager.interface";
+import { IPick, ITeam } from "../interface/team.interface";
 import models = require("../models/path");
 import { objId } from "../types/types";
 

@@ -1,9 +1,9 @@
 import { ManagerRepo } from "../database/repository/manager.repo";
 import { PlayerRepo } from "../database/repository/player.repo";
-import { IPlayer } from "../Interface/player.interface";
-import { IManager } from "../Interface/manager.interface";
-import { IPick } from "../Interface/team.interface";
-import ITeamService = require("../Interface/teamService");
+import { IPlayer } from "../interface/player.interface";
+import { IManager } from "../interface/manager.interface";
+import { IPick } from "../interface/team.interface";
+import ITeamService = require("../interface/teamService");
 import { objId } from "../types/types";
 
 class TeamService implements ITeamService {

@@ -1,10 +1,10 @@
 import { objId } from "../types/types";
-import { IPick } from "../Interface/team.interface";
+import { IPick } from "./team.interface";
 
 interface IManagerRepo {
   getManagerById(managerId: objId): Promise<IManager | null>;
-  getManagersByName(name:string):Promise<IManager[] | null>;
-  getManagers():Promise<Array<IManager>>;
+  getManagersByName(name: string): Promise<IManager[] | null>;
+  getManagers(): Promise<Array<IManager>>;
   getTeamByManagerId(managerId: objId): Promise<Array<IPick>>;
   getTeamDetailByManagerId(managerId: objId): Promise<any>;
   updateManagerBudgetById(managerId: objId, budget: number): Promise<void>;

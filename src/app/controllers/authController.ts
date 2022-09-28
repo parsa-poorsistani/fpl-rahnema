@@ -1,6 +1,6 @@
 require("dotenv").config();
 import utils = require("../helpers/utils/utils");
-import { IauthController } from "../Interface/auth.interface";
+import { IauthController } from "../interface/auth.interface";
 import { Request, Response } from "express";
 import { AuthService } from "../service/auth.service";
 import { StatusCodes } from "http-status-codes";
@@ -33,7 +33,7 @@ class AuthController implements IauthController {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
     }
-  };
+  }
 
   async verify(req: Request, res: Response): Promise<Response> {
     try {
@@ -53,7 +53,7 @@ class AuthController implements IauthController {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
     }
-  };
+  }
 
   async login(req: Request, res: Response): Promise<Response> {
     try {
@@ -75,7 +75,7 @@ class AuthController implements IauthController {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
     }
-  };
-};
+  }
+}
 
 export { AuthController };

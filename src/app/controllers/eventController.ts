@@ -1,7 +1,7 @@
 import models = require("../../app/models/path");
 import { Request, Response } from "express";
 import { EventService } from "../service/event.service";
-import { IEventController } from "../Interface/event.interface";
+import { IEventController } from "../interface/event.interface";
 
 export class EventController implements IEventController {
   eventService;

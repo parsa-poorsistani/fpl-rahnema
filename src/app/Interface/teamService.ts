@@ -1,5 +1,5 @@
-import { IPlayer } from "../Interface/player.interface";
-import { IPick } from "../Interface/team.interface";
+import { IPlayer } from "./player.interface";
+import { IPick } from "./team.interface";
 import { objId } from "../types/types";
 
 interface ITeamService {

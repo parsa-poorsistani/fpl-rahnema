@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import { substitution,objId } from '../types/types';
-import { IFeed } from '../Interface/feed.interface';
+import { IFeed } from '../interface/feed.interface';
 import { ObjectID } from 'bson';
 
 const feedSchema = new Schema<IFeed>({

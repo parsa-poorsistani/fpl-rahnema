@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import { IPlayer } from "../../Interface/player.interface";
+import { IPlayer } from "../../interface/player.interface";
 import {
   paginateResponseToFrontType,
   paginateResponseType,
@@ -27,7 +27,11 @@ export const validationErrorHandler = async (req: Request, status = 400) => {
   }
 };
 
-export const mailSender = async (receiver: string, subject: string, text: string):Promise<string> => {
+export const mailSender = async (
+  receiver: string,
+  subject: string,
+  text: string
+): Promise<string> => {
   let flag = 0;
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -43,7 +47,9 @@ export const mailSender = async (receiver: string, subject: string, text: string
     text: text,
   };
 
-  transporter.sendMail(mailOptions, function (error: any, info: { response: string }):void {
+  transporter.sendMail(
+    mailOptions,
+    function (error: any, info: { response: string }): void {
       if (error) {
         console.log(error);
       } else {
@@ -52,10 +58,10 @@ export const mailSender = async (receiver: string, subject: string, text: string
       }
     }
   );
-  if(flag===1) {
-    return 'error';
+  if (flag === 1) {
+    return "error";
   }
-  return 'OK';
+  return "OK";
 };
 
 export const confirmationCodeGenerator = async (): Promise<Number> => {

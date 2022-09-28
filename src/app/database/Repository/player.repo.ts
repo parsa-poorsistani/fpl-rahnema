@@ -1,6 +1,6 @@
 import models = require("../../models/path");
 import mongoose from "mongoose";
-import { IPlayer, IPlayerRepo } from "../../Interface/player.interface";
+import { IPlayer, IPlayerRepo } from "../../interface/player.interface";
 import { paginateResponseType } from "../../types/response.type";
 
 export class PlayerRepo implements IPlayerRepo {
