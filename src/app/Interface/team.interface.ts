@@ -9,7 +9,7 @@ export interface ITeam {
 }
 
 export interface IPick {
-  player: mongoose.Types.ObjectId;
+  player: objId;
 }
 
 export interface ITeamController {
@@ -32,4 +32,5 @@ export interface ITeamService {
   teamLimit(player: IPlayer, team: Array<IPick>): Promise<boolean>;
   checkIndex(player: IPlayer, index: number): boolean;
   getTeamById(teamId: objId): Promise<ITeam>;
+  getTeamPoint(managerId: objId): Promise<number>;
 }

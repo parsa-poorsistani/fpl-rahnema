@@ -4,7 +4,7 @@ class ValidationError extends BaseError {
   errors: any[];
 
   constructor(errors: any[], msg: string, status: number) {
-    super(msg, status);
+    super(msg, status, "Validation Error");
     this.errors = errors;
   }
 }

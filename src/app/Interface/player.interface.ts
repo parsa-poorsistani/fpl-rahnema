@@ -47,7 +47,7 @@ interface IPlayer {
   generalId: Number;
   positionId: Number;
   news: String;
-  event_points: Number;
+  event_points: number;
   first_name: String;
   form: Number;
   now_cost: Number;
