@@ -24,9 +24,9 @@ export class ConnectionController
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
       const target: objId = new mongoose.Types.ObjectId(req.body.target);
       await this.connectionService.follow(managerId, target);
-      return await this.generalSuccessfulResponse(res, "Follow successfull");
+      return this.generalSuccessfulResponse(res, "Follow successfull");
     } catch (error) {
-      return await this.sendFailedResponse(
+      return this.sendFailedResponse(
         res,
         new InternalServerError("follow failed")
       );
@@ -38,9 +38,9 @@ export class ConnectionController
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
       const target: objId = new mongoose.Types.ObjectId(req.body.target);
       await this.connectionService.unfollow(managerId, target);
-      return await this.generalSuccessfulResponse(res, "Unfollow successfull");
+      return this.generalSuccessfulResponse(res, "Unfollow successfull");
     } catch (error) {
-      return await this.sendFailedResponse(
+      return this.sendFailedResponse(
         res,
         new InternalServerError("Unfollow failed")
       );
@@ -55,13 +55,13 @@ export class ConnectionController
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
       const data: connectionResponse[] | null =
         await this.connectionService.displayFollowers(managerId);
-      return await this.generalSuccessfulResponse(
+      return this.generalSuccessfulResponse(
         res,
         "Sending followers successfull",
         data
       );
     } catch (error) {
-      return await this.sendFailedResponse(
+      return this.sendFailedResponse(
         res,
         new InternalServerError("Sending followers failed")
       );
@@ -76,13 +76,13 @@ export class ConnectionController
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
       const data: connectionResponse[] | null =
         await this.connectionService.displayFollowings(managerId);
-      return await this.generalSuccessfulResponse(
+      return this.generalSuccessfulResponse(
         res,
         "Sending followings successfull",
         data
       );
     } catch (error) {
-      return await this.sendFailedResponse(
+      return this.sendFailedResponse(
         res,
         new InternalServerError("Sending followings failed")
       );
@@ -94,13 +94,13 @@ export class ConnectionController
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
       const fullName: string = req.body;
       const data = await this.connectionService.search(managerId, fullName);
-      return await this.generalSuccessfulResponse(
+      return this.generalSuccessfulResponse(
         res,
         "Sending searched managers successfull",
         data
       );
     } catch (error) {
-      return await this.sendFailedResponse(
+      return this.sendFailedResponse(
         res,
         new InternalServerError("Sending searched managers failed")
       );
@@ -116,13 +116,13 @@ export class ConnectionController
       const name: string = req.body.name;
       const data: connectionResponse[] | null =
         await this.connectionService.searchInFollowers(managerId, name);
-      return await this.generalSuccessfulResponse(
+      return this.generalSuccessfulResponse(
         res,
         "Sending searched followers successfull",
         data
       );
     } catch (error) {
-      return await this.sendFailedResponse(
+      return this.sendFailedResponse(
         res,
         new InternalServerError("Sending searched followers failed")
       );
@@ -135,13 +135,13 @@ export class ConnectionController
       const name: string = req.body.name;
       const data: connectionResponse[] | null =
         await this.connectionService.searchInFollowings(managerId, name);
-      return await this.generalSuccessfulResponse(
+      return this.generalSuccessfulResponse(
         res,
         "Sending searched followings successfull",
         data
       );
     } catch (error) {
-      return await this.sendFailedResponse(
+      return this.sendFailedResponse(
         res,
         new InternalServerError("Sending searched followings failed")
       );

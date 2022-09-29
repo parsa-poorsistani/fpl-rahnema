@@ -63,6 +63,14 @@ const managerSchema = new Schema<IManager>(
       type: Number,
       default: null,
     },
+    age:{
+      type:Number,
+      default:null
+    },
+    points:{
+      type:Number,
+      default:0
+    }
   },
   { versionKey: false }
 );
