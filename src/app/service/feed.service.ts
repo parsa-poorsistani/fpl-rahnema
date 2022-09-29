@@ -29,15 +29,17 @@ export class FeedService implements IFeedService {
                 followings.push(manager._id);
             }
         }
+        
         const feeds:IFeed[] = await this.feedRepo.getFeeds(gameWeek,followings);
         for(let feed of feeds) {
+            let manager:IManager = await this.managerRepo.getManagerById(feed.managerId!);
             const data:feedDisplay = {
                 points: feed.points,
                 substitutions: await this.feedRepo.convertSubs(feed.substitutions!),
                 managerId: feed.managerId,
                 feedId: feed._id,
-                first_name: (await this.managerRepo.getManagerById(feed.managerId!)).first_name,
-                last_name: (await this.managerRepo.getManagerById(feed.managerId!)).last_name,
+                first_name: manager.first_name,
+                last_name: manager.last_name,
                 event: gameWeek,
                 is_liked: await this.likeRepo.isLiked(managerId,feed._id)
             };
@@ -45,7 +47,7 @@ export class FeedService implements IFeedService {
         }
         return result;
     }
-    
+
     like = async(managerId: objId, feedId: objId): Promise<void> => {
         throw new Error("Method not implemented.");
     }

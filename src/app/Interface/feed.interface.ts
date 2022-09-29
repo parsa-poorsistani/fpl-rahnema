@@ -6,10 +6,9 @@ export interface IFeedRepo {
   createFeed(managerId: objId): Promise<void>;
   getFeeds(gameWeek: number,managers:objId[]): Promise<Array<IFeed>>;
   convertSubs(subs:Array<substitution>): Promise<Array<substitutionRsponse>|null>;
-  isLikedByManager(managerId:objId): Promise<boolean>;
   addSub(managerId: objId, sub: substitution): Promise<void>;
-  addLike(managerId: objId, liker: objId): Promise<void>;
-  removeLike(managerId: objId, liker: objId): Promise<void>;
+//   addLike(managerId: objId, liker: objId): Promise<void>;
+//   removeLike(managerId: objId, liker: objId): Promise<void>;
   updatePoints(managerId: objId, points: number): Promise<void>;
 }
 

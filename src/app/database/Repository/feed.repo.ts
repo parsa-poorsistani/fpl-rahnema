@@ -11,6 +11,7 @@ export class FeedRepo implements IFeedRepo {
     constructor(){
         this.playerRepo = new PlayerRepo();
     }
+    
     getFeeds = async(gameWeek: number,managersId:objId[]): Promise<IFeed[]>  => {
         const event: IEvent = await models.eventModel.findOne({generalId:gameWeek.toString});
         const feeds: IFeed[] = await models.feed_model.find(
@@ -38,25 +39,16 @@ export class FeedRepo implements IFeedRepo {
         return result;
     }
 
-    // isLikedByManager(managerId: objId): Promise<boolean> {
-    //     throw new Error('Method not implemented.');
-    // }
-    addSub(managerId: mongoose.Types.ObjectId, sub: substitution): Promise<void> {
+    addSub(managerId: objId, sub: substitution): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    addLike(managerId: mongoose.Types.ObjectId, liker: mongoose.Types.ObjectId): Promise<void> {
+    addLike(managerId: objId, liker: objId): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    removeLike(
-        managerId: mongoose.Types.ObjectId,
-        liker: mongoose.Types.ObjectId
-    ): Promise<void> {
+    removeLike(managerId: objId, liker: objId): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    updatePoints(
-        managerId: mongoose.Types.ObjectId,
-        points: number
-    ): Promise<void> {
+    updatePoints(managerId: objId, points: number): Promise<void> {
         throw new Error("Method not implemented.");
     }
     async createFeed(managerId:objId): Promise<void> {
