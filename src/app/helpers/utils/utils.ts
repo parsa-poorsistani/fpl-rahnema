@@ -7,6 +7,7 @@ import {
 import { ValidationError } from "../error/validationError";
 import nodemailer from "nodemailer";
 import { Request, Response } from "express";
+import path from "path";
 
 export const paginationResponseToFront = async (
   response: paginateResponseType
@@ -23,7 +24,11 @@ export const paginationResponseToFront = async (
 
 export const validationErrorHandler = async (req: Request, status = 400) => {
   if (!validationResult(req).isEmpty()) {
-    throw new ValidationError(validationResult(req).array(), status);
+    throw new ValidationError(
+      validationResult(req).array(),
+      "validation error",
+      status
+    );
   }
 };
 
@@ -67,4 +72,24 @@ export const mailSender = async (
 export const confirmationCodeGenerator = async (): Promise<Number> => {
   const val: Number = await Math.floor(1000 + Math.random() * 9000);
   return val;
+};
+
+export const removeSpaces = async (text: string): Promise<string> => {
+  return await text.replace(/\s/g, "");
+};
+
+export const getFilename = async (
+  file: Express.Multer.File
+): Promise<string> => {
+  let originalName = file.originalname.split(".")[0];
+  let filename: string =
+    originalName + "-" + Date.now() + path.extname(file.originalname);
+  filename = await removeSpaces(filename);
+  return filename;
+};
+
+export const urlFormatter = async (url: string): Promise<string> => {
+  return `${process.env.BASE_URL}${url
+    .replace(/\\/g, "/")
+    .replace(/[\s]/g, "-")}`;
 };

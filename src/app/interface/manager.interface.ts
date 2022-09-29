@@ -1,7 +1,8 @@
 import { objId } from "../types/types";
-import { IPick } from "./team.interface";
+import { IPick, ITeam } from "./team.interface";
+import { Request, Response } from "express";
 
-interface IManagerRepo {
+export interface IManagerRepo {
   getManagerById(managerId: objId): Promise<IManager | null>;
   getManagersByName(name: string): Promise<IManager[] | null>;
   getManagers(): Promise<Array<IManager>>;
@@ -18,7 +19,7 @@ interface IManagerRepo {
   createTeam(): Promise<objId>;
 }
 
-interface IManager {
+export interface IManager {
   _id: objId;
   first_name: string;
   last_name: string;
@@ -26,6 +27,8 @@ interface IManager {
   country: string;
   password: string;
   email: string;
+  age: number;
+  points: number;
   budget: number;
   teamId?: objId;
   summaryOverallPoints: number;
@@ -34,4 +37,14 @@ interface IManager {
   summaryEventRank: number;
 }
 
-export { IManager, IManagerRepo };
+export interface IManagerController {
+  managerService: IManagerService;
+  getDashboard(req: Request, res: Response): Promise<Response>;
+}
+
+export interface IManagerService {
+  managerRepo: IManagerRepo;
+  countPlayersInTeam(team: ITeam): Promise<number>;
+  getTeamPlayerIdsByManagerId(id: objId): Promise<Array<objId>>;
+  getManagerById(managerId: objId): Promise<IManager>;
+}

@@ -24,24 +24,13 @@ const playerSchema = new Schema<IPlayer>(
       type: String,
       // required: true,
     },
-    form: {
-      type: Number,
-      default: 0,
+    web_name: {
+      type: String,
+      required: true,
     },
     now_cost: {
       type: Number,
       required: true,
-    },
-    points_per_game: {
-      type: Number,
-      default: 0,
-    },
-    special: {
-      type: Boolean,
-      default: false,
-    },
-    status: {
-      type: String,
     },
     teamId: {
       type: Number,
@@ -50,38 +39,15 @@ const playerSchema = new Schema<IPlayer>(
       type: Number,
       default: 0,
     },
-    web_name: {
-      type: String,
-      required: true,
+    form: {
+      type: Number,
+      default: 0,
     },
     minutes: {
       type: Number,
       default: 0,
     },
     goals_scored: {
-      type: Number,
-      default: 0,
-    },
-    assists: {
-      type: Number,
-      default: 0,
-    },
-    clean_sheets: {
-      type: Number,
-      default: 0,
-    },
-    goals_conceded: {
-      type: Number,
-    },
-    own_goals: {
-      type: Number,
-      default: 0,
-    },
-    penalties_saved: {
-      type: Number,
-      default: 0,
-    },
-    penalties_missed: {
       type: Number,
       default: 0,
     },
@@ -93,13 +59,40 @@ const playerSchema = new Schema<IPlayer>(
       type: Number,
       default: 0,
     },
-    saves: {
-      type: Number,
-      default: 0,
-    },
-    bonus: {
-      type: Number,
-    },
+    // status: {
+    //   type: String,
+    // },
+
+    // assists: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    // clean_sheets: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    // goals_conceded: {
+    //   type: Number,
+    // },
+    // own_goals: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    // penalties_saved: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    // penalties_missed: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    // saves: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    // bonus: {
+    //   type: Number,
+    // },
   },
   { versionKey: false }
 );

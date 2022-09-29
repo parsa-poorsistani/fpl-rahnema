@@ -1,12 +1,19 @@
 import mongoose from "mongoose";
-import TeamService = require("../service/teamService");
-import ITeamController = require("../interface/team.controller");
+import { TeamService } from "../service/teamService";
+import { ITeamController } from "../interface/team.controller";
 import { StatusCodes } from "http-status-codes";
 import { Request, Response } from "express";
 import { objId } from "../types/types";
+import { ApiGeneralService } from "../service/api.general.service";
+import { ITeamService } from "../interface/teamService";
 
-class TeamController implements ITeamController {
-  teamService = new TeamService();
+class TeamController extends ApiGeneralService implements ITeamController {
+  teamService: ITeamService;
+
+  constructor() {
+    super();
+    this.teamService = new TeamService();
+  }
 
   addPlayerToTeam = async (req: Request, res: Response): Promise<Response> => {
     try {
@@ -25,7 +32,8 @@ class TeamController implements ITeamController {
       if (response == "wrong index") {
         return res.status(StatusCodes.FORBIDDEN);
       }
-      return res.status(StatusCodes.OK).json({ msg: "OK" });
+
+      return await this.generalSuccessfulResponse(res);
     } catch (error) {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });

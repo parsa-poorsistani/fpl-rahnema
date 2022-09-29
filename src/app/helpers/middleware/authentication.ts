@@ -1,14 +1,14 @@
 import models = require("../../models/path");
 import jwt = require("jsonwebtoken");
 import { Request, Response } from "express";
-import { ApiError } from "../error/apiError";
-import mongoose from "mongoose";
+import { ApiGeneralService } from "../../service/api.general.service";
+import errors = require("../error/path");
 
 type Next = (err?: String) => void | Promise<void>;
 
 function authToken(req: Request, res: Response, next: Next) {
+  const apiGeneralService = new ApiGeneralService();
   type token = string;
-
   type Secret = string | Buffer | { key: string | Buffer; passphrase: string };
 
   let token = req.headers.token as token;
@@ -22,16 +22,25 @@ function authToken(req: Request, res: Response, next: Next) {
           req._id = decode.id;
           return next();
         } else {
-          return res
-            .status(403)
-            .json(new ApiError("User with sent token doesn't exist", 403));
+          return apiGeneralService.sendFailedResponse(
+            res,
+            new errors.AccessForbiddenError(
+              "User with sent token doesn't exist"
+            )
+          );
         }
       } else {
-        return res.status(403).json(new ApiError("Token is invalid", 403));
+        return apiGeneralService.sendFailedResponse(
+          res,
+          new errors.AccessForbiddenError("Token is invalid")
+        );
       }
     });
   } else {
-    return res.status(403).json(new ApiError("Token not sent", 403));
+    return apiGeneralService.sendFailedResponse(
+      res,
+      new errors.BadRequestError("Token not sent")
+    );
   }
 }
 

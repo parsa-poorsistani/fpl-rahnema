@@ -1,95 +1,150 @@
+import {
+  IConnectionController,
+  IConnectionService,
+} from "../interface/connection.interface";
 import { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
-import { IConnectionController } from "../interface/connection.interface";
 import { connectionResponse, objId } from "../types/types";
 import { ConnectionService } from "../service/connection.service";
+import { StatusCodes } from "http-status-codes";
+import { ApiGeneralService } from "../service/api.general.service";
 import mongoose from "mongoose";
-const connectionServive = new ConnectionService();
+import { InternalServerError } from "../helpers/error/internalServerError";
 
-export class ConnectionController implements IConnectionController {
-  async follow(req: Request, res: Response): Promise<Response> {
+export class ConnectionController
+  extends ApiGeneralService
+  implements IConnectionController
+{
+  connectionService: IConnectionService;
+  constructor() {
+    super();
+    this.connectionService = new ConnectionService();
+  }
+  public follow = async (req: Request, res: Response): Promise<Response> => {
     try {
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
       const target: objId = new mongoose.Types.ObjectId(req.body.target);
-      await connectionServive.follow(managerId, target);
-      return res.status(StatusCodes.OK).json({ msg: "OK" });
+      await this.connectionService.follow(managerId, target);
+      return this.generalSuccessfulResponse(res, "Follow successfull");
     } catch (error) {
-      console.log(error);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
+      return this.sendFailedResponse(
+        res,
+        new InternalServerError("follow failed")
+      );
     }
-  }
+  };
 
-  async unfollow(req: Request, res: Response): Promise<Response> {
+  public unfollow = async (req: Request, res: Response): Promise<Response> => {
     try {
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
       const target: objId = new mongoose.Types.ObjectId(req.body.target);
-      await connectionServive.unfollow(managerId, target);
-      return res.status(StatusCodes.OK).json({ msg: "OK" });
+      await this.connectionService.unfollow(managerId, target);
+      return this.generalSuccessfulResponse(res, "Unfollow successfull");
     } catch (error) {
-      console.log(error);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
+      return this.sendFailedResponse(
+        res,
+        new InternalServerError("Unfollow failed")
+      );
     }
-  }
+  };
 
-  async displayFollowers(req: Request, res: Response): Promise<Response> {
+  public displayFollowers = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
     try {
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
       const data: connectionResponse[] | null =
-        await connectionServive.displayFollowers(managerId);
-      return res.status(StatusCodes.OK).json({ data: data });
+        await this.connectionService.displayFollowers(managerId);
+      return this.generalSuccessfulResponse(
+        res,
+        "Sending followers successfull",
+        data
+      );
     } catch (error) {
-      console.log(error);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
+      return this.sendFailedResponse(
+        res,
+        new InternalServerError("Sending followers failed")
+      );
     }
-  }
+  };
 
-  async displayFollowings(req: Request, res: Response): Promise<Response> {
+  public displayFollowings = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
     try {
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
       const data: connectionResponse[] | null =
-        await connectionServive.displayFollowings(managerId);
-      return res.status(StatusCodes.OK).json({ data: data });
+        await this.connectionService.displayFollowings(managerId);
+      return this.generalSuccessfulResponse(
+        res,
+        "Sending followings successfull",
+        data
+      );
     } catch (error) {
-      console.log(error);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
+      return this.sendFailedResponse(
+        res,
+        new InternalServerError("Sending followings failed")
+      );
     }
-  }
+  };
 
-  async search(req: Request, res: Response): Promise<Response> {
+  public search = async (req: Request, res: Response): Promise<Response> => {
     try {
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
       const fullName: string = req.body;
-      const data = await connectionServive.search(managerId, fullName);
-      return res.status(StatusCodes.OK).json({ data: data });
+      const data = await this.connectionService.search(managerId, fullName);
+      return this.generalSuccessfulResponse(
+        res,
+        "Sending searched managers successfull",
+        data
+      );
     } catch (error) {
-      console.log(error);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
+      return this.sendFailedResponse(
+        res,
+        new InternalServerError("Sending searched managers failed")
+      );
     }
-  }
+  };
 
-  async searchInFollowers(req: Request, res: Response): Promise<Response> {
+  public searchInFollowers = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
     try {
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
       const name: string = req.body.name;
       const data: connectionResponse[] | null =
-        await connectionServive.searchInFollowers(managerId, name);
-      return res.status(StatusCodes.OK).json({ data: data });
+        await this.connectionService.searchInFollowers(managerId, name);
+      return this.generalSuccessfulResponse(
+        res,
+        "Sending searched followers successfull",
+        data
+      );
     } catch (error) {
-      console.log(error);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
+      return this.sendFailedResponse(
+        res,
+        new InternalServerError("Sending searched followers failed")
+      );
     }
-  }
+  };
 
   async searchInFollowings(req: Request, res: Response): Promise<Response> {
     try {
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
       const name: string = req.body.name;
       const data: connectionResponse[] | null =
-        await connectionServive.searchInFollowings(managerId, name);
-      return res.status(StatusCodes.OK).json({ data: data });
+        await this.connectionService.searchInFollowings(managerId, name);
+      return this.generalSuccessfulResponse(
+        res,
+        "Sending searched followings successfull",
+        data
+      );
     } catch (error) {
-      console.log(error);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
+      return this.sendFailedResponse(
+        res,
+        new InternalServerError("Sending searched followings failed")
+      );
     }
   }
 }
