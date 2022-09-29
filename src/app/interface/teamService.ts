@@ -2,7 +2,7 @@ import { IPlayer } from "./player.interface";
 import { IPick } from "./team.interface";
 import { objId } from "../types/types";
 
-interface ITeamService {
+export interface ITeamService {
   addPlayerToTeam(
     managerId: objId,
     playerId: objId,
@@ -16,5 +16,3 @@ interface ITeamService {
   teamLimit(player: IPlayer, team: Array<IPick>): Promise<boolean>;
   checkIndex(player: IPlayer, index: number): boolean;
 }
-
-export = ITeamService;
