@@ -30,7 +30,7 @@ export class EventController
         "Event sent successfuly",
         event
       );
-    } catch (err) {
+    } catch (err:any) {
       return await this.sendFailedResponse(
         res,
         new errors.InternalServerError(err)

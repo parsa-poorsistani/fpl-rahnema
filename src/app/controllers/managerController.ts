@@ -44,7 +44,7 @@ export class ManagerController
         "dashboard sent successfully",
         { data: { manager, nb } }
       );
-    } catch (err) {
+    } catch (err:any) {
       return this.sendFailedResponse(res, new errors.InternalServerError(err));
     }
   };

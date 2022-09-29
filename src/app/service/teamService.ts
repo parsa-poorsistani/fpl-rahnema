@@ -39,7 +39,7 @@ export class TeamService implements ITeamService {
     }
     const player: IPlayer = await this.playerRepo.getPlayerById(playerId);
 
-    if (await !this.teamLimit(player, team)) {
+    if (await this.teamLimit(player, team) == false) {      
       return "not allowed to add more than 3 players from one team";
     }
     if (currentBudget < player.now_cost) {
@@ -82,6 +82,8 @@ export class TeamService implements ITeamService {
         }
       }
     }
+    console.log(num);
+    
     if (num >= 3) {
       return false;
     }
@@ -89,18 +91,18 @@ export class TeamService implements ITeamService {
   };
   checkIndex(player: IPlayer, index: number): boolean {
     if (player.positionId === 1) {
-      if (index === 0 || index === 1) {
+      if (index === 0 || index === 11) {
         return true;
       }
     }
 
     if (player.positionId === 2) {
       if (
+        index === 1 ||
         index === 2 ||
         index === 3 ||
         index === 4 ||
-        index === 5 ||
-        index === 6
+        index === 12
       ) {
         return true;
       }
@@ -108,18 +110,18 @@ export class TeamService implements ITeamService {
 
     if (player.positionId === 3) {
       if (
+        index === 5 ||
+        index === 6 ||
         index === 7 ||
         index === 8 ||
-        index === 9 ||
-        index === 10 ||
-        index === 11
+        index === 13
       ) {
         return true;
       }
     }
 
     if (player.positionId === 4) {
-      if (index === 12 || index === 13 || index === 14) {
+      if (index === 9 || index === 10 || index === 14) {
         return true;
       }
     }

@@ -5,7 +5,6 @@ import {
 import { Request, Response } from "express";
 import { connectionResponse, objId } from "../types/types";
 import { ConnectionService } from "../service/connection.service";
-import { StatusCodes } from "http-status-codes";
 import { ApiGeneralService } from "../service/api.general.service";
 import mongoose from "mongoose";
 import { InternalServerError } from "../helpers/error/internalServerError";
@@ -129,7 +128,7 @@ export class ConnectionController
     }
   };
 
-  async searchInFollowings(req: Request, res: Response): Promise<Response> {
+   searchInFollowings= async (req: Request, res: Response): Promise<Response> => {
     try {
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
       const name: string = req.body.name;
@@ -140,7 +139,7 @@ export class ConnectionController
         "Sending searched followings successfull",
         data
       );
-    } catch (error) {
+    } catch (error) {      
       return this.sendFailedResponse(
         res,
         new InternalServerError("Sending searched followings failed")
