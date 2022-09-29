@@ -49,8 +49,6 @@ export class ManagerController
         { data: { manager, nb, points } }
       );
     } catch (err) {
-      console.log(err);
-
       return this.sendFailedResponse(res, new errors.InternalServerError(err));
     }
   };
