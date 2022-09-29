@@ -38,7 +38,7 @@ export class PlayerController
         "players sent successfully",
         players
       );
-    } catch (err:any) {
+    } catch (err: any) {
       return await this.sendFailedResponse(
         res,
         new errors.InternalServerError(err)
