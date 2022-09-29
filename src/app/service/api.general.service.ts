@@ -9,7 +9,7 @@ export class ApiGeneralService implements IApiGeneralService {
     msg?: string,
     data?: any
   ): Response => {
-    return res.status(StatusCodes.OK).json({ data: data, msg: msg });
+    return res.status(StatusCodes.OK).json({ data, msg: msg });
   };
 
   createSuccessfulResponse = (
@@ -20,10 +20,7 @@ export class ApiGeneralService implements IApiGeneralService {
     return res.status(StatusCodes.CREATED).json({ data: data, msg: msg });
   };
 
-  sendFailedResponse = (
-    res: Response,
-    err: errors.BaseError
-  ): Response => {
+  sendFailedResponse = (res: Response, err: errors.BaseError): Response => {
     return res.status(err.status).json(err);
   };
 }

@@ -14,7 +14,7 @@ export type paginateResponseType = {
 };
 
 export type paginateResponseToFrontType = {
-  data: IPlayer[];
+  array: IPlayer[];
   total: Number;
   limit: Number;
   page: Number;

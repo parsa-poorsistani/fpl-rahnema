@@ -132,10 +132,7 @@ export class TeamService implements ITeamService {
     let totalPoints: number = 0;
     for (let pick of team) {
       let player = await this.playerRepo.getPlayerById(pick.player);
-      console.log(player);
-
       if (player) {
-        console.log(player.event_points);
         totalPoints += player.event_points;
       }
     }

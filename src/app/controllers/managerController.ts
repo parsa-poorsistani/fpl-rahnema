@@ -39,14 +39,10 @@ export class ManagerController
 
       let nb: number = await this.managerService.countPlayersInTeam(team);
 
-      let points = await this.teamService.getTeamPoint(
-        new mongoose.Types.ObjectId(req._id)
-      );
-
       return await this.generalSuccessfulResponse(
         res,
         "dashboard sent successfully",
-        { data: { manager, nb, points } }
+        { data: { manager, nb } }
       );
     } catch (err) {
       return this.sendFailedResponse(res, new errors.InternalServerError(err));
