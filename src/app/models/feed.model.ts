@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import { substitution,objId } from '../types/types';
-import { IFeed } from '../Interface/feed.interface';
+import { IFeed } from '../interface/feed.interface';
 
 const feedSchema = new Schema<IFeed>(
     {
@@ -12,7 +12,8 @@ const feedSchema = new Schema<IFeed>(
             type:Number
         },
         substitutions:{
-            type:Array<substitution>
+            type:Array<substitution>,
+            default:null
         },
         likers:{
             type:Array<objId>,

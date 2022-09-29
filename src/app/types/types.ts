@@ -48,4 +48,20 @@ type substitution = {
     out:objId
 };
 
+export type substitutionRsponse = {
+    in:String,
+    out:String
+};
+
+export type feedDisplay = {
+    points:number,
+    event:number,
+    managerId?:objId,
+    substitutions:Array<substitutionRsponse>|null,
+    is_liked:boolean,
+    first_name:string,
+    last_name:string,
+    feedId?:objId
+};
+
 export {objId,managerSignUpType,signInputData,authResponseData,substitution,feedCreationType};
