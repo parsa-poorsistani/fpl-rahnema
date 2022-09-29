@@ -1,6 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { objId, substitution } from "../types/types";
-import { IFeed } from "../interface/feed.interface";
 
 const feedSchema = new Schema({
   managerId: {

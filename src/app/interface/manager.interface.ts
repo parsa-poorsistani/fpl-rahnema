@@ -44,7 +44,7 @@ export interface IManagerController {
 
 export interface IManagerService {
   managerRepo: IManagerRepo;
-  countPlayersInTeam(team: ITeam): number;
+  countPlayersInTeam(team: ITeam): Promise<number>;
   getTeamPlayerIdsByManagerId(id: objId): Promise<Array<objId>>;
   getManagerById(managerId: objId): Promise<IManager>;
 }

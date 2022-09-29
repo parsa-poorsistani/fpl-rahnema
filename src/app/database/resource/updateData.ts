@@ -49,46 +49,38 @@ const updatePlayerdata = async (req: Request, res: Response) => {
     let update = await models.playerModel.update(
       { generalId: player.id },
       {
+        positionId: player.element_type,
+        event_points: player.event_points,
         first_name: player.first_name,
         second_name: player.second_name,
         web_name: player.web_name,
         now_cost: player.now_cost / 10,
         teamId: player.team,
-        team_code: player.team_code,
-        positionId: player.element_type,
-        points: player.total_points,
         value_season: player.value_season,
+        form: player.value_form,
         minutes: player.minutes,
         goals_scored: player.goals_scored,
         yellow_cards: player.yellow_cards,
         red_cards: player.red_cards,
-        influence: player.influence,
-        creativity: player.creativity,
-        threat: player.threat,
-        in_dreamteam: player.in_dreamteam,
       }
     );
 
     if (update.matchedCount == 0) {
       await models.playerModel.create({
         generalId: player.id,
+        positionId: player.element_type,
+        event_points: player.event_points,
         first_name: player.first_name,
         second_name: player.second_name,
         web_name: player.web_name,
         now_cost: player.now_cost / 10,
         teamId: player.team,
-        team_code: player.team_code,
-        positionId: player.element_type,
-        points: player.total_points,
         value_season: player.value_season,
+        form: player.value_form,
         minutes: player.minutes,
         goals_scored: player.goals_scored,
         yellow_cards: player.yellow_cards,
         red_cards: player.red_cards,
-        influence: player.influence,
-        creativity: player.creativity,
-        threat: player.threat,
-        in_dreamteam: player.in_dreamteam,
       });
     }
   }

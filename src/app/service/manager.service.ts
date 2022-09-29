@@ -14,11 +14,11 @@ export class ManagerService implements IManagerService {
     this.teamRepo = new TeamRepo();
   }
 
-  public countPlayersInTeam = (team: ITeam): number => {
+  public countPlayersInTeam = async (team: ITeam): Promise<number> => {
     let count = 0;
     for (let player of team.picks) {
       if (player.player !== null) {
-        count++;
+        await count++;
       }
     }
     return count;

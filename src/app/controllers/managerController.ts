@@ -6,10 +6,11 @@ import {
 } from "../interface/manager.interface";
 import { ApiGeneralService } from "../service/api.general.service";
 import { ManagerService } from "../service/manager.service";
-import TeamService = require("../service/teamService");
-import { ITeamService, ITeam } from "../interface/team.interface";
+import { TeamService } from "../service/teamService";
+import { ITeam } from "../interface/team.interface";
 import mongoose from "mongoose";
 import errors = require("../helpers/error/path");
+import { ITeamService } from "../interface/teamService";
 
 export class ManagerController
   extends ApiGeneralService
@@ -33,16 +34,19 @@ export class ManagerController
       );
       let team: ITeam = await this.teamService.getTeamById(manager.teamId!);
       if (!team) {
-        throw "Internal server error";
+        throw "Could not find team";
       }
+
       let nb: number = await this.managerService.countPlayersInTeam(team);
-      if (!nb) {
-        throw "Internal server error";
-      }
+
+      let points = await this.teamService.getTeamPoint(
+        new mongoose.Types.ObjectId(req._id)
+      );
+
       return await this.generalSuccessfulResponse(
         res,
         "dashboard sent successfully",
-        { data: { manager, nb } }
+        { data: { manager, nb, points } }
       );
     } catch (err) {
       return this.sendFailedResponse(res, new errors.InternalServerError(err));
