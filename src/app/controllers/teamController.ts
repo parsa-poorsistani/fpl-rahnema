@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
-import TeamService = require("../service/teamService");
-import { ITeamController } from "../interface/team.interface";
+import { TeamService } from "../service/teamService";
+import { ITeamController } from "../interface/team.controller";
 import { StatusCodes } from "http-status-codes";
 import { Request, Response } from "express";
 import { objId } from "../types/types";
 import { ApiGeneralService } from "../service/api.general.service";
+import { ITeamService } from "../interface/teamService";
 
 class TeamController extends ApiGeneralService implements ITeamController {
-  teamService: TeamService;
+  teamService: ITeamService;
 
   constructor() {
     super();

@@ -1,31 +1,42 @@
 import { ManagerRepo } from "../database/repository/manager.repo";
 import { PlayerRepo } from "../database/repository/player.repo";
-import { IPlayer } from "../interface/player.interface";
-import { IManager } from "../interface/manager.interface";
+import { IPlayer, IPlayerRepo } from "../interface/player.interface";
+import { IManager, IManagerRepo } from "../interface/manager.interface";
 import { IPick, ITeam } from "../interface/team.interface";
 import { ITeamService } from "../interface/teamService";
 import { objId } from "../types/types";
 import { TeamRepo } from "../database/repository/team.repo";
 
-class TeamService implements ITeamService {
-  managerRepo = new ManagerRepo();
-  playerRepo = new PlayerRepo();
-  teamRepo = new TeamRepo();
+export class TeamService implements ITeamService {
+  managerRepo: IManagerRepo;
+  playerRepo: IPlayerRepo;
+  teamRepo;
+
+  constructor() {
+    this.managerRepo = new ManagerRepo();
+    this.playerRepo = new PlayerRepo();
+    this.teamRepo = new TeamRepo();
+  }
 
   getTeamById = async (teamId: objId): Promise<ITeam> => {
     return await this.teamRepo.getTeamById(teamId);
   };
 
-  async addPlayerToTeam(
+  addPlayerToTeam = async (
     managerId: objId,
     playerId: objId,
     index: number
-  ): Promise<string> {
+  ): Promise<string> => {
     const team: Array<IPick> = await this.managerRepo.getTeamByManagerId(
       managerId
     );
-    const manager: IManager = await this.managerRepo.getManagerById(managerId);
-    const currentBudget: number = manager.budget;
+    const manager: IManager | null = await this.managerRepo.getManagerById(
+      managerId
+    );
+    let currentBudget: number = 0;
+    if (manager) {
+      currentBudget = manager.budget;
+    }
     const player: IPlayer = await this.playerRepo.getPlayerById(playerId);
 
     if (await !this.teamLimit(player, team)) {
@@ -39,27 +50,29 @@ class TeamService implements ITeamService {
     }
 
     const budget: number = currentBudget - Number(player.now_cost);
-    await this.managerRepo.updateManagerBudgetById(manager._id, budget);
-    await this.managerRepo.updateTeamById(manager.teamId!, player._id, index);
+    await this.managerRepo.updateManagerBudgetById(manager!._id, budget);
+    await this.managerRepo.updateTeamById(manager!.teamId!, player._id, index);
     return "OK";
-  }
+  };
 
-  async deletePlayerFromTeam(
+  deletePlayerFromTeam = async (
     managerId: objId,
     playerId: objId,
     index: number
-  ): Promise<string> {
-    const manager: IManager = await this.managerRepo.getManagerById(managerId);
-    const currentBudget: number = manager.budget;
+  ): Promise<string> => {
+    const manager: IManager | null = await this.managerRepo.getManagerById(
+      managerId
+    );
+    const currentBudget: number = manager!.budget;
     const player: IPlayer = await this.playerRepo.getPlayerById(playerId);
 
     const budget: number = currentBudget + Number(player.now_cost);
-    await this.managerRepo.updateManagerBudgetById(manager._id, budget);
-    await this.managerRepo.updateTeamById(manager.teamId!, null, index);
+    await this.managerRepo.updateManagerBudgetById(manager!._id, budget);
+    await this.managerRepo.updateTeamById(manager!.teamId!, null, index);
     return "OK";
-  }
+  };
 
-  async teamLimit(player: IPlayer, team: Array<IPick>): Promise<boolean> {
+  teamLimit = async (player: IPlayer, team: Array<IPick>): Promise<boolean> => {
     let num: number = 0;
     for (let p of team) {
       if (p.player !== null) {
@@ -73,7 +86,7 @@ class TeamService implements ITeamService {
       return false;
     }
     return true;
-  }
+  };
   checkIndex(player: IPlayer, index: number): boolean {
     if (player.positionId === 1) {
       if (index === 0 || index === 1) {
@@ -129,5 +142,3 @@ class TeamService implements ITeamService {
     return totalPoints;
   };
 }
-
-export = TeamService;
