@@ -7,6 +7,7 @@ const pl_teamModel = require("./pl-teamModel");
 const feed_model = require("./feed.model");
 const connectionModel = require("./connection.model");
 const fileModel = require("./fileModel");
+const likeModel = require("./like.model");
 
 export {
   playerModel,
@@ -18,4 +19,5 @@ export {
   feed_model,
   connectionModel,
   fileModel,
+  likeModel
 };

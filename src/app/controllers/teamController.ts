@@ -23,6 +23,8 @@ class TeamController extends ApiGeneralService implements ITeamController {
         req.body.id,
         req.body.index
       );
+      console.log(response);
+      
       if (response == "not allowed to add more than 3 players from one team") {
         return res.status(StatusCodes.FORBIDDEN).json({ msg: response });
       }
@@ -33,7 +35,8 @@ class TeamController extends ApiGeneralService implements ITeamController {
         return res.status(StatusCodes.FORBIDDEN);
       }
 
-      return await this.generalSuccessfulResponse(res);
+      // return this.generalSuccessfulResponse(res);
+      return res.status(200).json({ msg: "OK" });
     } catch (error) {
       console.log(error);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });

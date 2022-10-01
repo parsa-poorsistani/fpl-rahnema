@@ -1,7 +1,6 @@
 import { objId } from "../types/types";
 import { IPick, ITeam } from "./team.interface";
 import { Request, Response } from "express";
-import { NumericType } from "mongodb";
 
 export interface IManagerRepo {
   getManagerById(managerId: objId): Promise<IManager | null>;
@@ -28,8 +27,8 @@ export interface IManager {
   country: string;
   password: string;
   email: string;
-  age:number,
-  points:number,
+  age: number;
+  points: number;
   budget: number;
   teamId?: objId;
   summaryOverallPoints: number;
