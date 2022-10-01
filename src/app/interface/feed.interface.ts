@@ -1,11 +1,9 @@
 import { Request, Response } from "express";
-import { feedDisplay, objId, substitution, substitutionRsponse } from "../types/types";
-import { IManager } from "./manager.interface";
+import { feedDisplay, objId, substitution } from "../types/types";
 
 export interface IFeedRepo {
   createFeed(managerId: objId): Promise<void>;
-  getFeeds(gameWeek: number,managers:objId[]): Promise<Array<IFeed>>;
-  convertSubs(subs:Array<substitution>): Promise<Array<substitutionRsponse>|null>;
+  getFeed(gameWeek: number, managerIds: Array<objId>): Promise<Array<IFeed>>;
   addSub(managerId: objId, sub: substitution): Promise<void>;
   updatePoints(managerId: objId, points: number): Promise<void>;
 };
@@ -23,10 +21,9 @@ export interface IFeedService {
 };
 
 export interface IFeed {
-    _id:objId,
-    managerId?:objId,
-    points:number,
-    substitutions?:Array<substitution>|null,
-    likers:Array<objId>|null,
-    event?:objId
-};
+  managerId?: objId;
+  points: number;
+  substitutions?: Array<substitution> | null;
+  likers: Array<objId> | null;
+  event?: objId;
+}

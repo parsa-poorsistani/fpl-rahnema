@@ -10,7 +10,7 @@ import { TeamService } from "../service/teamService";
 import { ITeam } from "../interface/team.interface";
 import mongoose from "mongoose";
 import errors = require("../helpers/error/path");
-import { ITeamService } from "../interface/teamService";
+import { ITeamService } from "../interface/team.interface";
 
 export class ManagerController
   extends ApiGeneralService
@@ -42,9 +42,9 @@ export class ManagerController
       return await this.generalSuccessfulResponse(
         res,
         "dashboard sent successfully",
-        { data: { manager, nb } }
+        { manager, nb }
       );
-    } catch (err:any) {
+    } catch (err: any) {
       return this.sendFailedResponse(res, new errors.InternalServerError(err));
     }
   };

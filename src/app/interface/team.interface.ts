@@ -32,4 +32,5 @@ export interface ITeamService {
   teamLimit(player: IPlayer, team: Array<IPick>): Promise<boolean>;
   checkIndex(player: IPlayer, index: number): boolean;
   getTeamById(teamId: objId): Promise<ITeam>;
+  getTeamPoint(managerId: objId): Promise<number>;
 }
