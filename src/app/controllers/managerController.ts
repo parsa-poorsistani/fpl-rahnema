@@ -10,7 +10,7 @@ import { TeamService } from "../service/teamService";
 import { ITeam } from "../interface/team.interface";
 import mongoose from "mongoose";
 import errors = require("../helpers/error/path");
-import { ITeamService } from "../interface/teamService";
+import { ITeamService } from "../interface/team.interface";
 
 export class ManagerController
   extends ApiGeneralService
@@ -39,14 +39,10 @@ export class ManagerController
 
       let nb: number = await this.managerService.countPlayersInTeam(team);
 
-      let points = await this.teamService.getTeamPoint(
-        new mongoose.Types.ObjectId(req._id)
-      );
-
       return await this.generalSuccessfulResponse(
         res,
         "dashboard sent successfully",
-        { data: { manager, nb, points } }
+        { manager, nb }
       );
     } catch (err) {
       return this.sendFailedResponse(res, new errors.InternalServerError(err));

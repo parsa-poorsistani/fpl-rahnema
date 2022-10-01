@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import { TeamService } from "../service/teamService";
-import { ITeamController } from "../interface/team.controller";
+import { ITeamController } from "../interface/team.interface";
 import { StatusCodes } from "http-status-codes";
 import { Request, Response } from "express";
 import { objId } from "../types/types";
 import { ApiGeneralService } from "../service/api.general.service";
-import { ITeamService } from "../interface/teamService";
+import { ITeamService } from "../interface/team.interface";
 
 class TeamController extends ApiGeneralService implements ITeamController {
   teamService: ITeamService;

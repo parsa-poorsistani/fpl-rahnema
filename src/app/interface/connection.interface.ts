@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { objId } from "../types/types";
-import { IManager } from "./manager.interface";
 import { connectionResponse } from "../types/types";
 
 export interface IConnectionController {

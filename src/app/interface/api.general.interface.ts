@@ -6,13 +6,13 @@ export interface IApiGeneralService {
     res: Response,
     msg?: string,
     data?: any
-  ): Promise<Response>;
+  ): Response;
 
   createSuccessfulResponse(
     res: Response,
     msg?: string,
     data?: any
-  ): Promise<Response>;
+  ): Response;
 
-  sendFailedResponse(res: Response, err: errors.BaseError): Promise<Response>;
-}
+  sendFailedResponse(res: Response, err: errors.BaseError): Response;
+};

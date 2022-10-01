@@ -3,7 +3,7 @@ import { PlayerRepo } from "../database/repository/player.repo";
 import { IPlayer, IPlayerRepo } from "../interface/player.interface";
 import { IManager, IManagerRepo } from "../interface/manager.interface";
 import { IPick, ITeam } from "../interface/team.interface";
-import { ITeamService } from "../interface/teamService";
+import { ITeamService } from "../interface/team.interface";
 import { objId } from "../types/types";
 import { TeamRepo } from "../database/repository/team.repo";
 

@@ -4,26 +4,26 @@ import { IApiGeneralService } from "../interface/api.general.interface";
 import errors = require("../helpers/error/path");
 
 export class ApiGeneralService implements IApiGeneralService {
-  generalSuccessfulResponse = async (
+  generalSuccessfulResponse = (
     res: Response,
     msg?: string,
     data?: any
-  ): Promise<Response> => {
+  ): Response => {
     return res.status(StatusCodes.OK).json({ data: data, msg: msg });
   };
 
-  createSuccessfulResponse = async (
+  createSuccessfulResponse = (
     res: Response,
     msg?: string,
     data?: any
-  ): Promise<Response> => {
+  ): Response => {
     return res.status(StatusCodes.CREATED).json({ data: data, msg: msg });
   };
 
-  sendFailedResponse = async (
+  sendFailedResponse = (
     res: Response,
     err: errors.BaseError
-  ): Promise<Response> => {
+  ): Response => {
     return res.status(err.status).json(err);
   };
 }
