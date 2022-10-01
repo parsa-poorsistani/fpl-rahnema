@@ -36,7 +36,7 @@ export const mailSender = async (
   receiver: string,
   subject: string,
   text: string
-): Promise<string> => {
+): Promise<boolean> => {
   let flag = 0;
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -64,9 +64,9 @@ export const mailSender = async (
     }
   );
   if (flag === 1) {
-    return "error";
+    return false;
   }
-  return "OK";
+  return true;
 };
 
 export const confirmationCodeGenerator = async (): Promise<Number> => {

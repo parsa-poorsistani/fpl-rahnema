@@ -10,6 +10,7 @@ export class EventService implements IEventService {
 
   public getCurrentEvent = async (): Promise<IEvent> => {
     const currentEvent: IEvent = await this.eventRepo.getCurrentEvent();
+    if (!currentEvent) throw "error while getting event in service";
     return currentEvent;
   };
 }

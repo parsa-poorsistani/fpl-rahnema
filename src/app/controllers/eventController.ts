@@ -24,13 +24,12 @@ export class EventController
   ): Promise<Response> => {
     try {
       const event: IEvent = await this.eventService.getCurrentEvent();
-      if (!event) throw "error while getting event";
       return await this.generalSuccessfulResponse(
         res,
         "Event sent successfuly",
         event
       );
-    } catch (err:any) {
+    } catch (err: any) {
       return await this.sendFailedResponse(
         res,
         new errors.InternalServerError(err)

@@ -4,6 +4,7 @@ import { ValidationError } from "./validationError";
 import { BadRequestError } from "./badRequestError";
 import { InternalServerError } from "./internalServerError";
 import { BaseError } from "./baseError";
+import { NotFoundError } from "./notFoundError";
 
 export {
   ValidationError,
@@ -12,4 +13,5 @@ export {
   BadRequestError,
   InternalServerError,
   BaseError,
+  NotFoundError,
 };
