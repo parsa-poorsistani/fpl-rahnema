@@ -7,7 +7,7 @@ import { ManagerRepo } from "../database/repository/manager.repo";
 import { IFeed, IFeedService } from "../interface/feed.interface";
 import { IManager } from "../interface/manager.interface";
 import { feedDisplay, objId } from "../types/types";
-import { ManagerService } from "./manager.service";
+import { TeamService } from "./teamService";
 
 export class FeedService implements IFeedService {
     managerRepo:ManagerRepo;
@@ -15,7 +15,7 @@ export class FeedService implements IFeedService {
     connectionRepo:ConnectionRepo;
     likeRepo:LikeRepo;
     eventRepo:EventRepo;
-    managerService:ManagerService;
+    teamService:TeamService;
 
     constructor() {
         this.managerRepo = new ManagerRepo();
@@ -23,7 +23,7 @@ export class FeedService implements IFeedService {
         this.connectionRepo = new ConnectionRepo();
         this.likeRepo = new LikeRepo();
         this.eventRepo = new EventRepo();
-        this.managerService = new ManagerService();
+        this.teamService = new TeamService();
     }
 
     displayFeeds = async(managerId: objId): Promise<feedDisplay[]> => {
@@ -41,9 +41,9 @@ export class FeedService implements IFeedService {
         const feeds:IFeed[] = await this.feedRepo.getFeeds(gameWeek,followings);
         for(let feed of feeds) {
             let manager:IManager = await this.managerRepo.getManagerById(feed.managerId!);
-            //feed.points = await this.managerService.
+            // feed.points = await this.teamService.getTeamPoint(manager._id);
             const data:feedDisplay = {
-                points: feed.points,
+                points: await this.teamService.getTeamPoint(manager._id),
                 substitutions: await this.feedRepo.convertSubs(feed.substitutions!),
                 managerId: feed.managerId,
                 feedId: feed._id,

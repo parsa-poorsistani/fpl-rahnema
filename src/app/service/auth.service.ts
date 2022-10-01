@@ -57,7 +57,7 @@ export class AuthService implements IauthService {
   ): Promise<authResponseData | string> {
     const verCode = await redisClient.hGet(`email:${email}`, "code");
     if (code !== verCode) {
-      return "code is wrong";
+      return "code is wrong or expired";
     }
     const teamId: objId = await this.managerRepo.createTeam();
     const first_name = await redisClient.hGet(`email:${email}`, "first_name");

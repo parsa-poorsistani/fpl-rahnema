@@ -5,7 +5,6 @@ export interface IFeedRepo {
   createFeed(managerId: objId): Promise<void>;
   getFeed(gameWeek: number, managerIds: Array<objId>): Promise<Array<IFeed>>;
   addSub(managerId: objId, sub: substitution): Promise<void>;
-  updatePoints(managerId: objId, points: number): Promise<void>;
 };
 
 export interface IFeedController {
@@ -21,9 +20,10 @@ export interface IFeedService {
 };
 
 export interface IFeed {
-  managerId?: objId;
-  points: number;
-  substitutions?: Array<substitution> | null;
-  likers: Array<objId> | null;
-  event?: objId;
+    _id:objId,
+    managerId?: objId;
+    points: number;
+    substitutions?: Array<substitution> | null;
+    likers: Array<objId> | null;
+    event?: objId;
 }
