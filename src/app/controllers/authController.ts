@@ -41,7 +41,7 @@ class AuthController extends ApiGeneralService implements IauthController {
     } catch (error:any) {
       return await this.sendFailedResponse(
         res,
-        new errors.InternalServerError(error)
+        new errors.InternalServerError("error in signup")
       );
     }
   };
@@ -61,7 +61,7 @@ class AuthController extends ApiGeneralService implements IauthController {
         return this.sendFailedResponse(res, error);
       return await this.sendFailedResponse(
         res,
-        new errors.InternalServerError(error)
+        new errors.InternalServerError("error in verify")
       );
     }
   };
@@ -84,7 +84,7 @@ class AuthController extends ApiGeneralService implements IauthController {
         return this.sendFailedResponse(res, error);
       return this.sendFailedResponse(
         res,
-        new errors.InternalServerError(error)
+        new errors.InternalServerError("error in login")
       );
     }
   };

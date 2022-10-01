@@ -32,7 +32,7 @@ export class EventController
     } catch (err: any) {
       return await this.sendFailedResponse(
         res,
-        new errors.InternalServerError(err)
+        new errors.InternalServerError("error in getting event")
       );
     }
   };
