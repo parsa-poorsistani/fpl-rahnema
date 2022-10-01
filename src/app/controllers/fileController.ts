@@ -39,8 +39,11 @@ export class FileController
         res,
         new errors.BadRequestError("no file was sent")
       );
-    } catch (err:any) {
-      return this.sendFailedResponse(res, new errors.InternalServerError(err));
+    } catch (err: any) {
+      return this.sendFailedResponse(
+        res,
+        new errors.InternalServerError("error in creating file")
+      );
     }
   };
 }
