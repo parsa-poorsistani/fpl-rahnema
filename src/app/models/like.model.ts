@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { ILikes } from "../interface/likes.interface";
+import { ILike } from "../interface/likes.interface";
 
-const likeSchema = new mongoose.Schema<ILikes>({
+const likeSchema = new mongoose.Schema<ILike>({
     feed:{
         type:mongoose.Types.ObjectId
     },
