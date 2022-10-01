@@ -82,8 +82,7 @@ export class TeamService implements ITeamService {
         }
       }
     }
-    console.log(num);
-    
+        
     if (num >= 3) {
       return false;
     }

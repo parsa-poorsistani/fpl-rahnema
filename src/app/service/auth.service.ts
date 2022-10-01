@@ -12,7 +12,7 @@ import {
   authResponseData,
 } from "../types/types";
 const redis = require("redis");
-let redisClient = redis.createClient();
+let redisClient = redis.createClient({ url: "redis://redis:6379" });
 redisClient.connect();
 redisClient.on("connect", () => {
   console.log("Connected!");
