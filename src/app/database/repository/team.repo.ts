@@ -3,6 +3,7 @@ import { IPick, ITeam } from "../../interface/team.interface";
 import { objId } from "../../types/types";
 
 export class TeamRepo {
+
   getTeamById = async (teamId: objId): Promise<ITeam> => {
     const team = await models.teamModel.findById(teamId);
     return team;
@@ -38,4 +39,13 @@ export class TeamRepo {
       },
     });
   };
+
+  // substitution = async(teamId:objId,data:objId|null,index:number):Promise<void> => {
+  //   await models.teamModel.findByIdAndUpdate(teamId, {
+  //     $set: {
+  //       [`picks.${index}.player`]: data,
+  //     },
+  //   });
+
+  // }
 }

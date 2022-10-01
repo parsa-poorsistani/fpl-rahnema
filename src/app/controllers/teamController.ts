@@ -6,6 +6,8 @@ import { Request, Response } from "express";
 import { objId } from "../types/types";
 import { ApiGeneralService } from "../service/api.general.service";
 import { ITeamService } from "../interface/team.interface";
+import { ParamsDictionary } from "express-serve-static-core";
+import { ParsedQs } from "qs";
 
 class TeamController extends ApiGeneralService implements ITeamController {
   teamService: ITeamService;
@@ -13,6 +15,24 @@ class TeamController extends ApiGeneralService implements ITeamController {
   constructor() {
     super();
     this.teamService = new TeamService();
+  }
+
+  changePlayer = async(req: Request, res: Response): Promise<Response> => {
+    try {
+      const managerId:objId = new mongoose.Types.ObjectId(req._id);
+      const inIndex:number = req.body.inIndex;
+      const outIndex:number = req.body.outIndex;
+      const inPlayerId:objId = req.body.inId;
+      const outPlayerId:objId = req.body.outId;
+      const result:boolean = await this.teamService.changePlayer(managerId,inIndex,inPlayerId,outIndex,outPlayerId);
+      if(result===false) {
+        return res.status(StatusCodes.EXPECTATION_FAILED).json({msg:"error occured"});
+      }
+      return res.status(StatusCodes.OK).json({msg:"OK"});
+    } catch (error) {
+      console.log(error);
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg:error});
+    }
   }
 
   addPlayerToTeam = async (req: Request, res: Response): Promise<Response> => {

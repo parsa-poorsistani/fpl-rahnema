@@ -3,8 +3,7 @@ import { feedDisplay, objId, substitution } from "../types/types";
 
 export interface IFeedRepo {
   createFeed(managerId: objId): Promise<void>;
-  getFeed(gameWeek: number, managerIds: Array<objId>): Promise<Array<IFeed>>;
-  addSub(managerId: objId, sub: substitution): Promise<void>;
+  addSub(managerId: objId, sub: substitution, event:objId): Promise<void>;
 };
 
 export interface IFeedController {

@@ -11,9 +11,6 @@ export class FeedRepo implements IFeedRepo {
     constructor(){
         this.playerRepo = new PlayerRepo();
     }
-    getFeed(gameWeek: number, managerIds: mongoose.Types.ObjectId[]): Promise<IFeed[]> {
-        throw new Error('Method not implemented.');
-    }
     
     getFeeds = async(gameWeek: number,managersId:objId[]): Promise<IFeed[]>  => {
         const event: IEvent = await models.eventModel.findOne({generalId:gameWeek.toString});
@@ -42,18 +39,14 @@ export class FeedRepo implements IFeedRepo {
         return result;
     }
 
-    addSub(managerId: objId, sub: substitution): Promise<void> {
+    addSub = async(managerId: objId, sub: substitution, event:objId): Promise<void> => {
+        await models.feed_model.findOneAndUpdate({managerId:managerId,event:event},
+            {
+                $push:{substitutions:{sub}}
+            })
         throw new Error("Method not implemented.");
     }
-    addLike(managerId: objId, liker: objId): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    removeLike(managerId: objId, liker: objId): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    updatePoints(managerId: objId, points: number): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
+
     async createFeed(managerId:objId): Promise<void> {
         for(let i=1;i<=38;i++) {
             const event:IEvent = await models.eventModel.findOne({generalId:i.toString()});

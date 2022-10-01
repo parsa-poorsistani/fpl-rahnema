@@ -2,20 +2,26 @@ import { ManagerRepo } from "../database/repository/manager.repo";
 import { PlayerRepo } from "../database/repository/player.repo";
 import { IPlayer, IPlayerRepo } from "../interface/player.interface";
 import { IManager, IManagerRepo } from "../interface/manager.interface";
-import { IPick, ITeam } from "../interface/team.interface";
-import { ITeamService } from "../interface/team.interface";
-import { objId } from "../types/types";
+import { IPick, ITeam, ITeamService } from "../interface/team.interface";
+import { objId, substitution } from "../types/types";
 import { TeamRepo } from "../database/repository/team.repo";
+import { EventRepo } from "../database/repository/event.repo";
+import { IEvent } from "../interface/event.interface";
+import { FeedRepo } from "../database/repository/feed.repo";
 
 export class TeamService implements ITeamService {
   managerRepo: IManagerRepo;
   playerRepo: IPlayerRepo;
-  teamRepo;
+  teamRepo:TeamRepo;
+  eventRepo:EventRepo;
+  feedRepo:FeedRepo;
 
   constructor() {
     this.managerRepo = new ManagerRepo();
     this.playerRepo = new PlayerRepo();
     this.teamRepo = new TeamRepo();
+    this.eventRepo = new EventRepo();
+    this.feedRepo = new FeedRepo();
   }
 
   getTeamById = async (teamId: objId): Promise<ITeam> => {
@@ -55,6 +61,29 @@ export class TeamService implements ITeamService {
     return "OK";
   };
 
+  changePlayer = async(managerId:objId, inId:number,inPlayerId:objId,outId:number,outPlayerId:objId): Promise<boolean> => {
+    const teamId:objId = (await this.managerRepo.getManagerById(managerId))?.teamId!;
+    const inPlayer:IPlayer = await this.playerRepo.getPlayerById(inPlayerId);
+    const outPlayer:IPlayer = await this.playerRepo.getPlayerById(outPlayerId);
+    if (this.checkIndex(inPlayer, outId)===false) {
+      return false;
+    }
+
+    if (this.checkIndex(outPlayer, inId)===false) {
+      return false;
+    }
+
+    await this.teamRepo.updateTeamById(teamId,inPlayer._id,inId);
+    await this.teamRepo.updateTeamById(teamId,outPlayer._id,outId);
+    const event:IEvent = await this.eventRepo.getCurrentEvent();
+    const sub:substitution = {
+      in:inPlayerId,
+      out:outPlayerId
+    }
+    await this.feedRepo.addSub(managerId,sub,event._id);
+    return true;
+  }
+
   deletePlayerFromTeam = async (
     managerId: objId,
     playerId: objId,
@@ -82,7 +111,7 @@ export class TeamService implements ITeamService {
         }
       }
     }
-        
+
     if (num >= 3) {
       return false;
     }
@@ -139,4 +168,5 @@ export class TeamService implements ITeamService {
     }
     return totalPoints;
   };
+
 }

@@ -15,6 +15,7 @@ export interface IPick {
 export interface ITeamController {
   teamService: ITeamService;
   addPlayerToTeam(req: Request, res: Response): Promise<Response>;
+  changePlayer(req: Request, res: Response): Promise<Response>;
   deletePlayerFromTeam(req: Request, res: Response): Promise<Response>;
 }
 
@@ -29,6 +30,7 @@ export interface ITeamService {
     playerId: objId,
     index: number
   ): Promise<string>;
+  changePlayer(managerId:objId,inId:number,inPlayerId:objId,outId:number,outPlayerId:objId):Promise<boolean>;
   teamLimit(player: IPlayer, team: Array<IPick>): Promise<boolean>;
   checkIndex(player: IPlayer, index: number): boolean;
   getTeamById(teamId: objId): Promise<ITeam>;
