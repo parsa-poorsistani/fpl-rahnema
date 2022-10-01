@@ -1,25 +1,33 @@
 import { ConnectionRepo } from "../database/repository/connection.repo";
+import { EventRepo } from "../database/repository/event.repo";
 import { FeedRepo } from "../database/repository/feed.repo";
-import { LikesRepo } from "../database/repository/likes.repo";
+import { LikeRepo } from "../database/repository/likes.repo";
+import {ILike} from "../interface/likes.interface";
 import { ManagerRepo } from "../database/repository/manager.repo";
 import { IFeed, IFeedService } from "../interface/feed.interface";
 import { IManager } from "../interface/manager.interface";
 import { feedDisplay, objId } from "../types/types";
+import { ManagerService } from "./manager.service";
 
 export class FeedService implements IFeedService {
     managerRepo:ManagerRepo;
     feedRepo:FeedRepo;
     connectionRepo:ConnectionRepo;
-    likeRepo:LikesRepo;
+    likeRepo:LikeRepo;
+    eventRepo:EventRepo;
+    managerService:ManagerService;
 
     constructor() {
         this.managerRepo = new ManagerRepo();
         this.feedRepo = new FeedRepo();
         this.connectionRepo = new ConnectionRepo();
-        this.likeRepo = new LikesRepo();
+        this.likeRepo = new LikeRepo();
+        this.eventRepo = new EventRepo();
+        this.managerService = new ManagerService();
     }
 
-    displayFeeds = async(managerId: objId, gameWeek: number): Promise<feedDisplay[]> => {
+    displayFeeds = async(managerId: objId): Promise<feedDisplay[]> => {
+        const gameWeek:number = parseInt((await this.eventRepo.getCurrentEvent()).generalId)-1;
         const managers:IManager[] = await this.managerRepo.getManagers();
         let followings:objId[] = [];
         let result:feedDisplay[] = [];
@@ -29,10 +37,11 @@ export class FeedService implements IFeedService {
                 followings.push(manager._id);
             }
         }
-        
+
         const feeds:IFeed[] = await this.feedRepo.getFeeds(gameWeek,followings);
         for(let feed of feeds) {
             let manager:IManager = await this.managerRepo.getManagerById(feed.managerId!);
+            //feed.points = await this.managerService.
             const data:feedDisplay = {
                 points: feed.points,
                 substitutions: await this.feedRepo.convertSubs(feed.substitutions!),
@@ -48,11 +57,15 @@ export class FeedService implements IFeedService {
         return result;
     }
 
-    like = async(managerId: objId, feedId: objId): Promise<void> => {
-        throw new Error("Method not implemented.");
+    like = async(managerId: objId, feedId: objId): Promise<boolean> => {
+        const result:ILike = await this.likeRepo.like(managerId,feedId);
+        if(!result) { return false };
+        return true;
     }
-    dislike= async(managerId: objId, feedId: objId): Promise<void> => {
-        throw new Error("Method not implemented.");
+
+    dislike= async(managerId: objId, feedId: objId): Promise<boolean> => {
+        const result:boolean = await this.likeRepo.dislike(managerId,feedId);
+        return result;
     }
 
 };

@@ -1,15 +1,21 @@
-import {ILikesRepo} from '../../interface/likes.interface';
+import {ILike, ILikeRepo} from '../../interface/likes.interface';
 import { objId } from '../../types/types';
 import models = require('../../models/path');
-import { Types } from 'mongoose';
 
 
-export class LikesRepo implements ILikesRepo {
-    like(managerId: Types.ObjectId, feed: Types.ObjectId): Promise<void> {
-        throw new Error('Method not implemented.');
+export class LikeRepo implements ILikeRepo {
+    like = async(managerId: objId, feed: objId): Promise<ILike> => {
+        const data = {
+            feed:feed,
+            likedBy:managerId
+        }
+        return await models.likeModel.create(data);
     }
-    dislike(managerId: Types.ObjectId, feed: Types.ObjectId): Promise<void> {
-        throw new Error('Method not implemented.');
+
+    dislike = async(managerId: objId, feed: objId): Promise<boolean> => {
+        const result:number = await models.likeModel.deleteOne({feed:feed,likedBy:managerId});
+        if(result===0) {return false;}
+        return true;
     }
 
     isLiked = async(managerId: objId,feed: objId): Promise<boolean> => {

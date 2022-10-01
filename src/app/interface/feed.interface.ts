@@ -7,10 +7,8 @@ export interface IFeedRepo {
   getFeeds(gameWeek: number,managers:objId[]): Promise<Array<IFeed>>;
   convertSubs(subs:Array<substitution>): Promise<Array<substitutionRsponse>|null>;
   addSub(managerId: objId, sub: substitution): Promise<void>;
-//   addLike(managerId: objId, liker: objId): Promise<void>;
-//   removeLike(managerId: objId, liker: objId): Promise<void>;
   updatePoints(managerId: objId, points: number): Promise<void>;
-}
+};
 
 export interface IFeedController {
     displayFeeds(req:Request,res:Response):Promise<Response>;
@@ -19,10 +17,11 @@ export interface IFeedController {
 };
 
 export interface IFeedService {
-    displayFeeds(managerId:objId,gameWeek:number):Promise<Array<feedDisplay>>;
-    like(managerId:objId,feedId:objId):Promise<void>;
-    dislike(managerId:objId,feedId:objId):Promise<void>;
+    displayFeeds(managerId:objId):Promise<Array<feedDisplay>>;
+    like(managerId:objId,feedId:objId):Promise<boolean>;
+    dislike(managerId:objId,feedId:objId):Promise<boolean>;
 };
+
 export interface IFeed {
     _id:objId,
     managerId?:objId,

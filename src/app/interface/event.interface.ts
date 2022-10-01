@@ -3,7 +3,7 @@ import { objId } from "../types/types";
 
 export interface IEvent {
   _id: objId;
-  generalId: String;
+  generalId: string;
   name: String;
   deadline_time: String;
   average_entry_score: String;
