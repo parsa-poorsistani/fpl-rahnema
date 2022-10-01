@@ -17,12 +17,13 @@ redisClient.connect();
 redisClient.on("connect", () => {
   console.log("Connected!");
 });
+import errors = require("../helpers/error/path");
 
 export class AuthService implements IauthService {
   managerRepo = new ManagerRepo();
   feedRepo = new FeedRepo();
 
-  async signUpManager(input: signInputData): Promise<string> {
+  async signUpManager(input: signInputData): Promise<boolean> {
     const { email, country, first_name, last_name, username, password } = input;
     const confirmationCode: Number = await utils.confirmationCodeGenerator();
     redisClient.hSet(`email:${email}`, [
@@ -40,24 +41,18 @@ export class AuthService implements IauthService {
       confirmationCode,
     ]);
     redisClient.expire(`email:${email}`, 900);
-    const result: string | undefined = await utils.mailSender(
+    const result: boolean = await utils.mailSender(
       email,
       "confirmation",
       confirmationCode.toString()
     );
-    if (result === "error") {
-      return result;
-    }
     return result;
   }
 
-  async verify(
-    email: string,
-    code: string
-  ): Promise<authResponseData | string> {
+  async verify(email: string, code: string): Promise<authResponseData> {
     const verCode = await redisClient.hGet(`email:${email}`, "code");
     if (code !== verCode) {
-      return "code is wrong";
+      throw "code is wrong";
     }
     const teamId: objId = await this.managerRepo.createTeam();
     const first_name = await redisClient.hGet(`email:${email}`, "first_name");
@@ -85,20 +80,17 @@ export class AuthService implements IauthService {
     return data;
   }
 
-  async login(
-    username: string,
-    password: string
-  ): Promise<authResponseData | string> {
+  async login(username: string, password: string): Promise<authResponseData> {
     const manager: IManager | null = await this.managerRepo.findManager(
       username
     );
 
     if (!manager) {
-      return "wrong username";
+      throw new errors.NotFoundError("username not found");
     }
     const isValid: boolean = await bcrypt.compare(password, manager.password);
     if (!isValid) {
-      return "wrong password";
+      throw new errors.AccessForbiddenError("wrong password");
     }
     const token: string = jwt.sign({ id: manager._id }, process.env.HASH_KEY!);
     const data: authResponseData = {

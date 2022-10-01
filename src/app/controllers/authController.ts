@@ -6,16 +6,17 @@ import { AuthService } from "../service/auth.service";
 import { StatusCodes } from "http-status-codes";
 import { authResponseData, signInputData } from "../types/types";
 import { ApiGeneralService } from "../service/api.general.service";
-const authService = new AuthService();
+import errors = require("../helpers/error/path");
 
-class AuthController implements IauthController {
-  authService:AuthService;
+class AuthController extends ApiGeneralService implements IauthController {
+  authService: AuthService;
 
   constructor() {
+    super();
     this.authService = new AuthService();
-  };
+  }
 
-  signUpManager = async(req: Request, res: Response): Promise<Response> => {
+  signUpManager = async (req: Request, res: Response): Promise<Response> => {
     try {
       await utils.validationErrorHandler(req);
       const { first_name, last_name, password, username, country, email } =
@@ -29,66 +30,62 @@ class AuthController implements IauthController {
         email: email,
       };
 
-      const result: string = await this.authService.signUpManager(inputData);
-      if (result === "error") {
-        return res
-          .status(StatusCodes.NOT_ACCEPTABLE)
-          .json({ msg: "sign up failed" });
+      const result: boolean = await this.authService.signUpManager(inputData);
+      if (!result) {
+        throw "signup failed";
       }
-      return res
-        .status(StatusCodes.OK)
-        .json({ msg: "Email sent successfully", result });
+      return await this.generalSuccessfulResponse(
+        res,
+        "Email sent successfully"
+      );
     } catch (error) {
-      console.log(error);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
+      return await this.sendFailedResponse(
+        res,
+        new errors.InternalServerError(error)
+      );
     }
-  }
+  };
 
   verify = async (req: Request, res: Response): Promise<Response> => {
     try {
       await utils.validationErrorHandler(req);
       const { code, email } = req.body;
-      const result: string | authResponseData = await this.authService.verify(
-        email,
-        code
+      const data: authResponseData = await this.authService.verify(email, code);
+      return await this.generalSuccessfulResponse(
+        res,
+        "User created successfully",
+        data
       );
-      if (result === "code is wrong") {
-        return res
-          .status(StatusCodes.NOT_ACCEPTABLE)
-          .json({ msg: "code is wrong" });
-      }
-      return res
-        .status(StatusCodes.OK)
-        .json({ msg: "User created successfully", result });
     } catch (error) {
-      console.log(error);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
+      return await this.sendFailedResponse(
+        res,
+        new errors.InternalServerError(error)
+      );
     }
-  }
+  };
 
-  login = async(req: Request, res: Response): Promise<Response> => {
+  login = async (req: Request, res: Response): Promise<Response> => {
     try {
       await utils.validationErrorHandler(req);
       const { username, password } = req.body;
-      const result: authResponseData | string = await this.authService.login(
+      const data: authResponseData = await this.authService.login(
         username,
         password
       );
-
-      if (result === "wrong username") {
-        return res.status(StatusCodes.NOT_FOUND).json({ msg: result });
-      }
-      if (result === "wrong password") {
-        return res.status(StatusCodes.FORBIDDEN).json({ msg: result });
-      }
-      return res
-        .status(StatusCodes.OK)
-        .json({ msg: "login successful", result });
+      return await this.generalSuccessfulResponse(
+        res,
+        "login successful",
+        data
+      );
     } catch (error) {
-      console.log(error);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: error });
+      if (error instanceof errors.BaseError)
+        return this.sendFailedResponse(res, error);
+      return this.sendFailedResponse(
+        res,
+        new errors.InternalServerError(error)
+      );
     }
-  }
+  };
 }
 
 export { AuthController };
