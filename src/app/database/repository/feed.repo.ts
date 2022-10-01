@@ -11,6 +11,9 @@ export class FeedRepo implements IFeedRepo {
     constructor(){
         this.playerRepo = new PlayerRepo();
     }
+    getFeed(gameWeek: number, managerIds: mongoose.Types.ObjectId[]): Promise<IFeed[]> {
+        throw new Error('Method not implemented.');
+    }
     
     getFeeds = async(gameWeek: number,managersId:objId[]): Promise<IFeed[]>  => {
         const event: IEvent = await models.eventModel.findOne({generalId:gameWeek.toString});

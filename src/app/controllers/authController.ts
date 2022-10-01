@@ -57,6 +57,8 @@ class AuthController extends ApiGeneralService implements IauthController {
         data
       );
     } catch (error) {
+      if (error instanceof errors.BaseError)
+        return this.sendFailedResponse(res, error);
       return await this.sendFailedResponse(
         res,
         new errors.InternalServerError(error)

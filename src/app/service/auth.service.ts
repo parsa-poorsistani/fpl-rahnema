@@ -12,7 +12,7 @@ import {
   authResponseData,
 } from "../types/types";
 const redis = require("redis");
-let redisClient = redis.createClient({ url: "redis://redis:6379" });
+let redisClient = redis.createClient();
 redisClient.connect();
 redisClient.on("connect", () => {
   console.log("Connected!");
@@ -52,7 +52,7 @@ export class AuthService implements IauthService {
   async verify(email: string, code: string): Promise<authResponseData> {
     const verCode = await redisClient.hGet(`email:${email}`, "code");
     if (code !== verCode) {
-      throw "code is wrong";
+      throw new errors.AccessForbiddenError("wrong or expired code");
     }
     const teamId: objId = await this.managerRepo.createTeam();
     const first_name = await redisClient.hGet(`email:${email}`, "first_name");
