@@ -2,6 +2,9 @@ import models = require("../../models/path");
 import { IPick, ITeam } from "../../interface/team.interface";
 import { IManagerRepo, IManager } from "../../interface/manager.interface";
 import { managerSignUpType, objId } from "../../types/types";
+import { managerUpdateType } from "../../types/manager.type";
+import { updateMongoResponseType } from "../../types/mongo.type";
+import errors = require("../../helpers/error/path");
 
 export class ManagerRepo implements IManagerRepo {
   getManagersByName(name: string): Promise<IManager[] | null> {
@@ -17,6 +20,11 @@ export class ManagerRepo implements IManagerRepo {
       },
     });
     return managers;
+  }
+
+  getManagerByEmail(email: string): Promise<IManager> {
+    const manager = models.managerModel.findOne({ email });
+    return manager;
   }
 
   async getManagers(): Promise<IManager[]> {
@@ -79,7 +87,7 @@ export class ManagerRepo implements IManagerRepo {
     return manager;
   };
 
-  findManager = async (username: string): Promise<IManager | null> => {
+  findManager = async (username: string): Promise<IManager> => {
     const manager: IManager = await models.managerModel.findOne({
       username: username,
     });
@@ -98,5 +106,20 @@ export class ManagerRepo implements IManagerRepo {
       picks: picks,
     });
     return team._id;
+  };
+
+  updateManager = async (
+    managerId: objId,
+    newManager: managerUpdateType
+  ): Promise<IManager | null> => {
+    let response: updateMongoResponseType = await models.managerModel.updateOne(
+      { _id: managerId },
+      newManager
+    );
+    if (response.matchedCount == 0) {
+      return null;
+    }
+    const manager: IManager = await this.getManagerById(managerId);
+    return manager;
   };
 }

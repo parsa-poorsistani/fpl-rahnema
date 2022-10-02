@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const connectDB = async () => {
-  await mongoose.connect(process.env.MONGO_URI);
+  await mongoose.connect(process.env.MONGO_URI!);
   if (mongoose.connection.readyState == 1) {
     console.log("Connected to db!");
   } else {

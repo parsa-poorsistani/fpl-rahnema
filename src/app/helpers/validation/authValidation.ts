@@ -1,5 +1,7 @@
 import { body } from "express-validator";
-const models = require("../../models/path");
+import { ManagerService } from "../../service/manager.service";
+import models = require("../../models/path");
+const managerService = new ManagerService();
 
 function handleSignUp() {
   return [
@@ -17,13 +19,10 @@ function handleSignUp() {
       .withMessage("Email format is not correct")
       .bail()
       .custom(async (value: any, { req }) => {
-        return await models.managerModel
-          .findOne({ email: value })
-          .then((manager: any) => {
-            if (manager) {
-              return Promise.reject("email is already taken");
-            }
-          });
+        let manager = await managerService.getManagerByEmail(value);
+        if (manager) {
+          return Promise.reject("email is already taken");
+        }
       }),
 
     body("username")
@@ -32,13 +31,10 @@ function handleSignUp() {
       .withMessage("Send username")
       .bail()
       .custom(async (value, { req }) => {
-        return await models.managerModel
-          .findOne({ username: value })
-          .then((manager: any) => {
-            if (manager) {
-              return Promise.reject("username is already taken");
-            }
-          });
+        let manager = await managerService.getManagerByUsername(value);
+        if (manager) {
+          return Promise.reject("username is already taken");
+        }
       }),
   ];
 }
@@ -66,7 +62,27 @@ function handleLogin() {
 
 function handleVerify() {
   return [
-    body(["code", "email"]).trim().notEmpty().withMessage("please send code"),
+    body("code").trim().notEmpty().withMessage("please send code"),
+    body("email")
+      .trim()
+      .notEmpty()
+      .withMessage("Send email")
+      .bail()
+      .isEmail()
+      .withMessage("Email format is not correct")
+      .bail()
+      .custom(async (value: string, { req }) => {
+        let manager = await managerService.getManagerByEmail(value);
+        if (manager) {
+          return Promise.reject("email is already taken");
+        }
+        // .findOne({ email: value })
+        // .then((manager: any) => {
+        //   if (manager) {
+        //     return Promise.reject("email is already taken");
+        //   }
+        // });
+      }),
   ];
 }
 
