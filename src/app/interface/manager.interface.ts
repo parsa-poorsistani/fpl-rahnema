@@ -52,6 +52,7 @@ export interface IManagerService {
   getTeamPlayerIdsByManagerId(id: objId): Promise<Array<objId>>;
   getManagerById(managerId: objId): Promise<IManager>;
   getManagerByEmail(email: string): Promise<IManager>;
+  getManagerByUsername(username: string): Promise<IManager>;
   updateManager(
     managerId: objId,
     newManager: managerUpdateType

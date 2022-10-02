@@ -12,6 +12,7 @@ import mongoose from "mongoose";
 import errors = require("../helpers/error/path");
 import { ITeamService } from "../interface/team.interface";
 import { managerUpdateType } from "../types/manager.type";
+import utils = require("../helpers/utils/utils");
 
 export class ManagerController
   extends ApiGeneralService
@@ -55,6 +56,7 @@ export class ManagerController
     res: Response
   ): Promise<Response> => {
     try {
+      await utils.validationErrorHandler(req);
       const newManager: managerUpdateType = req.body;
       let result: IManager | errors.NotFoundError =
         await this.managerService.updateManager(

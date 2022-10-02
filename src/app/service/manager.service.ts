@@ -55,6 +55,11 @@ export class ManagerService implements IManagerService {
     return manager;
   };
 
+  getManagerByUsername = async (username: string): Promise<IManager> => {
+    const manager: IManager = await this.managerRepo.findManager(username);
+    return manager;
+  };
+
   public updateManager = async (
     managerId: objId,
     newManager: managerUpdateType

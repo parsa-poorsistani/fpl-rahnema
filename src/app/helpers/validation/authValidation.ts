@@ -19,13 +19,10 @@ function handleSignUp() {
       .withMessage("Email format is not correct")
       .bail()
       .custom(async (value: any, { req }) => {
-        return await models.managerModel
-          .findOne({ email: value })
-          .then((manager: any) => {
-            if (manager) {
-              return Promise.reject("email is already taken");
-            }
-          });
+        let manager = await managerService.getManagerByEmail(value);
+        if (manager) {
+          return Promise.reject("email is already taken");
+        }
       }),
 
     body("username")
@@ -34,18 +31,10 @@ function handleSignUp() {
       .withMessage("Send username")
       .bail()
       .custom(async (value, { req }) => {
-        let manager = await managerService.getManagerByEmail(value);
+        let manager = await managerService.getManagerByUsername(value);
         if (manager) {
-          return Promise.reject("email is already taken");
+          return Promise.reject("username is already taken");
         }
-
-        return await models.managerModel
-          .findOne({ username: value })
-          .then((manager: any) => {
-            if (manager) {
-              return Promise.reject("username is already taken");
-            }
-          });
       }),
   ];
 }
