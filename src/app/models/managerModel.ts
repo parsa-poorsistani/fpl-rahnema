@@ -47,30 +47,14 @@ const managerSchema = new Schema<IManager>(
       type: Types.ObjectId,
       ref: "Team",
     },
-    summaryOverallPoints: {
-      type: Number,
-      default: 0,
-    },
-    summaryOverallRank: {
+    age: {
       type: Number,
       default: null,
     },
-    summaryEventPoints: {
+    points: {
       type: Number,
       default: 0,
     },
-    summaryEventRank: {
-      type: Number,
-      default: null,
-    },
-    age:{
-      type:Number,
-      default:null
-    },
-    points:{
-      type:Number,
-      default:0
-    }
   },
   { versionKey: false }
 );

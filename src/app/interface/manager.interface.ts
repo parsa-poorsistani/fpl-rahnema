@@ -1,6 +1,8 @@
-import { objId } from "../types/types";
+import { objId, repoReponseType } from "../types/types";
 import { IPick, ITeam } from "./team.interface";
 import { Request, Response } from "express";
+import { managerUpdateType } from "../types/manager.type";
+import errors = require("../helpers/error/path");
 
 export interface IManagerRepo {
   getManagerById(managerId: objId): Promise<IManager | null>;
@@ -18,6 +20,10 @@ export interface IManagerRepo {
   findManager(username: string): Promise<IManager>;
   createTeam(): Promise<objId>;
   getManagerByEmail(email: string): Promise<IManager>;
+  updateManager(
+    managerId: objId,
+    newManager: managerUpdateType
+  ): Promise<IManager | null>;
 }
 
 export interface IManager {
@@ -32,15 +38,12 @@ export interface IManager {
   points: number;
   budget: number;
   teamId?: objId;
-  summaryOverallPoints: number;
-  summaryOverallRank: number;
-  summaryEventPoints: number;
-  summaryEventRank: number;
 }
 
 export interface IManagerController {
   managerService: IManagerService;
   getDashboard(req: Request, res: Response): Promise<Response>;
+  updateProfile(req: Request, res: Response): Promise<Response>;
 }
 
 export interface IManagerService {
@@ -49,4 +52,8 @@ export interface IManagerService {
   getTeamPlayerIdsByManagerId(id: objId): Promise<Array<objId>>;
   getManagerById(managerId: objId): Promise<IManager>;
   getManagerByEmail(email: string): Promise<IManager>;
+  updateManager(
+    managerId: objId,
+    newManager: managerUpdateType
+  ): Promise<IManager | errors.NotFoundError>;
 }
