@@ -50,44 +50,34 @@ export class AuthService implements IauthService {
   }
 
   async verify(email: string, code: string): Promise<authResponseData> {
-    const hasManager = await this.managerRepo.getManagerByEmail(email);
-    if (hasManager) {
-      const verCode = await redisClient.hGet(`email:${email}`, "code");
-      if (code !== verCode) {
-        throw new errors.AccessForbiddenError("wrong or expired code");
-      }
-      const teamId: objId = await this.managerRepo.createTeam();
-      const first_name = await redisClient.hGet(`email:${email}`, "first_name");
-      const last_name = await redisClient.hGet(`email:${email}`, "last_name");
-      const username = await redisClient.hGet(`email:${email}`, "username");
-      const password = await redisClient.hGet(`email:${email}`, "password");
-      const country = await redisClient.hGet(`email:${email}`, "country");
-      const managerData: managerSignUpType = {
-        first_name: first_name,
-        last_name: last_name,
-        username: username,
-        password: password,
-        country: country,
-        teamId: teamId,
-        email: email,
-      };
-
-      const manager: IManager = await this.managerRepo.createManager(
-        managerData
-      );
-      await this.feedRepo.createFeed(manager._id);
-      const token: string = jwt.sign(
-        { id: manager._id },
-        process.env.HASH_KEY!
-      );
-      const data: authResponseData = {
-        manager: manager._id,
-        token: token,
-      };
-      return data;
-    } else {
-      throw new errors.BadRequestError("manager already exists");
+    const verCode = await redisClient.hGet(`email:${email}`, "code");
+    if (code !== verCode) {
+      throw new errors.AccessForbiddenError("wrong or expired code");
     }
+    const teamId: objId = await this.managerRepo.createTeam();
+    const first_name = await redisClient.hGet(`email:${email}`, "first_name");
+    const last_name = await redisClient.hGet(`email:${email}`, "last_name");
+    const username = await redisClient.hGet(`email:${email}`, "username");
+    const password = await redisClient.hGet(`email:${email}`, "password");
+    const country = await redisClient.hGet(`email:${email}`, "country");
+    const managerData: managerSignUpType = {
+      first_name: first_name,
+      last_name: last_name,
+      username: username,
+      password: password,
+      country: country,
+      teamId: teamId,
+      email: email,
+    };
+
+    const manager: IManager = await this.managerRepo.createManager(managerData);
+    await this.feedRepo.createFeed(manager._id);
+    const token: string = jwt.sign({ id: manager._id }, process.env.HASH_KEY!);
+    const data: authResponseData = {
+      manager: manager._id,
+      token: token,
+    };
+    return data;
   }
 
   async login(username: string, password: string): Promise<authResponseData> {
