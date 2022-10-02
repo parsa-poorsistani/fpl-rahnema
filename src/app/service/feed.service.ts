@@ -27,23 +27,24 @@ export class FeedService implements IFeedService {
     }
 
     displayFeeds = async(managerId: objId): Promise<feedDisplay[]> => {
-        const gameWeek:number = parseInt((await this.eventRepo.getCurrentEvent()).generalId)-1;
+        const gameWeek:number = parseInt((await this.eventRepo.getCurrentEvent()).generalId)-1;        
         const managers:IManager[] = await this.managerRepo.getManagers();
         let followings:objId[] = [];
         let result:feedDisplay[] = [];
+        
         // find connections in which follower is manager:improve
         for(let manager of managers) {
             if(await this.connectionRepo.isFollowing(managerId,manager._id)) {
                 followings.push(manager._id);
             }
         }
-
         const feeds:IFeed[] = await this.feedRepo.getFeeds(gameWeek,followings);
+
         for(let feed of feeds) {
             let manager:IManager = await this.managerRepo.getManagerById(feed.managerId!);
             // feed.points = await this.teamService.getTeamPoint(manager._id);
             const data:feedDisplay = {
-                points: await this.teamService.getTeamPoint(manager._id),
+                points: await this.teamService.getTeamPoint(manager._id),                
                 substitutions: await this.feedRepo.convertSubs(feed.substitutions!),
                 managerId: feed.managerId,
                 feedId: feed._id,
@@ -52,8 +53,12 @@ export class FeedService implements IFeedService {
                 event: gameWeek,
                 is_liked: await this.likeRepo.isLiked(managerId,feed._id)
             };
+            console.log("data: ",data);
+            
             result.push(data);
         }
+        console.log(result);
+        
         return result;
     }
 

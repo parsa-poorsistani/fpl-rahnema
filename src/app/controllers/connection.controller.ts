@@ -91,7 +91,7 @@ export class ConnectionController
   public search = async (req: Request, res: Response): Promise<Response> => {
     try {
       const managerId: objId = new mongoose.Types.ObjectId(req._id);
-      const fullName: string = req.body;
+      const fullName: string = req.body.fullName;
       const data = await this.connectionService.search(managerId, fullName);
       return this.generalSuccessfulResponse(
         res,

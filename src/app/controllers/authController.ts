@@ -3,7 +3,6 @@ import utils = require("../helpers/utils/utils");
 import { IauthController } from "../interface/auth.interface";
 import { Request, Response } from "express";
 import { AuthService } from "../service/auth.service";
-import { StatusCodes } from "http-status-codes";
 import { authResponseData, signInputData } from "../types/types";
 import { ApiGeneralService } from "../service/api.general.service";
 import errors = require("../helpers/error/path");
@@ -29,7 +28,7 @@ class AuthController extends ApiGeneralService implements IauthController {
         country: country,
         email: email,
       };
-
+            
       const result: boolean = await this.authService.signUpManager(inputData);
       if (!result) {
         throw "signup failed";

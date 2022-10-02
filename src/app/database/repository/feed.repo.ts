@@ -12,20 +12,20 @@ export class FeedRepo implements IFeedRepo {
         this.playerRepo = new PlayerRepo();
     }
     
-    getFeeds = async(gameWeek: number,managersId:objId[]): Promise<IFeed[]>  => {
-        const event: IEvent = await models.eventModel.findOne({generalId:gameWeek.toString});
+    getFeeds = async(gameWeek: number,managersId:objId[]): Promise<IFeed[]>  => {        
+        const event: IEvent = await models.eventModel.findOne({generalId:gameWeek.toString()});        
         const feeds: IFeed[] = await models.feed_model.find(
             {
                 event:event._id,
-                managerId:{"$in":managersId}
-            });
+                managerId:{$in:managersId}
+            });        
         return feeds;
     }
 
     convertSubs = async(subs: substitution[]): Promise<substitutionRsponse[]|null> => {
         let result:Array<substitutionRsponse> = [];
-
-        if(subs.length===0) {
+        
+        if(subs===null) {
             return null;
         }
 
@@ -48,7 +48,7 @@ export class FeedRepo implements IFeedRepo {
     }
 
     async createFeed(managerId:objId): Promise<void> {
-        for(let i=1;i<=38;i++) {
+        for(let i=9;i<=38;i++) {
             const event:IEvent = await models.eventModel.findOne({generalId:i.toString()});
             const data:feedCreationType = {
                 managerId:managerId,
