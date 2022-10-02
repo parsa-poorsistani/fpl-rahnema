@@ -3,7 +3,9 @@ import { ManagerRepo } from "../database/repository/manager.repo";
 import { TeamRepo } from "../database/repository/team.repo";
 import { IManager, IManagerService } from "../interface/manager.interface";
 import { IPick, ITeam } from "../interface/team.interface";
+import { managerUpdateType } from "../types/manager.type";
 import { objId } from "../types/types";
+import errors = require("../helpers/error/path");
 
 export class ManagerService implements IManagerService {
   managerRepo: ManagerRepo;
@@ -50,6 +52,20 @@ export class ManagerService implements IManagerService {
 
   public getManagerByEmail = async (email: string): Promise<IManager> => {
     const manager: IManager = await this.managerRepo.getManagerByEmail(email);
+    return manager;
+  };
+
+  public updateManager = async (
+    managerId: objId,
+    newManager: managerUpdateType
+  ): Promise<IManager | errors.NotFoundError> => {
+    const manager: IManager | null = await this.managerRepo.updateManager(
+      managerId,
+      newManager
+    );
+    if (!manager) {
+      return new errors.NotFoundError("Manager not found");
+    }
     return manager;
   };
 }
