@@ -53,12 +53,10 @@ export class FeedService implements IFeedService {
                 event: gameWeek,
                 is_liked: await this.likeRepo.isLiked(managerId,feed._id)
             };
-            console.log("data: ",data);
             
             result.push(data);
         }
-        console.log(result);
-        
+                
         return result;
     }
 
