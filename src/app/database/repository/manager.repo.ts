@@ -19,6 +19,11 @@ export class ManagerRepo implements IManagerRepo {
     return managers;
   }
 
+  getManagerByEmail(email: string): Promise<IManager> {
+    const manager = models.managerModel.findOne({ email });
+    return manager;
+  }
+
   async getManagers(): Promise<IManager[]> {
     return await models.managerModel.find();
   }
@@ -79,7 +84,7 @@ export class ManagerRepo implements IManagerRepo {
     return manager;
   };
 
-  findManager = async (username: string): Promise<IManager | null> => {
+  findManager = async (username: string): Promise<IManager> => {
     const manager: IManager = await models.managerModel.findOne({
       username: username,
     });

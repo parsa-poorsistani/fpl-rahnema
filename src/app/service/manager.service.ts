@@ -47,4 +47,9 @@ export class ManagerService implements IManagerService {
     manager.budget = Math.round(manager.budget * 10) / 10;
     return manager;
   };
+
+  public getManagerByEmail = async (email: string): Promise<IManager> => {
+    const manager: IManager = await this.managerRepo.getManagerByEmail(email);
+    return manager;
+  };
 }

@@ -15,8 +15,9 @@ export interface IManagerRepo {
     index: number
   ): Promise<void>;
   createManager(managerData: object): Promise<IManager>;
-  findManager(username: string): Promise<IManager | null>;
+  findManager(username: string): Promise<IManager>;
   createTeam(): Promise<objId>;
+  getManagerByEmail(email: string): Promise<IManager>;
 }
 
 export interface IManager {
@@ -47,4 +48,5 @@ export interface IManagerService {
   countPlayersInTeam(team: ITeam): Promise<number>;
   getTeamPlayerIdsByManagerId(id: objId): Promise<Array<objId>>;
   getManagerById(managerId: objId): Promise<IManager>;
+  getManagerByEmail(email: string): Promise<IManager>;
 }
