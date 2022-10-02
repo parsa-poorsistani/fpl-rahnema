@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import { feedDisplay, objId, substitution } from "../types/types";
+import { feedDisplay, objId, substitution, substitutionRsponse } from "../types/types";
 
 export interface IFeedRepo {
   createFeed(managerId: objId): Promise<void>;
+  convertSubs(subs:substitution[]):Promise<substitutionRsponse[]|null>;
   addSub(managerId: objId, sub: substitution, event:objId): Promise<void>;
 };
 
@@ -23,6 +24,5 @@ export interface IFeed {
     managerId?: objId;
     points: number;
     substitutions?: Array<substitution> | null;
-    likers: Array<objId> | null;
     event?: objId;
 }

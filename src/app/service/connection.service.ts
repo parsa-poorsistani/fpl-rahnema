@@ -10,6 +10,7 @@ const managerRepo = new ManagerRepo();
 export class ConnectionService implements IConnectionService {
   async follow(managerId: objId, following: objId): Promise<void> {
     try {
+      //validation needed
       await connectionRepo.connect(following, managerId);
     } catch (error) {
       console.log(error);
@@ -73,7 +74,7 @@ export class ConnectionService implements IConnectionService {
         first_name: manager.first_name,
         last_name: manager.last_name,
         img: null,
-        following: isFollowing,
+        following: await connectionRepo.isFollowing(managerId,manager._id),
       };
       result.push(data);
     }
@@ -132,7 +133,7 @@ export class ConnectionService implements IConnectionService {
         first_name: manager.first_name,
         last_name: manager.last_name,
         img: null,
-        following: isFollowing,
+        following: await connectionRepo.isFollowing(managerId,manager._id),
       };
       result.push(data);
     }

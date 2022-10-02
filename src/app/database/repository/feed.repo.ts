@@ -23,10 +23,9 @@ export class FeedRepo implements IFeedRepo {
     }
 
     convertSubs = async(subs: substitution[]): Promise<substitutionRsponse[]|null> => {
-        let result:Array<substitutionRsponse> = [];
-        
+        let result:substitutionRsponse[] = [];
         if(subs===null) {
-            return null;
+            return [];
         }
 
         for(let sub of subs) {
@@ -36,6 +35,7 @@ export class FeedRepo implements IFeedRepo {
             };
             result.push(data);
         }
+        console.log(result);
         return result;
     }
 
@@ -43,18 +43,16 @@ export class FeedRepo implements IFeedRepo {
         await models.feed_model.findOneAndUpdate({managerId:managerId,event:event},
             {
                 $push:{substitutions:{sub}}
-            })
-        throw new Error("Method not implemented.");
+            });        
     }
 
     async createFeed(managerId:objId): Promise<void> {
-        for(let i=9;i<=38;i++) {
+        for(let i=1;i<=38;i++) {
             const event:IEvent = await models.eventModel.findOne({generalId:i.toString()});
             const data:feedCreationType = {
                 managerId:managerId,
                 points:0,
                 substitutions:null,
-                likers:null,
                 event:event._id
             };
             await models.feed_model.create(data);

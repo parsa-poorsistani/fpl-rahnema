@@ -38,7 +38,6 @@ type feedCreationType = {
   managerId: objId;
   points: number;
   substitutions: Array<substitution> | null;
-  likers: Array<objId> | null;
   event: objId;
 };
 
