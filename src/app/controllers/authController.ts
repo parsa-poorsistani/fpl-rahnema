@@ -38,7 +38,10 @@ class AuthController extends ApiGeneralService implements IauthController {
         res,
         "Email sent successfully"
       );
-    } catch (error) {
+    } catch (error: any) {
+      if (error instanceof errors.BaseError) {
+        return await this.sendFailedResponse(res, error);
+      }
       return await this.sendFailedResponse(
         res,
         new errors.InternalServerError("error in signup")
@@ -56,7 +59,7 @@ class AuthController extends ApiGeneralService implements IauthController {
         "User created successfully",
         data
       );
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof errors.BaseError)
         return this.sendFailedResponse(res, error);
       return await this.sendFailedResponse(
@@ -79,7 +82,7 @@ class AuthController extends ApiGeneralService implements IauthController {
         "login successful",
         data
       );
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof errors.BaseError)
         return this.sendFailedResponse(res, error);
       return this.sendFailedResponse(
