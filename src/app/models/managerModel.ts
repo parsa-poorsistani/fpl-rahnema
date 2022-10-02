@@ -19,7 +19,7 @@ const managerSchema = new Schema<IManager>(
     username: {
       type: String,
       default: null,
-      unique: true,
+      unique: false,
       required: true,
     },
     country: {
@@ -36,7 +36,7 @@ const managerSchema = new Schema<IManager>(
     email: {
       type: String,
       default: null,
-      unique: true,
+      unique: false,
       required: true,
     },
     budget: {
