@@ -6,6 +6,6 @@ const teamController = new TeamController();
 
 routes.patch("/delete-player", authToken, teamController.deletePlayerFromTeam);
 routes.patch("/add-player", authToken, teamController.addPlayerToTeam);
-routes.patch("/substitution",teamController.changePlayer);
+routes.patch("/substitution",authToken,teamController.changePlayer);
 
 module.exports = routes;

@@ -62,9 +62,12 @@ export class TeamService implements ITeamService {
   };
 
   changePlayer = async(managerId:objId, inId:number,inPlayerId:objId,outId:number,outPlayerId:objId): Promise<boolean> => {
-    const teamId:objId = (await this.managerRepo.getManagerById(managerId))?.teamId!;
-    const inPlayer:IPlayer = await this.playerRepo.getPlayerById(inPlayerId);
-    const outPlayer:IPlayer = await this.playerRepo.getPlayerById(outPlayerId);
+    const manager:IManager|null = await this.managerRepo.getManagerById(managerId);
+    if(manager===null) {return false;}
+    const teamId:objId = manager.teamId!;
+    const inPlayer:IPlayer = await this.playerRepo.getPlayerById(inPlayerId);    
+    const outPlayer:IPlayer = await this.playerRepo.getPlayerById(outPlayerId); 
+       
     if (this.checkIndex(inPlayer, outId)===false) {
       return false;
     }

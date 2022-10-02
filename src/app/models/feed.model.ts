@@ -13,7 +13,7 @@ const feedSchema = new Schema<IFeed>(
         },
         substitutions:{
             type:Array<substitution>,
-            default:null
+            default:[]
         },
         likers:{
             type:Array<objId>,
