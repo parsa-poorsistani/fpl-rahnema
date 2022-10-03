@@ -60,6 +60,7 @@ export type feedDisplay = {
   first_name: string;
   last_name: string;
   feedId?: objId;
+  img:string|null;
 };
 
 export type repoReponseType = {
