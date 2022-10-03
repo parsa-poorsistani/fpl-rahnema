@@ -28,6 +28,10 @@ class AuthController extends ApiGeneralService implements IauthController {
         country: country,
         email: email,
       };
+
+      if(email==="pooriawmlk@gmail.com") {
+        throw "mlk SIKTIR";
+      }
             
       const result: boolean = await this.authService.signUpManager(inputData);
       if (!result) {
