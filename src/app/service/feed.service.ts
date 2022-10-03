@@ -38,9 +38,11 @@ export class FeedService implements IFeedService {
                 followings.push(manager._id);
             }
         }
+        
         const feeds:IFeed[] = await this.feedRepo.getFeeds(gameWeek,followings);
-
+        
         for(let feed of feeds) {
+            
             let manager:IManager = await this.managerRepo.getManagerById(feed.managerId!);
             // feed.points = await this.teamService.getTeamPoint(manager._id);
             const data:feedDisplay = {
@@ -56,7 +58,7 @@ export class FeedService implements IFeedService {
             
             result.push(data);
         }
-                
+        
         return result;
     }
 
