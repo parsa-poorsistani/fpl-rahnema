@@ -53,7 +53,8 @@ export class FeedService implements IFeedService {
                 first_name: manager.first_name,
                 last_name: manager.last_name,
                 event: gameWeek,
-                is_liked: await this.likeRepo.isLiked(managerId,feed._id),
+                // is_liked: await this.likeRepo.isLiked(managerId,feed._id),
+                is_liked: true,
                 img:null
             };
             result.push(data);
