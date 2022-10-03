@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import models = require('../../models/path');
 import {IFeed, IFeedRepo} from '../../interface/feed.interface';
 import { objId, substitution,feedCreationType, substitutionRsponse } from '../../types/types';
